@@ -1,5 +1,5 @@
-import { useSelector } from 'react-redux';
-import { selectIsError, selectIsLoading } from '../features/auth/selectors';
+import { useSelector } from "react-redux";
+import { selectIsError, selectIsLoading } from "../features/auth/selectors";
 
 export const useLoadingAndError = () => {
   const isError = useSelector(selectIsError);

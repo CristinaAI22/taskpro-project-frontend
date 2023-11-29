@@ -1,5 +1,5 @@
-import { createSlice } from '@reduxjs/toolkit';
-import { register, refreshUser, logOut, login } from './operations';
+import { createSlice } from "@reduxjs/toolkit";
+import { register, refreshUser, logOut, login } from "./operations";
 
 const initialState = {
   user: { name: null, email: null },
@@ -12,9 +12,13 @@ const initialState = {
 };
 
 const authSlice = createSlice({
-  name: 'auth',
+  name: "auth",
   initialState,
-  reducers: {},
+  reducers: {
+    resetError: (state) => {
+      state.isError = false;
+    },
+  },
   extraReducers: (builder) => {
     builder
       .addCase(register.pending, (state) => {
@@ -28,7 +32,7 @@ const authSlice = createSlice({
       })
       .addCase(register.rejected, (state, action) => {
         const errorMessage = action.payload;
-        if (errorMessage === 'Email in use') {
+        if (errorMessage === "Email in use") {
           state.errorMessage = errorMessage;
         } else {
           state.isError = true;
@@ -80,4 +84,4 @@ const authSlice = createSlice({
 });
 
 export const authReducer = authSlice.reducer;
-// export const {} = authSlice.actions;
+export const { resetError, setIsNotLoggedIn } = authSlice.actions;
