@@ -21,3 +21,5 @@ export const selectNeededCalories = (state) =>
   state.auth.calories.neededCalories;
 
 export const selectNonRecCategories = (state) => state.auth.nonRecCategories;
+
+export const selectTheme = (state) => state.auth.theme;

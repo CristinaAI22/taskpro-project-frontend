@@ -1,5 +1,12 @@
 import { createSlice } from "@reduxjs/toolkit";
-import { register, refreshUser, logOut, login } from "./operations";
+
+import {
+  register,
+  refreshUser,
+  logOut,
+  login,
+  editUserProfile,
+} from "./operations";
 
 const initialState = {
   user: { name: null, email: null },
@@ -9,12 +16,22 @@ const initialState = {
   isLoading: false,
   isError: false,
   errorMessage: null,
+  isEditProfileModalOpen: false,
 };
 
 const authSlice = createSlice({
   name: "auth",
   initialState,
   reducers: {
+    changeTheme: (state, action) => {
+      state.theme = action.payload;
+    },
+    openEditProfileModal: (state) => {
+      state.isEditProfileModalOpen = true;
+    },
+
+    closeEditProfileModal: (state) => {
+      state.isEditProfileModalOpen = false;
     resetError: (state) => {
       state.isError = false;
     },
@@ -79,9 +96,26 @@ const authSlice = createSlice({
         state.isError = true;
         state.errorMessage = action.payload;
         state.isLoading = false;
+      })
+      .addCase(editUserProfile.pending, (state) => {
+        state.isLoading = true;
+      })
+      .addCase(editUserProfile.fulfilled, (state, action) => {
+        const { user } = action.payload;
+        state.user.name = user.name;
+        state.user.email = user.email;
+        state.user.image = user.image;
+        state.isLoading = false;
+      })
+      .addCase(editUserProfile.rejected, (state, action) => {
+        state.isError = true;
+        state.errorMessage = action.payload;
+        state.isLoading = false;
       });
   },
 });
 
 export const authReducer = authSlice.reducer;
-export const { resetError, setIsNotLoggedIn } = authSlice.actions;
+
+export const { changeTheme, openEditProfileModal, closeEditProfileModal, resetError, setIsNotLoggedIn} =
+  authSlice.actions;
