@@ -1,4 +1,4 @@
-import { createSlice } from "@reduxjs/toolkit";
+import { createSlice } from '@reduxjs/toolkit';
 
 import {
   register,
@@ -6,7 +6,7 @@ import {
   logOut,
   login,
   editUserProfile,
-} from "./operations";
+} from './operations';
 
 const initialState = {
   user: { name: null, email: null },
@@ -20,7 +20,7 @@ const initialState = {
 };
 
 const authSlice = createSlice({
-  name: "auth",
+  name: 'auth',
   initialState,
   reducers: {
     changeTheme: (state, action) => {
@@ -32,6 +32,7 @@ const authSlice = createSlice({
 
     closeEditProfileModal: (state) => {
       state.isEditProfileModalOpen = false;
+    },
     resetError: (state) => {
       state.isError = false;
     },
@@ -49,7 +50,7 @@ const authSlice = createSlice({
       })
       .addCase(register.rejected, (state, action) => {
         const errorMessage = action.payload;
-        if (errorMessage === "Email in use") {
+        if (errorMessage === 'Email in use') {
           state.errorMessage = errorMessage;
         } else {
           state.isError = true;
@@ -117,5 +118,10 @@ const authSlice = createSlice({
 
 export const authReducer = authSlice.reducer;
 
-export const { changeTheme, openEditProfileModal, closeEditProfileModal, resetError, setIsNotLoggedIn} =
-  authSlice.actions;
+export const {
+  changeTheme,
+  openEditProfileModal,
+  closeEditProfileModal,
+  resetError,
+  setIsNotLoggedIn,
+} = authSlice.actions;
