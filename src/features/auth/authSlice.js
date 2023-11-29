@@ -1,4 +1,5 @@
 import { createSlice } from "@reduxjs/toolkit";
+
 import {
   register,
   refreshUser,
@@ -31,6 +32,8 @@ const authSlice = createSlice({
 
     closeEditProfileModal: (state) => {
       state.isEditProfileModalOpen = false;
+    resetError: (state) => {
+      state.isError = false;
     },
   },
   extraReducers: (builder) => {
@@ -113,6 +116,6 @@ const authSlice = createSlice({
 });
 
 export const authReducer = authSlice.reducer;
-export const { changeTheme, openEditProfileModal, closeEditProfileModal } =
+
+export const { changeTheme, openEditProfileModal, closeEditProfileModal, resetError, setIsNotLoggedIn} =
   authSlice.actions;
-// export const {} = authSlice.actions;

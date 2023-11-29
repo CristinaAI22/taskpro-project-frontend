@@ -1,0 +1,33 @@
+.header-icon-cont {
+  display: flex;
+  flex-wrap: nowrap;
+}
+h1 {
+  font-family: Poppins;
+  font-weight: 600px;
+  font-size: 40px;
+  line-height: 60px;
+}
+.first-page-cont {
+  width: 473px;
+  height: 438px;
+  align-self: center;
+  margin-top: 293px;
+}
+
+.home-link {
+  width: 344px;
+  height: 49px;
+  border: 1px solid black;
+  border-radius: 10px;
+  background-color: black;
+  color: white;
+  text-decoration: none;
+  text-align: center;
+  margin-top: 20px;
+  padding: 10px;
+}
+.home-link-cont {
+  display: flex;
+  flex-direction: column;
+}
