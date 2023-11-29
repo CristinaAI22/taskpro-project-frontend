@@ -31,6 +31,7 @@ const HomePage = () => {
           Log In
         </NavLink>
       </div>
+    </div>
   );
 };
 export default HomePage;
