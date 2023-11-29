@@ -16,15 +16,19 @@ const StyledDialog = styled(Dialog)`
 `;
 
 const StyledProfilePictureContainer = styled.div`
+  width: 40px;
+  height: 40px;
+  border-radius: 10%;
+  overflow: hidden;
+  background-color: #ccc;
   display: flex;
   justify-content: center;
   align-items: center;
-  margin-bottom: 1rem;
 `;
 
 const StyledProfileIcon = styled.i`
   font-size: 2rem;
-  margin-right: 1rem;
+  color: #fff; /* Set the color of the icon */
 `;
 
 const StyledInputContainer = styled.div`
@@ -104,17 +108,17 @@ const EditProfileModal = () => {
           {/* Placeholder for profile picture */}
           <StyledProfilePictureContainer>
             <StyledProfileIcon className="pi pi-user" />
-            <FileUpload
-              name="profilePicture"
-              accept="image/*"
-              chooseLabel="Choose"
-              uploadLabel="Upload"
-              cancelLabel="Cancel"
-              customUpload
-              onSelect={(e) => handleFileChange(e, e.form)}
-            />
-            <ErrorMessage name="profilePicture" component="div" />
           </StyledProfilePictureContainer>
+          <FileUpload
+            name="profilePicture"
+            accept="image/*"
+            chooseLabel="Choose"
+            uploadLabel="Upload"
+            cancelLabel="Cancel"
+            customUpload
+            onSelect={(e) => handleFileChange(e, e.form)}
+          />
+          <ErrorMessage name="profilePicture" component="div" />
 
           {/* Inputs for name, email, password */}
           <StyledInputContainer>

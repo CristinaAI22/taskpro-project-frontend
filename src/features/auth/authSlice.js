@@ -32,6 +32,7 @@ const authSlice = createSlice({
 
     closeEditProfileModal: (state) => {
       state.isEditProfileModalOpen = false;
+    },
     resetError: (state) => {
       state.isError = false;
     },
@@ -117,5 +118,10 @@ const authSlice = createSlice({
 
 export const authReducer = authSlice.reducer;
 
-export const { changeTheme, openEditProfileModal, closeEditProfileModal, resetError, setIsNotLoggedIn} =
-  authSlice.actions;
+export const {
+  changeTheme,
+  openEditProfileModal,
+  closeEditProfileModal,
+  resetError,
+  setIsNotLoggedIn,
+} = authSlice.actions;
