@@ -1,0 +1,92 @@
+.filter-btn {
+  background-color: transparent;
+  border: none;
+  display: flex;
+  gap: 5px;
+  align-items: center;
+  justify-content: center;
+}
+
+.filter-btn:hover {
+  cursor: pointer;
+}
+
+.modals-container {
+  width: 100vw;
+  height: 100vh;
+  background-color: transparent;
+  z-index: 99;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: absolute;
+  top: 0;
+  left: 0;
+}
+
+.modal-inner-container {
+  min-width: 320px;
+  max-width: 100%;
+  border: 1px solid transparent;
+  border-radius: 20px;
+}
+
+.position-btn-right {
+  position: absolute;
+  right: -10px;
+  top: -10px;
+}
+
+.label-color-filter {
+  display: flex;
+  gap: 5px;
+  align-items: center;
+}
+
+.color-input-div {
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  position: relative;
+}
+
+.without-priority-input {
+  background-color: #FFFFFF4D;
+}
+
+.low-input {
+  background-color: #8FA1D0;
+}
+
+.medium-input {
+  background-color: #E09CB5;
+}
+
+.high-input {
+  background-color: #BEDBB0;
+}
+
+.filter-input {
+  display: none;
+}
+
+.color-div.selected .color-input-div::before {
+  content: '';
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 15px;
+  height: 15px;
+  border-radius: 50%;
+  transform: translate(-50%, -50%);
+  border: 2px solid black;
+  box-sizing: border-box;
+}
+
+.filter-modal-main .label-color-filter {
+  color: #FFFFFF4D;
+}
+
+.selected .label-color-filter {
+  color: white
+}
