@@ -1,11 +1,12 @@
 import { RegisterForm } from "../../components/register-form/RegisterForm";
 import { useLoadingAndError } from "../../hooks/useLoadingAndError";
-import ErrorMessage from "../../components/error-message/ErrorMessage";
+//import ErrorMessage from "../../components/error-message/ErrorMessage";
 import Loading from "../../components/loading/Loading";
 import { Link as RouterLink } from "react-router-dom";
+import React, { useState } from 'react';  
 
 const Register = () => {
-  const { isError, isLoading } = useLoadingAndError();
+ // const { isError, isLoading } = useLoadingAndError();
 
   return (
     <>
@@ -18,9 +19,11 @@ const Register = () => {
         </RouterLink>
       </div>
       <RegisterForm />
-      {isError && <ErrorMessage />}
-      {isLoading && <Loading />}
+      {/* {isError && <ErrorMessage />}
+      {isLoading && <Loading />} */}
     </>
   );
 };
 export default Register;
+
+ 
