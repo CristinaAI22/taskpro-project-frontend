@@ -11,29 +11,53 @@
 //   );
 // };
 // export default Header;
-import React from "react";
-import ThemeSwitcher from "./ThemeSwitcher";
-import UserInfo from "./UserInfo";
-import styled from "styled-components";
+// import React from "react";
+// import ThemeSwitcher from "./ThemeSwitcher";
+// import UserInfo from "./UserInfo";
+// import styled from "styled-components";
 
-const HeaderContainer = styled.div`
-  background-color: #333;
-  color: #fff;
-  padding: 10px;
-  display: flex;
-  justify-content: space-between;
-  margin-left: auto;
-`;
+// const HeaderContainer = styled.div`
+//   background-color: #333;
+//   color: #fff;
+//   padding: 10px;
+//   display: flex;
+//   justify-content: space-between;
+//   margin-left: auto;
+// `;
 
-const Header = () => {
+// const Header = () => {
+//   return (
+//     <HeaderContainer>
+//       <div style={{ display: "flex", alignItems: "center" }}>
+//         <ThemeSwitcher />
+//         <UserInfo />
+//       </div>
+//     </HeaderContainer>
+//   );
+// };
+
+// export default Header;
+import React from 'react';
+import { NavLink } from 'react-router-dom';
+import { useSelector } from 'react-redux';  
+import { selectIsLoggedIn } from '../../redux/auth/selectorsAuth';
+import { UserMenu } from '../UserMenu/UserMenu';
+
+const Navbar = () => {  
+  const isLoggedIn = useSelector(selectIsLoggedIn);
+
   return (
-    <HeaderContainer>
-      <div style={{ display: "flex", alignItems: "center" }}>
-        <ThemeSwitcher />
-        <UserInfo />
-      </div>
-    </HeaderContainer>
+    // <div>    
+    //         {!isLoggedIn && (
+    //           <>
+    //             <NavLink to="/login"> Login </NavLink>
+    //             <NavLink to="/register"> Sign Up </NavLink>
+    //           </>
+    //         )}  
+        <div>{isLoggedIn && <UserMenu />}</div> 
+        
+        // </div>
   );
 };
 
-export default Header;
+export default Navbar;

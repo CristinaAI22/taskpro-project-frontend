@@ -1,5 +1,7 @@
 import * as Yup from "yup";
 import { useFormik } from "formik";
+import { useDispatch } from 'react-redux'; 
+import { register } from '../../redux/auth/operationsAuth';
 
 const RegisterSchema = Yup.object().shape({
   name: Yup.string().required("Name is required!").label("name"),
@@ -13,7 +15,9 @@ const RegisterSchema = Yup.object().shape({
     .required("Password is required!"),
 });
 
+  
 export const RegisterForm = () => {
+  const dispatch = useDispatch();
   const formik = useFormik({
     initialValues: {
       name: "",
@@ -21,13 +25,19 @@ export const RegisterForm = () => {
       password: "",
     },
     validationSchema: RegisterSchema,
-    onSubmit: (values) => {
-      console.log(values);
+    onSubmit: async (values, { resetForm }) => {
+      try {
+        await dispatch(register(values));
+      console.log(  values);
+        resetForm();  
+      } catch (error) {
+        console.error('Eroare la reg', error);
+      }
     },
   });
-
   return (
     <div className="">
+      <form onSubmit={formik.handleSubmit} noValidate>
       <input
         autoComplete="off"
         id="name"
@@ -67,6 +77,7 @@ export const RegisterForm = () => {
       <button type="submit" onClick={formik.handleSubmit}>
         Register Now
       </button>
+      </form>
     </div>
   );
 };
