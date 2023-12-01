@@ -4,6 +4,8 @@ const initialState = {
   filterModal: false,
   addColumnModal: false,
   editColumnModal: false,
+  deleteColumnModal: false,
+  list: null,
 };
 
 const modalsSlice = createSlice({
@@ -24,9 +26,19 @@ const modalsSlice = createSlice({
     },
     closeEditColumnModal: (state) => {
       state.editColumnModal = false;
+      state.list = null;
     },
-    openEditColumnModal: (state) => {
+    openEditColumnModal: (state, action) => {
+      state.list = action.payload;
       state.editColumnModal = true;
+    },
+    closeDeleteColumnModal: (state) => {
+      state.deleteColumnModal = false;
+      state.list = null;
+    },
+    openDeleteColumnModal: (state, action) => {
+      state.list = action.payload;
+      state.deleteColumnModal = true;
     },
   },
 });
@@ -38,6 +50,8 @@ export const {
   openEditColumnModal,
   closeColumnModal,
   closeEditColumnModal,
+  closeDeleteColumnModal,
+  openDeleteColumnModal,
 } = modalsSlice.actions;
 
 export default modalsSlice.reducer;

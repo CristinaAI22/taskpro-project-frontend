@@ -24,3 +24,49 @@ export const addList = createAsyncThunk(
     }
   }
 );
+
+export const editList = createAsyncThunk(
+  'taskPro/edit-list',
+  async (credentials, thunkAPI) => {
+    try {
+      setAuthHeader(token);
+      const { _id, data } = credentials;
+      const response = await axios.patch('/api/taskPro/lists/' + _id, data);
+      return response.data;
+    } catch (error) {
+      console.log(error);
+      return thunkAPI.rejectWithValue(error.message);
+    }
+  }
+);
+
+export const getBoardData = createAsyncThunk(
+  'taskPro/get-boardData',
+  async (credentials, thunkAPI) => {
+    try {
+      setAuthHeader(token);
+      const response = await axios.get(
+        '/api/taskPro/boards/' + credentials._id
+      );
+      return response.data;
+    } catch (error) {
+      console.log(error);
+      return thunkAPI.rejectWithValue(error.message);
+    }
+  }
+);
+
+export const deleteList = createAsyncThunk(
+  'taskPro/delete-list',
+  async (credentials, thunkAPI) => {
+    try {
+      setAuthHeader(token);
+      const { _id } = credentials;
+      const response = await axios.delete('/api/taskPro/lists/' + _id);
+      return response.data;
+    } catch (error) {
+      console.log(error);
+      return thunkAPI.rejectWithValue(error.message);
+    }
+  }
+);

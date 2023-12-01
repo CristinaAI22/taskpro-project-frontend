@@ -1,5 +1,5 @@
 import { createSlice } from '@reduxjs/toolkit';
-import { addList } from './operations';
+import { addList, editList, getBoardData, deleteList } from './operations';
 
 const initialState = {
   bordData: {
@@ -17,7 +17,7 @@ const initialState = {
             _id: '65679150ecdc70e9ab2e5575',
             title: 'card title',
             description: 'some card description',
-            labelColor: '#FFFFFF',
+            labelColor: '#8FA1D0',
             deadline: '06/12/2023',
             owner: '65663be08e3fb6d2d8e842ca',
             __v: 0,
@@ -26,7 +26,7 @@ const initialState = {
             _id: '65679155ecdc70e9ab2e5578',
             title: 'card 2 title',
             description: 'some card description',
-            labelColor: '#FFFFFF',
+            labelColor: '#BEDBB0',
             deadline: '06/12/2023',
             owner: '65663be08e3fb6d2d8e842ca',
             __v: 0,
@@ -85,6 +85,47 @@ const boardSlice = createSlice({
       .addCase(addList.fulfilled, (state, action) => {
         const { newList } = action.payload;
         state.bordData.lists.push(newList);
+        state.isLoading = false;
+      })
+      .addCase(addList.rejected, (state) => {
+        state.isLoading = false;
+        state.isError = true;
+      })
+      .addCase(editList.pending, (state) => {
+        state.isLoading = true;
+      })
+      .addCase(editList.fulfilled, (state, action) => {
+        const { list } = action.payload;
+        const newLists = state.bordData.lists.map((boardList) => {
+          if (boardList._id === list._id) {
+            return list;
+          }
+          return boardList;
+        });
+        state.bordData.lists = newLists;
+        state.isLoading = false;
+      })
+      .addCase(editList.rejected, (state) => {
+        state.isLoading = false;
+        state.isError = true;
+      })
+      .addCase(getBoardData.pending, (state) => {
+        state.isLoading = true;
+      })
+      .addCase(getBoardData.fulfilled, (state, action) => {
+        const { bordData } = action.payload;
+        state.bordData = bordData;
+      })
+      .addCase(getBoardData.rejected, (state) => {
+        state.isLoading = false;
+        state.isError = true;
+      })
+      .addCase(deleteList.pending, (state) => {
+        state.isLoading = true;
+      })
+      .addCase(deleteList.rejected, (state) => {
+        state.isLoading = false;
+        state.isError = true;
       });
   },
 });

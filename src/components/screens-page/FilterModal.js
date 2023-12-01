@@ -3,7 +3,7 @@ import { closeFilterModal } from '../../features/modals/modalsSlice';
 import { useState } from 'react';
 import { setFilter, resetFilter } from '../../features/board-slice/boardSlice';
 
-const labelColor = [
+export const labelColor = [
   { name: 'Without priority', color: '#FFFFFF4D' },
   { name: 'Low', color: '#8FA1D0' },
   { name: 'Medium', color: '#E09CB5' },
