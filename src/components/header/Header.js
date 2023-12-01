@@ -1,16 +1,16 @@
-// import ThemeSwitcher from "./ThemeSwitcher";
-// import UserInfo from "./UserInfo";
+import ThemeSwitcher from './ThemeSwitcher';
+import UserInfo from './UserInfo';
 
-// const Header = () => {
-//   return (
-//     <div>
-//       <h1>Header</h1>
-//       <ThemeSwitcher />
-//       <UserInfo />
-//     </div>
-//   );
-// };
-// export default Header;
+const Header = () => {
+  return (
+    <div>
+      <h1>Header</h1>
+      <ThemeSwitcher />
+      <UserInfo />
+    </div>
+  );
+};
+export default Header;
 // import React from "react";
 // import ThemeSwitcher from "./ThemeSwitcher";
 // import UserInfo from "./UserInfo";
@@ -37,27 +37,27 @@
 // };
 
 // export default Header;
-import React from 'react';
-import { NavLink } from 'react-router-dom';
-import { useSelector } from 'react-redux';  
-import { selectIsLoggedIn } from '../../redux/auth/selectorsAuth';
-import { UserMenu } from '../UserMenu/UserMenu';
+// import React from 'react';
+// import { NavLink } from 'react-router-dom';
+// import { useSelector } from 'react-redux';
+// import { selectIsLoggedIn } from '../../features/auth/selectors';
+// import { UserMenu } from '../UserMenu/UserMenu';
 
-const Navbar = () => {  
-  const isLoggedIn = useSelector(selectIsLoggedIn);
+// const Navbar = () => {
+//   const isLoggedIn = useSelector(selectIsLoggedIn);
 
-  return (
-    // <div>    
-    //         {!isLoggedIn && (
-    //           <>
-    //             <NavLink to="/login"> Login </NavLink>
-    //             <NavLink to="/register"> Sign Up </NavLink>
-    //           </>
-    //         )}  
-        <div>{isLoggedIn && <UserMenu />}</div> 
-        
-        // </div>
-  );
-};
+//   return (
+//     // <div>
+//     //         {!isLoggedIn && (
+//     //           <>
+//     //             <NavLink to="/login"> Login </NavLink>
+//     //             <NavLink to="/register"> Sign Up </NavLink>
+//     //           </>
+//     //         )}
+//     <div>{isLoggedIn && <UserMenu />}</div>
 
-export default Navbar;
+//     // </div>
+//   );
+// };
+
+// export default Navbar;

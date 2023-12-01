@@ -1,82 +1,80 @@
-import { lazy, useEffect } from 'react';
+import { lazy } from 'react';
 import { Route, Routes } from 'react-router-dom';
 import { RestrictedRoute } from './components/RestrictedRoute';
 import { PrivateRoute } from './components/PrivateRoute';
-import { useSelector, useDispatch } from 'react-redux';
+import { refreshUser } from './features/auth/operations';
+import { useDispatch } from 'react-redux';
+import { useEffect } from 'react';
+import { useAuth } from './hooks/useAuth';
 import SharedLayout from './components/shared-layout/SharedLayout';
 import Loading from './components/loading/Loading';
-import { selectIsRefreshing } from './redux/auth/selectorsAuth';
-import { refreshUser } from './redux/auth/operationsAuth';
-import { ToastContainer } from 'react-toastify';
-import 'react-toastify/dist/ReactToastify.css';
-//  temporary just for develop
-import ScreensPage from './components/screens-page/ScreensPage';
 
-const LogIn = lazy(() => import('./pages/login-page/LogIn'));
+import HomePage from './pages/home-page/HomePage.js';
+import Header from './components/header/Header.js';
+
 const Register = lazy(() => import('./pages/register-page/Register'));
-const UsersPage = lazy(() => import('./pages/user-page/User'));
+const ScreensPage = lazy(() =>
+  import('./components/screens-page/ScreensPage.js')
+);
+
 const ErrorPage = lazy(() => import('./pages/error-page/ErrorPage'));
 
 export const App = () => {
-  const dispatch = useDispatch();
-  const isRefreshing = useSelector(selectIsRefreshing);
+  const { isRefreshing } = useAuth();
 
+  const dispatch = useDispatch();
   useEffect(() => {
     dispatch(refreshUser());
-    // document.body.setAttribute('data-bs-theme', 'dark');
-    // return () => {
-    //   document.body.removeAttribute('data-bs-theme');
-    // };
   }, [dispatch]);
 
-  return (
-    <>
-      {isRefreshing ? (
-        <Loading />
-      ) : (
-        <Routes>
-          <Route path='/' element={<SharedLayout />}>
-            <Route
-              index
-              path='/register'
-              element={
-                <RestrictedRoute redirectTo='/users' component={<Register />} />
-              }
+  return isRefreshing ? (
+    <div className='loading-container'>
+      <Loading />
+    </div>
+  ) : (
+    <Routes>
+      <Route path='/' element={<SharedLayout />}>
+        <Route index element={<Register />} />
+        <Route path='screens-page' element={<ScreensPage />} />
+        <Route path='home-page' element={<HomePage />} />
+        <Route path='header' element={<Header />} />
+
+        {/* <Route
+          path='/users/register'
+          element={
+            <RestrictedRoute
+              redirectTo='/users/home-page'
+              component={<Register />}
             />
-            <Route
-              path='/login'
-              element={
-                <RestrictedRoute redirectTo='/users' component={<LogIn />} />
-              }
+          }
+        />
+
+        <Route
+          path='/users/login'
+          element={
+            <RestrictedRoute
+              redirectTo='/users/home-page'
+              component={<Login />}
             />
-            <Route
-              path='/users'
-              element={
-                <PrivateRoute
-                  redirectTo='/register'
-                  component={<UsersPage />}
-                />
-              }
+          }
+        />
+        <Route
+          path='/users/home-page'
+          element={
+            <PrivateRoute
+              redirectTo='/users/register'
+              component={<UsersHomePage />}
             />
-          </Route>
-          {/* temporary just for develop  */}
-          <Route path='/users/screens-page' element={<ScreensPage />} />
-          <Route path='*' element={<ErrorPage />} />
-        </Routes>
-      )}
-      <ToastContainer
-        font-size='15px'
-        position='top-right'
-        autoClose={5000}
-        hideProgressBar={false}
-        newestOnTop={false}
-        closeOnClick
-        rtl={false}
-        pauseOnFocusLoss
-        draggable
-        pauseOnHover
-        theme='light'
-      />
-    </>
+          }
+        />
+        <Route
+          path='/users/diary'
+          element={
+            <PrivateRoute redirectTo='/users/register' component={<Diary />} />
+          }
+        /> */}
+      </Route>
+      <Route path='*' element={<ErrorPage />} />
+    </Routes>
   );
 };
