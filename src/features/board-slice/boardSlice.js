@@ -1,4 +1,5 @@
 import { createSlice } from '@reduxjs/toolkit';
+import { addList } from './operations';
 
 const initialState = {
   bordData: {
@@ -62,15 +63,32 @@ const initialState = {
   },
   isLoading: false,
   isError: false,
+  filter: null,
 };
 
 const boardSlice = createSlice({
   name: 'board',
   initialState,
-  reducers: {},
-  extraReducers: (builder) => {},
+  reducers: {
+    setFilter: (state, action) => {
+      state.filter = action.payload;
+    },
+    resetFilter: (state) => {
+      state.filter = null;
+    },
+  },
+  extraReducers: (builder) => {
+    builder
+      .addCase(addList.pending, (state) => {
+        state.isLoading = true;
+      })
+      .addCase(addList.fulfilled, (state, action) => {
+        const { newList } = action.payload;
+        state.bordData.lists.push(newList);
+      });
+  },
 });
 
-export const { openModal, closeModal } = boardSlice.actions;
+export const { setFilter, resetFilter } = boardSlice.actions;
 
 export default boardSlice.reducer;

@@ -1,6 +1,8 @@
 import { useDispatch } from 'react-redux';
 import { closeFilterModal } from '../../features/modals/modalsSlice';
 import { useState } from 'react';
+import { setFilter, resetFilter } from '../../features/board-slice/boardSlice';
+
 const labelColor = [
   { name: 'Without priority', color: '#FFFFFF4D' },
   { name: 'Low', color: '#8FA1D0' },
@@ -13,6 +15,7 @@ const FilterModal = () => {
   const [selectedColor, setSelectedColor] = useState(null);
   const handleColorChange = (color) => {
     setSelectedColor(color);
+    dispatch(setFilter(color));
   };
   return (
     <div className='modals-container'>
@@ -20,7 +23,7 @@ const FilterModal = () => {
         <div className='filter-modal-header w-100 position-relative border-bottom'>
           <h4 className='text-light'>Filters</h4>
           <button
-            className='filter-button text-light filter-btn position-btn-right'
+            className='text-light filter-btn position-btn-right'
             onClick={() => dispatch(closeFilterModal())}
           >
             <i className='bi bi-x-lg fw-bold'></i>
@@ -56,7 +59,12 @@ const FilterModal = () => {
               );
             })}
           </form>
-          <button className='btn btn-link text-light m-0 p-0'>Show all</button>
+          <button
+            className='btn btn-link text-light m-0 p-0'
+            onClick={() => dispatch(resetFilter())}
+          >
+            Show all
+          </button>
         </div>
       </div>
     </div>

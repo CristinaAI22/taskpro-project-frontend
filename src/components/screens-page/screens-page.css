@@ -90,3 +90,30 @@
 .selected .label-color-filter {
   color: white
 }
+
+.btn-icon {
+  width: 28px;
+  height: 28px;
+  border-radius: 5px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.modals-buttons {
+  background-color: var(--modals-btns-bg);
+  border: none;
+}
+
+.add-column-input {
+  border: none;
+}
+
+.main-dashboard {
+  overflow: scroll;
+  gap: 30px;
+}
+
+.main-dashboard-lists {
+  height: 100%;
+}
