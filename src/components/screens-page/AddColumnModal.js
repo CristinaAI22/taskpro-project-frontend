@@ -37,8 +37,11 @@ const AddColumnModal = () => {
             <i className='bi bi-x-lg fw-bold'></i>
           </button>
         </div>
-        <form className='row mt-4 p-2' onSubmit={handleSubmit}>
-          <label className='mb-3 p-0'>
+        <form
+          className='d-flex flex-column mt-4 p-2 w-100'
+          onSubmit={handleSubmit}
+        >
+          <label className='mb-3 p-0 w-100'>
             <input
               type='text'
               placeholder='Title'
@@ -46,7 +49,7 @@ const AddColumnModal = () => {
               ref={inputRef}
             />
           </label>
-          <button type='submit' className='py-2 modals-buttons rounded-2'>
+          <button type='submit' className='py-2 modals-buttons rounded-2 w-100'>
             <i className='bi bi-plus-square-fill me-1'></i> Add
           </button>
         </form>

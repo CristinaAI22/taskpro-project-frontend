@@ -8,3 +8,13 @@ export const selectListToEdit = (state) => state.modals.list;
 
 export const selectDeleteColumnModal = (state) =>
   state.modals.deleteColumnModal;
+
+export const selectListId = (state) => state.modals.listId;
+
+export const selectAddCardModal = (state) => state.modals.addCardModal;
+
+export const selectEditCardModal = (state) => state.modals.editCardModal;
+
+export const selectMoveCardModal = (state) => state.modals.moveCardModal;
+
+export const selectDeleteCardModal = (state) => state.modals.deleteCardModal;
