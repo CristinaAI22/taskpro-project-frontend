@@ -1,22 +1,25 @@
-import React from "react";
-import { Navbar } from "react-bootstrap";
-import ThemeSwitcher from "./ThemeSwitcher";
-import UserInfo from "./UserInfo";
+import React from 'react';
+import { Navbar } from 'react-bootstrap';
+import ThemeSwitcher from './ThemeSwitcher';
+import UserInfo from './UserInfo';
+import { useSelector } from 'react-redux';
 
 const Header = () => {
+  const state = useSelector((state) => state.auth);
+  // console.log(state.user);
   return (
     <>
-      <div className=" border border-success">
+      <div className=' border border-success'>
         <ul
-          className=" d-flex flex-row justify-content-end navbar-nav border border-success "
+          className=' d-flex flex-row justify-content-end navbar-nav border border-success '
           style={{
-            height: "68px",
+            height: '68px',
           }}
         >
-          <li className=" navbar-item align-self-center">
+          <li className=' navbar-item align-self-center'>
             <ThemeSwitcher />
           </li>
-          <li className=" navbar-item align-self-center p-2">
+          <li className=' navbar-item align-self-center p-2'>
             <UserInfo />
           </li>
         </ul>

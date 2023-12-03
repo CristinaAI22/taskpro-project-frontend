@@ -1,7 +1,7 @@
-import axios from "axios";
-import { createAsyncThunk } from "@reduxjs/toolkit";
+import axios from 'axios';
+import { createAsyncThunk } from '@reduxjs/toolkit';
 
-axios.defaults.baseURL = "http://localhost:5000";
+axios.defaults.baseURL = 'http://localhost:5000';
 
 // Utility to add JWT
 
@@ -11,14 +11,14 @@ const setAuthHeader = (token) => {
 
 // Utility to remove JWT
 const clearAuthHeader = () => {
-  axios.defaults.headers.common.Authorization = "";
+  axios.defaults.headers.common.Authorization = '';
 };
 
 export const register = createAsyncThunk(
-  "auth/register",
+  'auth/register',
   async (credentials, thunkAPI) => {
     try {
-      const res = await axios.post("/api/taskPro/users/register", credentials);
+      const res = await axios.post('/api/taskPro/users/register', credentials);
 
       setAuthHeader(res.data.token);
       return res.data;
@@ -35,18 +35,18 @@ export const register = createAsyncThunk(
  */
 
 export const refreshUser = createAsyncThunk(
-  "auth/refreshUser",
+  'auth/refreshUser',
   async (_, thunkAPI) => {
     const {
       auth: { token },
     } = thunkAPI.getState();
     if (!token) {
-      return thunkAPI.rejectWithValue("Unable to fetch user.");
+      return thunkAPI.rejectWithValue('Unable to fetch user.');
     }
 
     try {
       setAuthHeader(token);
-      const response = await axios.get("/api/taskPro/users/current");
+      const response = await axios.get('/api/taskPro/users/current');
       return response.data;
     } catch (err) {
       return thunkAPI.rejectWithValue(err.message);
@@ -55,17 +55,17 @@ export const refreshUser = createAsyncThunk(
 );
 
 export const login = createAsyncThunk(
-  "auth/login",
+  'auth/login',
   async (credentials, thunkAPI) => {
     try {
       const response = await axios.post(
-        "/api/taskPro/users/login",
+        '/api/taskPro/users/login',
         credentials
       );
       setAuthHeader(response.data.token);
       return response.data;
     } catch (err) {
-      if (err.message === "Request failed with status code 400") {
+      if (err.message === 'Request failed with status code 400') {
         return thunkAPI.rejectWithValue(err.message);
       }
       return thunkAPI.rejectWithValue(err.message);
@@ -73,23 +73,23 @@ export const login = createAsyncThunk(
   }
 );
 
-export const logOut = createAsyncThunk("user/logOut", async (_, thunkAPI) => {
+export const logOut = createAsyncThunk('user/logOut', async (_, thunkAPI) => {
   try {
-    await axios.post("/api/taskPro/users/logout");
+    await axios.post('/api/taskPro/users/logout');
     clearAuthHeader();
   } catch (error) {
     return thunkAPI.rejectWithValue(error.message);
   }
 });
 export const updateProfile = createAsyncThunk(
-  "user/updateProfile",
+  'user/updateProfile',
   async (formData, thunkAPI) => {
     const { auth } = thunkAPI.getState();
     const { token } = auth;
 
     try {
       setAuthHeader(token);
-      const response = await axios.patch("/api/taskPro/users/", formData);
+      const response = await axios.patch('/api/taskPro/users/', formData);
       return response.data;
     } catch (error) {
       return thunkAPI.rejectWithValue(error.response.data.msg);
@@ -97,14 +97,14 @@ export const updateProfile = createAsyncThunk(
   }
 );
 export const updateUserTheme = createAsyncThunk(
-  "auth/theme",
+  'auth/theme',
   async (data, thunkAPI) => {
     const { auth } = thunkAPI.getState();
     const { token } = auth;
 
     try {
       setAuthHeader(token);
-      const response = await axios.patch("/api/taskPro/users/theme", data);
+      const response = await axios.patch('/api/taskPro/users/theme', data);
       return response.data;
     } catch (error) {
       return thunkAPI.rejectWithValue(error.message);

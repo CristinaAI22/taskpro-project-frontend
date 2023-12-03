@@ -1,12 +1,12 @@
-import React, { useState } from "react";
-import { useSelector, useDispatch } from "react-redux";
-import { Modal,Form } from "react-bootstrap";
-import { closeEditProfileModal } from "../../features/auth/authSlice";
-import { updateProfile, refreshUser } from "../../features/auth/operations";
+import React, { useState } from 'react';
+import { useSelector, useDispatch } from 'react-redux';
+import { Modal, Form } from 'react-bootstrap';
+import { closeEditProfileModal } from '../../features/auth/authSlice';
+import { updateProfile, refreshUser } from '../../features/auth/operations';
 import {
   selectIsEditProfileModalOpen,
   selectUser,
-} from "../../features/auth/selectors";
+} from '../../features/auth/selectors';
 
 const EditProfileModal = () => {
   const dispatch = useDispatch();
@@ -14,10 +14,10 @@ const EditProfileModal = () => {
   const user = useSelector(selectUser);
 
   const [formData, setFormData] = useState({
-    name: user?.name || "",
-    email: user?.email || "",
-    password: user?.password || "",
-    profileImage: null,
+    name: user?.name || '',
+    email: user?.email || '',
+    password: user?.password || '',
+    avatar: user.avatarURL,
     showPassword: false,
   });
 
@@ -27,13 +27,20 @@ const EditProfileModal = () => {
 
   const handleFileChange = (e) => {
     const file = e.target.files[0];
-    setFormData({ ...formData, profileImage: file });
-    console.log("Selected file:", file);
+    setFormData({ ...formData, avatar: file });
+    // console.log('Selected file:', file);
   };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    await dispatch(updateProfile(formData));
+
+    const formDataObject = new FormData();
+    formDataObject.append('avatar', formData.avatar);
+    formDataObject.append('name', formData.name);
+    formDataObject.append('email', formData.email);
+    formDataObject.append('password', formData.password);
+
+    await dispatch(updateProfile(formDataObject));
     await dispatch(refreshUser());
     handleClose();
   };
@@ -50,10 +57,10 @@ const EditProfileModal = () => {
         <Modal.Body>
           <Form
             onSubmit={handleSubmit}
-            className="border border-success d-grid gap-3"
+            className='border border-success d-grid gap-3'
           >
-            <div className="position-relative ">
-              <div className="  border d-flex justify-content-center">
+            <div className='position-relative '>
+              <div className='  border d-flex justify-content-center'>
                 <img
                   src={
                     formData.profileImage
@@ -62,36 +69,36 @@ const EditProfileModal = () => {
                         `path/to/placeholder.jpg?timestamp=${new Date().getTime()}`
                     //de daugat placeholder
                   }
-                  alt="Avatar"
-                  className="  border border-success rounded-2 "
-                  style={{ width: "150px", height: "150px" }}
+                  alt='Avatar'
+                  className='  border border-success rounded-2 '
+                  style={{ width: '150px', height: '150px' }}
                 />
               </div>
               <label
-                htmlFor="avatarInput"
-                className="position-absolute rounded-2"
+                htmlFor='avatarInput'
+                className='position-absolute rounded-2'
                 style={{
-                  bottom: "-10%",
-                  left: "50%",
-                  transform: "translateX(-50%)",
-                  color: "red",
+                  bottom: '-10%',
+                  left: '50%',
+                  transform: 'translateX(-50%)',
+                  color: 'red',
                 }}
               >
                 <input
-                  type="file"
-                  id="avatarInput"
-                  accept="image/*"
-                  className="d-none"
+                  type='file'
+                  id='avatarInput'
+                  accept='image/*'
+                  className='d-none'
                   onChange={handleFileChange}
                 />
-                <span className="btn btn-primary btn-sm">
-                  <i className="bi bi-plus"></i>
+                <span className='btn btn-primary btn-sm'>
+                  <i className='bi bi-plus'></i>
                 </span>
               </label>
             </div>
             <Form.Control
-              type="text"
-              placeholder="Enter your name"
+              type='text'
+              placeholder='Enter your name'
               value={formData.name}
               onChange={(e) =>
                 setFormData({ ...formData, name: e.target.value })
@@ -99,37 +106,37 @@ const EditProfileModal = () => {
             />
 
             <Form.Control
-              type="email"
-              placeholder="Enter your email"
+              type='email'
+              placeholder='Enter your email'
               value={formData.email}
               onChange={(e) =>
                 setFormData({ ...formData, email: e.target.value })
               }
             />
-            <div className="input-group">
+            <div className='input-group'>
               <Form.Control
-                type={formData.showPassword ? "text" : "password"}
-                placeholder="Enter your password"
+                type={formData.showPassword ? 'text' : 'password'}
+                placeholder='Enter your password'
                 value={formData.password}
                 onChange={(e) =>
                   setFormData({ ...formData, password: e.target.value })
                 }
               />
               <button
-                type="button"
-                className="btn btn-outline-secondary"
+                type='button'
+                className='btn btn-outline-secondary'
                 onClick={togglePasswordVisibility}
               >
                 <i
                   className={`bi ${
-                    formData.showPassword ? "bi-eye-slash" : "bi-eye"
+                    formData.showPassword ? 'bi-eye-slash' : 'bi-eye'
                   }`}
                 ></i>
               </button>
             </div>
             <button
-              type="submit"
-              className="py-2 modals-buttons rounded-2 w-100 mt-4 color-green "
+              type='submit'
+              className='py-2 modals-buttons rounded-2 w-100 mt-4 color-green '
             >
               Send
             </button>

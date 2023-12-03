@@ -14,9 +14,13 @@ const ScreensPage = () => {
   }, [dispatch]);
 
   return (
-    <div className='screens-page bg-secondary text-center'>
-      <HeaderDashboard />
-      <MainDashboard />
+    <div className='screens-page bg-secondary text-center col'>
+      <div className='row'>
+        <HeaderDashboard />
+      </div>
+      <div className='row'>
+        <MainDashboard />
+      </div>
     </div>
   );
 };
