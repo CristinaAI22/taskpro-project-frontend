@@ -17,7 +17,7 @@ const EditProfileModal = () => {
     name: user?.name || '',
     email: user?.email || '',
     password: user?.password || '',
-    avatar: user.avatarURL,
+    avatar: null,
     showPassword: false,
   });
 
@@ -63,8 +63,8 @@ const EditProfileModal = () => {
               <div className='  border d-flex justify-content-center'>
                 <img
                   src={
-                    formData.profileImage
-                      ? URL.createObjectURL(formData.profileImage)
+                    formData.avatar
+                      ? URL.createObjectURL(formData.avatar)
                       : user.avatarURL ||
                         `path/to/placeholder.jpg?timestamp=${new Date().getTime()}`
                     //de daugat placeholder
