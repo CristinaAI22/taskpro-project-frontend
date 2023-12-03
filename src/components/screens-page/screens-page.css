@@ -25,10 +25,11 @@
 }
 
 .modal-inner-container {
-  min-width: 320px;
-  max-width: 100%;
+  width: 370px;
+  max-width: 90%;
   border: 1px solid transparent;
   border-radius: 20px;
+  margin: 0;
 }
 
 .position-btn-right {
@@ -122,4 +123,36 @@
   width: 12px;
   height: 12px;
   border-radius: 50%;
+}
+
+.card-list-container p {
+  font-size: 12px;
+}
+
+.card-list-container .font-size-10 {
+  font-size: 10px;
+}
+
+button:hover {
+  cursor: pointer;
+}
+
+.color-green {
+  color: var(--modals-btns-bg);
+}
+
+.add-card-colors {
+  list-style: none;
+  display: flex;
+  gap: 5px;
+  padding: 0;
+}
+
+.react-calendar-container {
+  width: 350px;
+  max-width: 90%;
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
 }

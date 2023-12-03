@@ -70,3 +70,17 @@ export const deleteList = createAsyncThunk(
     }
   }
 );
+
+export const addCard = createAsyncThunk(
+  'taskPro/add-card',
+  async (credentials, thunkAPI) => {
+    try {
+      setAuthHeader(token);
+      const response = await axios.post('/api/taskPro/cards', credentials);
+      return response.data;
+    } catch (error) {
+      console.log(error);
+      return thunkAPI.rejectWithValue(error.message);
+    }
+  }
+);

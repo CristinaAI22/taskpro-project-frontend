@@ -3,14 +3,17 @@ import { selectBoardLists } from '../../features/board-slice/selectors';
 import {
   openEditColumnModal,
   openDeleteColumnModal,
+  openAddCardModal,
 } from '../../features/modals/modalsSlice';
 import {
   selectEditColumnModal,
   selectDeleteColumnModal,
+  selectAddCardModal,
 } from '../../features/modals/selectors';
 import EditListModal from './EditListModal';
 import DeleteColumnModal from './DeleteColumnModal';
 import { labelColor } from './FilterModal';
+import AddCardModal from './AddCardModal';
 
 const Lists = () => {
   const lists = useSelector(selectBoardLists);
@@ -37,6 +40,7 @@ function ListTitle({ list }) {
   const { title } = list;
   const editColumnModal = useSelector(selectEditColumnModal);
   const deleteColumnModal = useSelector(selectDeleteColumnModal);
+  const addCardModal = useSelector(selectAddCardModal);
   const cards = list.cards;
 
   return (
@@ -62,9 +66,16 @@ function ListTitle({ list }) {
         {cards.map((card) => (
           <Card key={card._id} card={card} />
         ))}
+        <button
+          className='py-3 modals-buttons rounded-2 w-100'
+          onClick={() => dispatch(openAddCardModal(list._id))}
+        >
+          <i className='bi bi-plus-square-fill me-1'></i> Add
+        </button>
       </div>
       {editColumnModal && <EditListModal />}
       {deleteColumnModal && <DeleteColumnModal />}
+      {addCardModal && <AddCardModal />}
     </div>
   );
 }
@@ -72,6 +83,8 @@ function ListTitle({ list }) {
 function Card({ card }) {
   const { title, description, _id, labelColor: color, deadline, owner } = card;
   const colorObject = labelColor.find((item) => item.color === color);
+  const thisDay = new Date().toLocaleDateString();
+  const today = thisDay === deadline;
 
   return (
     <div
@@ -79,26 +92,52 @@ function Card({ card }) {
       className='card-list-container p-3 bg-dark rounded-2 text-light mb-2'
     >
       <div className='card-text-container text-start border-bottom border-light-subtle'>
-        <h5>{title}</h5>
+        <h6>{title}</h6>
         <p className='text-secondary '>{description}</p>
       </div>
-      <div className='card-options-container'>
-        <div className='options-container-display'>
-          <div className='priority-container d-flex flex-column'>
-            <p className='fs-6 mb-1'>Priority</p>
+
+      <div className='card-options-container mt-3 d-flex justify-content-between align-items-center'>
+        <ul className='options-container-display d-flex p-0'>
+          <li className='priority-container d-flex flex-column'>
+            <p className='font-size-10 mb-1 text-secondary text-start'>
+              Priority
+            </p>
             <div className='d-flex justify-content-center align-items-center'>
               <div
                 className='label-color-display'
                 style={{ backgroundColor: `${color}` }}
               ></div>
-              <p className='m-0 fs-6'>
+              <p className='m-0 ms-1 font-size-10'>
                 {colorObject ? colorObject.name.toUpperCase() : 'Not set'}
               </p>
             </div>
-          </div>
-          <div className='deadline-container'></div>
+          </li>
+          <li className='priority-container d-flex flex-column ms-3'>
+            <p className='font-size-10 mb-1 text-secondary text-start'>
+              Deadline
+            </p>
+
+            <p className='m-0 font-size-10'>{deadline}</p>
+          </li>
+        </ul>
+
+        <div className='card-options-btns-container'>
+          {today && (
+            <button className='bg-transparent border-0 color-green'>
+              <i className='bi bi-bell'></i>
+            </button>
+          )}
+          <button className='bg-transparent border-0 text-secondary'>
+            <i className='bi bi-arrow-right-circle'></i>
+          </button>
+          <button className='bg-transparent border-0 text-secondary'>
+            <i className='bi bi-pencil'></i>
+          </button>
+          <button className='bg-transparent border-0 text-secondary'>
+            {' '}
+            <i className='bi bi-trash3'></i>
+          </button>
         </div>
-        <div className='card-options-btns-container'></div>
       </div>
     </div>
   );

@@ -1,5 +1,11 @@
 import { createSlice } from '@reduxjs/toolkit';
-import { addList, editList, getBoardData, deleteList } from './operations';
+import {
+  addList,
+  editList,
+  getBoardData,
+  deleteList,
+  addCard,
+} from './operations';
 
 const initialState = {
   bordData: {
@@ -18,7 +24,7 @@ const initialState = {
             title: 'card title',
             description: 'some card description',
             labelColor: '#8FA1D0',
-            deadline: '06/12/2023',
+            deadline: '02/12/2023',
             owner: '65663be08e3fb6d2d8e842ca',
             __v: 0,
           },
@@ -124,6 +130,22 @@ const boardSlice = createSlice({
         state.isLoading = true;
       })
       .addCase(deleteList.rejected, (state) => {
+        state.isLoading = false;
+        state.isError = true;
+      })
+      .addCase(addCard.pending, (state) => {
+        state.isLoading = true;
+      })
+      .addCase(addCard.fulfilled, (state, action) => {
+        const { newCard } = action.payload;
+        state.bordData.lists.forEach((list) => {
+          if (list._id === newCard.owner) {
+            list.cards.push(newCard);
+          }
+        });
+        state.isLoading = false;
+      })
+      .addCase(addCard.rejected, (state) => {
         state.isLoading = false;
         state.isError = true;
       });
