@@ -14,12 +14,7 @@ export const selectIsLoading = (state) => state.auth.isLoading;
 
 export const selectUserPage = (state) => state.auth.userPage;
 
-export const selectNeededCaloriesForDesiredWeight = (state) =>
-  state.auth.calories.neededCaloriesForDesiredWeight;
-
-export const selectNeededCalories = (state) =>
-  state.auth.calories.neededCalories;
-
-export const selectNonRecCategories = (state) => state.auth.nonRecCategories;
-
 export const selectTheme = (state) => state.auth.theme;
+
+export const selectIsEditProfileModalOpen = (state) =>
+  state.auth.isEditProfileModalOpen;
