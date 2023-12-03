@@ -84,10 +84,8 @@
   transition: all 150ms linear;
   cursor: pointer;
 }
-.welcome-links:hover {
+.welcome-links:hover .welcome-links:active {
   opacity: 0.8;
   border-radius: 8px;
-
-  background: #161616;
-  color: #ffffff;
+  color: #ffffff4d;
 }

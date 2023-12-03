@@ -93,3 +93,35 @@ export const editUserProfile = createAsyncThunk(
     }
   }
 );
+
+export const updateProfile = createAsyncThunk(
+  "user/updateProfile",
+  async (formData, thunkAPI) => {
+    const { auth } = thunkAPI.getState();
+    const { token } = auth;
+
+    try {
+      setAuthHeader(token);
+      const response = await axios.patch("/api/taskPro/users/", formData);
+      return response.data;
+    } catch (error) {
+      return thunkAPI.rejectWithValue(error.response.data.msg);
+    }
+  }
+);
+
+export const updateUserTheme = createAsyncThunk(
+  "auth/theme",
+  async (data, thunkAPI) => {
+    const { auth } = thunkAPI.getState();
+    const { token } = auth;
+
+    try {
+      setAuthHeader(token);
+      const response = await axios.patch("/api/taskPro/users/theme", data);
+      return response.data;
+    } catch (error) {
+      return thunkAPI.rejectWithValue(error.message);
+    }
+  }
+);

@@ -12,9 +12,13 @@ const Auth = () => {
     <div className="welcome-wrapper">
       <ToastContainer />
       <div className="form-container">
-        <div>
-          <NavLink to="/auth/register">Registration</NavLink>
-          <NavLink to="/auth/login">Log In</NavLink>
+        <div className="link-wrapper">
+          <NavLink className="auth-links" to="/auth/register">
+            Registration
+          </NavLink>
+          <NavLink className="auth-links" to="/auth/login">
+            Log In
+          </NavLink>
         </div>
 
         {id === "login" && <LoginForm />}

@@ -1,17 +1,17 @@
-import { MagnifyingGlass } from 'react-loader-spinner';
+import { Comment } from "react-loader-spinner";
 
 const Loading = () => {
   return (
-    <div className='loading-container'>
-      <MagnifyingGlass
+    <div className="loading-container">
+      <Comment
         visible={true}
-        height='100'
-        width='100'
-        ariaLabel='MagnifyingGlass-loading'
+        height="80"
+        width="80"
+        ariaLabel="comment-loading"
         wrapperStyle={{}}
-        wrapperClass='MagnifyingGlass-wrapper'
-        glassColor='#c0efff'
-        color='#e15b64'
+        wrapperClass="comment-wrapper"
+        color="#fff"
+        backgroundColor="#F4442E"
       />
     </div>
   );

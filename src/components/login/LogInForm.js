@@ -4,19 +4,21 @@ import { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Formik, Field, Form, ErrorMessage } from "formik";
 import { login } from "../../features/auth/operations";
-import Loading from "../../components/loading/Loading";
+import Loading from "../loading/Loading";
 import { selectIsLoading } from "../../features/auth/selectors";
 import { AiOutlineEye, AiOutlineEyeInvisible } from "react-icons/ai";
 import { toast } from "react-toastify";
-//import "../register/Register.css"
 
 const LoginSchema = Yup.object().shape({
   email: Yup.string().email("Invalid email!").required("Email is required!"),
   password: Yup.string()
     .min(8, { length: "Password is too short!" })
-    .matches(/\d+/, { message: { number: "Password has no number!" } })
-    .matches(/[a-z]+/, { message: "Password has no lowercase!" })
-    .matches(/[A-Z]+/, { message: "Password has no uppercase!" })
+    .matches(/^(?=.*[A-Za-z])(?=.*\d)(?=.*[@$!%*#?&])[A-Za-z\d@$!%*#?&]+$/, {
+      message: {
+        number:
+          "The password must contain a minimum of 6 characters, at least one letter, one number, and one special character",
+      },
+    })
     .max(64, "Password must be at most 64 characters")
     .required("Password is required!"),
 });
