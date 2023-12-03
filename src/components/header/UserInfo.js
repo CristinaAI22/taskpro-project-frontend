@@ -13,15 +13,18 @@ const UserInfo = () => {
   }, [dispatch]);
 
   return (
-    <div>
+    <div className="d-flex gap-2 ">
+      <span className="d-none d-md-block ps-2 align-self-center">
+        {user.name}
+      </span>
       <img
         onClick={handleProfileClick}
         src={user.avatarURL}
         alt={user.name}
-        className="rounded-circle"
+        className="rounded-2"
         width={32}
       />
-      <span className="d-none d-md-block ps-2">{user.name}</span>
+
       <EditProfileModal />
     </div>
   );

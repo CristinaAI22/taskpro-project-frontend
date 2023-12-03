@@ -1,31 +1,55 @@
 import React from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { Dropdown } from "primereact/dropdown";
-import { changeTheme } from "../../features/auth/authSlice";
-import { selectTheme } from "../../features/auth/selectors";
+import { updateUserTheme } from "../../features/auth/operations";
+import getTheme from "./getTheme";
 
 const ThemeSwitcher = () => {
   const dispatch = useDispatch();
-  const theme = useSelector(selectTheme);
+  const currentTheme = useSelector((state) => state.auth.user.theme);
 
-  const themeOptions = [
-    { label: "Light", value: "light" },
-    { label: "Violet", value: "violet" },
-    { label: "Dark", value: "dark" },
-  ];
-
-  const handleThemeChange = (e) => {
-    const selectedTheme = e.value;
-    dispatch(changeTheme(selectedTheme));
+  const handleThemeChange = (selectedTheme) => {
+    const theme = getTheme(selectedTheme);
+    dispatch(updateUserTheme({ theme: selectedTheme }));
+    // Apply the theme to the entire application (optional)
+    applyTheme(theme);
   };
 
+  const applyTheme = (theme) => {
+    // Implement logic to apply the theme to your application
+    // You might need to update the styles or use a library like Material-UI for theming
+    console.log("Applying theme:", theme);
+  };
+
+  const themeOptions = ["light", "dark", "violet"];
+
   return (
-    <Dropdown
-      value={theme}
-      options={themeOptions}
-      onChange={handleThemeChange}
-      placeholder="Theme"
-    />
+    <div className="dropdown" data-bs-theme="dark">
+      <button
+        className="btn btn-secondary"
+        type="button"
+        id="dropdownMenuButton"
+        data-bs-toggle="dropdown"
+        aria-haspopup="true"
+        aria-expanded="false"
+      >
+        Theme <i className="bi bi-chevron-down"></i>
+      </button>
+
+      <div
+        className="dropdown-menu dropdown-menu-right flex-column"
+        aria-labelledby="dropdownMenuButton"
+      >
+        {themeOptions.map((themeOption) => (
+          <button
+            className="dropdown-item"
+            key={themeOption}
+            onClick={() => handleThemeChange(themeOption)}
+          >
+            {themeOption.charAt(0).toUpperCase() + themeOption.slice(1)}
+          </button>
+        ))}
+      </div>
+    </div>
   );
 };
 

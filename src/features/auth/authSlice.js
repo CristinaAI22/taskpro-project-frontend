@@ -6,10 +6,11 @@ import {
   logOut,
   login,
   updateProfile,
+  updateUserTheme
 } from "./operations";
 
 const initialState = {
-  user: {},
+  user: { name: null, email: null, avatar: null, theme: "light" },
   token: null,
   isLoggedIn: false,
   isRefreshing: false,
@@ -23,9 +24,7 @@ const authSlice = createSlice({
   name: "auth",
   initialState,
   reducers: {
-    changeTheme: (state, action) => {
-      state.theme = action.payload;
-    },
+  
     openEditProfileModal: (state) => {
       state.isEditProfileModalOpen = true;
     },
@@ -111,14 +110,18 @@ const authSlice = createSlice({
         state.isError = true;
         state.errorMessage = action.payload;
         state.isLoading = false;
-      });
+      })
+      .addCase(updateUserTheme.fulfilled,(state, action)=> {
+        state.user.theme = action.payload.theme;
+        state.isLoggedIn = true;
+        state.isRefreshing = false;
+  })
   },
 });
 
 export const authReducer = authSlice.reducer;
 
 export const {
-  changeTheme,
   openEditProfileModal,
   closeEditProfileModal,
   resetError,

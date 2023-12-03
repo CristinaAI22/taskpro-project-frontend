@@ -18,6 +18,7 @@ const EditProfileModal = () => {
     email: user?.email || "",
     password: user?.password || "",
     profileImage: null,
+    showPassword: false,
   });
 
   const handleClose = () => {
@@ -36,6 +37,9 @@ const EditProfileModal = () => {
     await dispatch(refreshUser());
     handleClose();
   };
+  const togglePasswordVisibility = () => {
+    setFormData({ ...formData, showPassword: !formData.showPassword });
+  };
 
   return (
     <>
@@ -44,27 +48,33 @@ const EditProfileModal = () => {
           <Modal.Title>Edit Profile</Modal.Title>
         </Modal.Header>
         <Modal.Body>
-          <Form onSubmit={handleSubmit}>
-            <div className="position-relative">
-              <img
-                src={
-                  formData.profileImage
-                    ? URL.createObjectURL(formData.profileImage)
-                    : user.avatarURL ||
-                      `path/to/placeholder.jpg?timestamp=${new Date().getTime()}`
-                  //de daugat placeholder
-                }
-                alt="Avatar"
-                className="img-fluid rounded-circle mb-3"
-                style={{ width: "150px", height: "150px" }}
-              />
+          <Form
+            onSubmit={handleSubmit}
+            className="border border-success d-grid gap-3"
+          >
+            <div className="position-relative ">
+              <div className="  border d-flex justify-content-center">
+                <img
+                  src={
+                    formData.profileImage
+                      ? URL.createObjectURL(formData.profileImage)
+                      : user.avatarURL ||
+                        `path/to/placeholder.jpg?timestamp=${new Date().getTime()}`
+                    //de daugat placeholder
+                  }
+                  alt="Avatar"
+                  className="  border border-success rounded-2 "
+                  style={{ width: "150px", height: "150px" }}
+                />
+              </div>
               <label
                 htmlFor="avatarInput"
-                className="position-absolute"
+                className="position-absolute rounded-2"
                 style={{
-                  bottom: "0",
+                  bottom: "-10%",
                   left: "50%",
                   transform: "translateX(-50%)",
+                  color: "red",
                 }}
               >
                 <input
@@ -74,50 +84,55 @@ const EditProfileModal = () => {
                   className="d-none"
                   onChange={handleFileChange}
                 />
-                <span className="btn btn-primary btn-sm">+</span>
+                <span className="btn btn-primary btn-sm">
+                  <i className="bi bi-plus"></i>
+                </span>
               </label>
             </div>
+            <Form.Control
+              type="text"
+              placeholder="Enter your name"
+              value={formData.name}
+              onChange={(e) =>
+                setFormData({ ...formData, name: e.target.value })
+              }
+            />
 
-            {/* Form fields */}
-            <Form.Group controlId="name">
-              <Form.Label>Name</Form.Label>
+            <Form.Control
+              type="email"
+              placeholder="Enter your email"
+              value={formData.email}
+              onChange={(e) =>
+                setFormData({ ...formData, email: e.target.value })
+              }
+            />
+            <div className="input-group">
               <Form.Control
-                type="text"
-                placeholder="Enter your name"
-                value={formData.name}
-                onChange={(e) =>
-                  setFormData({ ...formData, name: e.target.value })
-                }
-              />
-            </Form.Group>
-
-            <Form.Group controlId="email">
-              <Form.Label>Email</Form.Label>
-              <Form.Control
-                type="email"
-                placeholder="Enter your email"
-                value={formData.email}
-                onChange={(e) =>
-                  setFormData({ ...formData, email: e.target.value })
-                }
-              />
-            </Form.Group>
-
-            <Form.Group controlId="password">
-              <Form.Label>Password</Form.Label>
-              <Form.Control
-                type="password"
+                type={formData.showPassword ? "text" : "password"}
                 placeholder="Enter your password"
                 value={formData.password}
                 onChange={(e) =>
                   setFormData({ ...formData, password: e.target.value })
                 }
               />
-            </Form.Group>
-
-            <Button variant="primary" type="submit">
-              Save Changes
-            </Button>
+              <button
+                type="button"
+                className="btn btn-outline-secondary"
+                onClick={togglePasswordVisibility}
+              >
+                <i
+                  className={`bi ${
+                    formData.showPassword ? "bi-eye-slash" : "bi-eye"
+                  }`}
+                ></i>
+              </button>
+            </div>
+            <button
+              type="submit"
+              className="py-2 modals-buttons rounded-2 w-100 mt-4 color-green "
+            >
+              Send
+            </button>
           </Form>
         </Modal.Body>
       </Modal>
