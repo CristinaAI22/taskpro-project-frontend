@@ -9,8 +9,7 @@ import { useAuth } from './hooks/useAuth';
 import SharedLayout from './components/shared-layout/SharedLayout';
 import Loading from './components/loading/Loading';
 
-import { Dashboard } from './components/Dashboard/Dashboard';
-import HomePage from './pages/home-page/HomePage.js';
+import { Home } from './pages/home-page/HomePage.jsx'; 
 import Header from './components/header/Header.js';
 
 const Register = lazy(() => import('./pages/register-page/Register'));
@@ -37,7 +36,7 @@ export const App = () => {
       <Route path='/' element={<SharedLayout />}>
         <Route index element={<Register />} />
         <Route path='screens-page' element={<ScreensPage />} />
-        <Route path='home-page' element={<HomePage />} />
+        <Route path='home-page' element={<Home />} />
         <Route path='header' element={<Header />} />
 
         {/* <Route

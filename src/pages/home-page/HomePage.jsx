@@ -1,10 +1,10 @@
 import React from "react";
-import Navbar from "../header/Header";
-import Sidebar from "../Sidebar/Sidebar"; 
+import Navbar from "../../components/header/Header";
+import Sidebar from "../../components/Sidebar/Sidebar"; 
 
-export const Dashboard = () => { 
+export const Home = () => { 
   return (
-    <div className="dashboard d-flex">
+    <div className="home d-flex">
       <div>
         <Sidebar />
       </div>
