@@ -4,6 +4,8 @@ body {
 
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+  color: "#FFF";
+  font-family: "Poppins"; 
 }
 
 code {
@@ -12,4 +14,20 @@ code {
 
 :root {
   --modals-btns-bg: #bedbb0;
+.modal-content, .card{
+  background-color: #000;
+  color: #fff;
+}
+.hQSxZz { 
+margin: 25px 15px !important;
+}
+
+.modal-header, .modal-footer{
+  border:1px solid black;
+}
+.jGeaPm{
+  border-bottom:1px solid black;
+}
+input{
+  color:#fff;
 }
