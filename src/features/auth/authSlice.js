@@ -1,12 +1,12 @@
-import { createSlice } from '@reduxjs/toolkit';
+import { createSlice } from "@reduxjs/toolkit";
 
 import {
   register,
   refreshUser,
   logOut,
   login,
-  editUserProfile,
-} from './operations';
+  updateProfile,
+} from "./operations";
 
 const initialState = {
   user: {},
@@ -20,7 +20,7 @@ const initialState = {
 };
 
 const authSlice = createSlice({
-  name: 'auth',
+  name: "auth",
   initialState,
   reducers: {
     changeTheme: (state, action) => {
@@ -50,7 +50,7 @@ const authSlice = createSlice({
       })
       .addCase(register.rejected, (state, action) => {
         const errorMessage = action.payload;
-        if (errorMessage === 'Email in use') {
+        if (errorMessage === "Email in use") {
           state.errorMessage = errorMessage;
         } else {
           state.isError = true;
@@ -96,17 +96,18 @@ const authSlice = createSlice({
         state.errorMessage = action.payload;
         state.isLoading = false;
       })
-      .addCase(editUserProfile.pending, (state) => {
+      .addCase(updateProfile.pending, (state) => {
         state.isLoading = true;
       })
-      .addCase(editUserProfile.fulfilled, (state, action) => {
+      .addCase(updateProfile.fulfilled, (state, action) => {
         const { user } = action.payload;
         state.user.name = user.name;
         state.user.email = user.email;
-        state.user.image = user.image;
+        state.user.password = user.password;
+        state.user.avatarURL = user.avatarURL;
         state.isLoading = false;
       })
-      .addCase(editUserProfile.rejected, (state, action) => {
+      .addCase(updateProfile.rejected, (state, action) => {
         state.isError = true;
         state.errorMessage = action.payload;
         state.isLoading = false;

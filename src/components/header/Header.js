@@ -1,15 +1,38 @@
-import ThemeSwitcher from './ThemeSwitcher';
-import UserInfo from './UserInfo';
+import React from "react";
+import { Navbar } from "react-bootstrap";
+import ThemeSwitcher from "./ThemeSwitcher";
+import UserInfo from "./UserInfo";
+import styles from "./Header.module.css";
 
 const Header = () => {
   return (
-    <div>
-      <h1>Header</h1>
-      <ThemeSwitcher />
-      <UserInfo />
-    </div>
+    <Navbar className={styles.navbar} bg="light" expand="lg">
+      <div className="ml-auto">
+        <ThemeSwitcher />
+      </div>
+      <div className="ml-auto">
+        <UserInfo />
+      </div>
+    </Navbar>
+    // <>
+    //   <header
+    //     id="header"
+    //     className="header fixed-top d-flex align-items-center"
+    //   >
+    //     <div className="d-flex align-items-center justify-content-between">
+    //       <a href="index.html" className="logo d-flex align-items-center">
+    //         <img src="assets/img/logo.png" alt="" />
+    //         <span className="d-none d-lg-block">NiceAdmin</span>
+    //       </a>
+    //       <i className="bi bi-list toggle-sidebar-btn"></i>
+    //     </div>
+    //     <ThemeSwitcher />
+    //     <UserInfo />
+    //   </header>
+    // </>
   );
 };
+
 export default Header;
 // import React from "react";
 // import ThemeSwitcher from "./ThemeSwitcher";
