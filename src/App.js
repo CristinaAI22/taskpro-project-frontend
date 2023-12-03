@@ -9,6 +9,7 @@ import { useAuth } from './hooks/useAuth';
 import SharedLayout from './components/shared-layout/SharedLayout';
 import Loading from './components/loading/Loading';
 
+import { Dashboard } from './components/Dashboard/Dashboard';
 import HomePage from './pages/home-page/HomePage.js';
 import Header from './components/header/Header.js';
 
@@ -73,6 +74,25 @@ export const App = () => {
             <PrivateRoute redirectTo='/users/register' component={<Diary />} />
           }
         /> */}
+{/* <Routes>
+        <Route path="/" element={<SharedLayout />}>
+          <Route
+            index
+            path="/register"
+            element={<RestrictedRoute redirectTo="/users" component={<Register />} />}
+          />
+          <Route 
+            path="/login"
+            element={<RestrictedRoute redirectTo="/users" component={<LogIn />} />}
+          /> 
+          <Route
+            path="/users"
+            element={<PrivateRoute redirectTo="/register" component={<Dashboard />} />}
+          />
+        </Route>
+        <Route path="*" element={<ErrorPage />} />
+      </Routes>
+    )} */}
       </Route>
       <Route path='*' element={<ErrorPage />} />
     </Routes>
