@@ -1,22 +1,20 @@
 import React from "react";
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
 import { updateUserTheme } from "../../features/auth/operations";
 import getTheme from "./getTheme";
 
 const ThemeSwitcher = () => {
   const dispatch = useDispatch();
-  const currentTheme = useSelector((state) => state.auth.user.theme);
 
   const handleThemeChange = (selectedTheme) => {
     const theme = getTheme(selectedTheme);
     dispatch(updateUserTheme({ theme: selectedTheme }));
-    // Apply the theme to the entire application (optional)
+    //ar trebui aplicat la toata aplicatia dar nu stiu cum...
     applyTheme(theme);
   };
 
   const applyTheme = (theme) => {
-    // Implement logic to apply the theme to your application
-    // You might need to update the styles or use a library like Material-UI for theming
+    //de implementat logica
     console.log("Applying theme:", theme);
   };
 

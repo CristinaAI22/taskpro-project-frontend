@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
-import { Modal, Button, Form } from "react-bootstrap";
+import { Modal,Form } from "react-bootstrap";
 import { closeEditProfileModal } from "../../features/auth/authSlice";
 import { updateProfile, refreshUser } from "../../features/auth/operations";
 import {
