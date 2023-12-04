@@ -8,10 +8,10 @@ import { useEffect } from "react";
 import { useAuth } from "./hooks/useAuth";
 import SharedLayout from "./components/shared-layout/SharedLayout";
 import Loading from "./components/loading/Loading";
-import LoginForm from "./components/login/LoginForm.js";
+import LoginForm from "./components/login/LogInForm.js";
 import RegisterForm from "./components/register/RegisterForm.js";
 
-import HomePage from "./pages/home-page/HomePage.js";
+import { Home } from "./pages/home-page/HomePage.jsx";
 import Header from "./components/header/Header.js";
 
 const ScreensPage = lazy(() =>
@@ -45,7 +45,7 @@ export const App = () => {
         />
         <Route
           path="/home"
-          element={<PrivateRoute redirectTo="/" component={<HomePage />} />}
+          element={<PrivateRoute redirectTo="/" component={<Home />} />}
         >
           <Route path="screens-page" element={<ScreensPage />} />
         </Route>
