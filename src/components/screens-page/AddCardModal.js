@@ -24,6 +24,16 @@ const monthNames = [
   'December',
 ];
 
+const daysOfWeek = [
+  'Sunday',
+  'Monday',
+  'Tuesday',
+  'Wednesday',
+  'Thursday',
+  'Friday',
+  'Saturday',
+];
+
 const AddCardModal = () => {
   const dispatch = useDispatch();
   const titleRef = useRef();
@@ -52,6 +62,16 @@ const AddCardModal = () => {
       );
     }
   };
+
+  let weekDay = null;
+  if (selectedDate) {
+    if (selectedDate.toLocaleDateString() === new Date().toLocaleDateString()) {
+      weekDay = 'Today';
+    } else {
+      const dayOfWeekNumber = selectedDate.getDay();
+      weekDay = daysOfWeek[dayOfWeekNumber];
+    }
+  }
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -138,7 +158,7 @@ const AddCardModal = () => {
             <p className='fs-6 text-secondary mb-1'>Deadline</p>
             <div className='add-card-set-date-container d-flex align-items-center mb-2'>
               <p className='fs-6 color-green m-0'>
-                Today, {monthNames[month]} {day}
+                {weekDay ? weekDay : 'Today'}, {monthNames[month]} {day}
               </p>
               <div
                 className='bg-transparent border-0 m-0 p-0 ms-2'

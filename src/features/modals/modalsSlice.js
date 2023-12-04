@@ -11,6 +11,7 @@ const initialState = {
   deleteCardModal: false,
   list: null,
   listId: null,
+  card: null,
 };
 
 const modalsSlice = createSlice({
@@ -59,10 +60,12 @@ const modalsSlice = createSlice({
       state.editCardModal = true;
     },
     openMoveCardModal: (state, action) => {
+      state.card = action.payload;
       state.moveCardModal = true;
     },
     closeMoveCardModal: (state, action) => {
-      state.moveCardModal = true;
+      state.moveCardModal = false;
+      state.card = null;
     },
     openDeleteCardModal: (state, action) => {
       state.deleteCardModal = true;

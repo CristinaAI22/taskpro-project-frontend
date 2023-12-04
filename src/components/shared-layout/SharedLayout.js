@@ -7,7 +7,7 @@ import Loading from '../loading/Loading';
 
 const SharedLayout = () => {
   return (
-    <div className='container'>
+    <div className='containers'>
       {/* <Navbar /> */}
       {/* <Home/> */}
       <Suspense fallback={<Loading />}>

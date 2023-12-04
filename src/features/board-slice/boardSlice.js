@@ -5,7 +5,10 @@ import {
   getBoardData,
   deleteList,
   addCard,
+  moveCard,
+  editCard,
 } from './operations';
+import { useDispatch } from 'react-redux';
 
 const initialState = {
   bordData: {
@@ -90,7 +93,7 @@ const boardSlice = createSlice({
       })
       .addCase(addList.fulfilled, (state, action) => {
         const { newList } = action.payload;
-        state.bordData.lists.push(newList);
+        state.bordData.lists.push({ ...newList, cards: [] });
         state.isLoading = false;
       })
       .addCase(addList.rejected, (state) => {
@@ -146,6 +149,18 @@ const boardSlice = createSlice({
         state.isLoading = false;
       })
       .addCase(addCard.rejected, (state) => {
+        state.isLoading = false;
+        state.isError = true;
+      })
+      .addCase(moveCard.pending, (state) => {
+        state.isLoading = true;
+      })
+      .addCase(moveCard.fulfilled, (state) => {
+        const dispatch = useDispatch();
+        dispatch(getBoardData({ _id: state.bordData._id }));
+        state.isLoading = false;
+      })
+      .addCase(moveCard.rejected, (state) => {
         state.isLoading = false;
         state.isError = true;
       });
