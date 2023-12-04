@@ -1,71 +1,85 @@
-import React from "react";
 import * as Yup from "yup";
-import { useState } from "react";
-import { useDispatch, useSelector } from "react-redux";
 import { Formik, Field, Form, ErrorMessage } from "formik";
-import { login } from "../../features/auth/operations";
-import Loading from "../loading/Loading";
-import { selectIsLoading } from "../../features/auth/selectors";
+import { useDispatch } from "react-redux";
+import { useState } from "react";
+import { register } from "../../features/auth/operations";
 import { AiOutlineEye, AiOutlineEyeInvisible } from "react-icons/ai";
-import { toast } from "react-toastify";
+import Loading from "../loading/Loading";
+import { useSelector } from "react-redux";
+import { selectIsLoading } from "../../features/auth/selectors";
+import "./Register.css";
 
-const LoginSchema = Yup.object().shape({
+const RegisterSchema = Yup.object().shape({
+  name: Yup.string()
+    .required("Name is required!")
+    .min(2, "Name must be at least 2 characters")
+    .max(32, "Name must be at most 32 characters"),
   email: Yup.string().email("Invalid email!").required("Email is required!"),
   password: Yup.string()
     .min(8, { length: "Password is too short!" })
     .matches(/^(?=.*[A-Za-z])(?=.*\d)(?=.*[@$!%*#?&])[A-Za-z\d@$!%*#?&]+$/, {
       message: {
         number:
-          "The password must contain a minimum of 6 characters, at least one letter, one number, and one special character",
+          "The password must contain a minimum of 6 characters, at least one letter, one number, and one special character!",
       },
     })
     .max(64, "Password must be at most 64 characters")
     .required("Password is required!"),
 });
-
 const initialValues = {
+  name: "",
   email: "",
   password: "",
   showPassword: false,
 };
 
-const LoginForm = () => {
-  const [showPassword, setShowPassword] = useState(false);
+const RegisterForm = () => {
   const dispatch = useDispatch();
   const loading = useSelector(selectIsLoading);
-
+  const [showPassword, setShowPassword] = useState(false);
   const handleTogglePassword = () => {
     setShowPassword(!showPassword);
   };
-
-  const onSubmit = async (values, { resetForm }) => {
-    const { email, password } = values;
-    const data = await dispatch(login({ email, password }));
-    if (data.error.message === "Rejected") {
-      toast.error("Email or password is wrong");
-    }
+  const onSubmit = (values, { resetForm }) => {
+    const { name, email, password } = values;
+    dispatch(
+      register({
+        name,
+        email,
+        password,
+      })
+    );
     resetForm();
   };
-
   return (
     <Formik
       initialValues={initialValues}
-      validationSchema={LoginSchema}
+      validationSchema={RegisterSchema}
       onSubmit={onSubmit}
     >
       <Form className="register-form">
         <div className="form-wrapper">
-          <ErrorMessage className="form-error" name="email" component="div" />
+          <ErrorMessage name="name" component="div" className="form-error" />
+          <Field
+            type="text"
+            id="name"
+            name="name"
+            placeholder="Enter your name"
+            autoComplete="off"
+            className="form-field"
+          />
+        </div>
+        <div className="form-wrapper">
+          <ErrorMessage name="email" component="div" className="form-error" />
           <Field
             type="email"
             id="email"
             name="email"
             placeholder="Enter your email"
-            className="form-field"
             autoComplete="off"
+            className="form-field"
           />
         </div>
-
         <div className="form-wrapper">
           <ErrorMessage
             className="form-error"
@@ -76,9 +90,9 @@ const LoginForm = () => {
             type={showPassword ? "text" : "password"}
             id="password"
             name="password"
-            placeholder="Confirm a password"
-            className="form-field"
+            placeholder="Create a password"
             autoComplete="off"
+            className="form-field"
           />
           <span className="form-icon" onClick={handleTogglePassword}>
             {showPassword ? <AiOutlineEyeInvisible /> : <AiOutlineEye />}
@@ -86,11 +100,11 @@ const LoginForm = () => {
         </div>
 
         <button className="welcome-button" type="submit">
-          {loading ? <Loading /> : "Login now"}
+          {loading ? <Loading /> : "Register now"}
         </button>
       </Form>
     </Formik>
   );
 };
 
-export default LoginForm;
+export default RegisterForm;
