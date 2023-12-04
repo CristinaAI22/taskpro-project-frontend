@@ -111,7 +111,7 @@
 }
 
 .main-dashboard {
-  overflow: auto;
+  overflow: scroll;
   gap: 30px;
 }
 
