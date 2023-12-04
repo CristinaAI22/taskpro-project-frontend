@@ -5,13 +5,14 @@ import {
   selectBoardId,
   selectBoardLists,
 } from '../../features/board-slice/selectors';
-import { moveCard } from '../../features/board-slice/operations';
+import { moveCard, getBoardData } from '../../features/board-slice/operations';
 import { selectCard } from '../../features/modals/selectors';
 
 const MoveCardModal = () => {
   const dispatch = useDispatch();
   const lists = useSelector(selectBoardLists);
-  const { _id } = useSelector(selectCard);
+  const { _id, owner } = useSelector(selectCard);
+  const boardId = useSelector(selectBoardId);
 
   return (
     <div className='modals-container'>
@@ -26,11 +27,25 @@ const MoveCardModal = () => {
 
           <ul className='main-move-card-modal pt-5'>
             {lists.map((list) => {
+              const iconClassName = `bi bi-arrow-right-circle ${
+                list._id === owner ? 'color-green' : ''
+              }`;
               return (
-                <li key={list._id} className={'move-card-li'}>
-                  <p>{list.title}</p>
+                <li
+                  key={list._id}
+                  className={'move-card-li'}
+                  onClick={() => {
+                    const data = { owner: list._id };
+                    dispatch(moveCard({ _id, data }));
+                    dispatch(getBoardData({ _id: boardId }));
+                    dispatch(closeMoveCardModal());
+                  }}
+                >
+                  <p className={list._id === owner ? 'color-green' : ''}>
+                    {list.title}
+                  </p>
                   <button className='bg-transparent border-0 text-secondary'>
-                    <i className='bi bi-arrow-right-circle'></i>
+                    <i className={iconClassName}></i>
                   </button>
                 </li>
               );

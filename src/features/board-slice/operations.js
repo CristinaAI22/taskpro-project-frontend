@@ -91,7 +91,7 @@ export const editCard = createAsyncThunk(
     try {
       setAuthHeader(token);
       const { _id, data } = credentials;
-      const response = await axios.patch('/api/taskPro/cards' + _id, data);
+      const response = await axios.patch('/api/taskPro/cards/' + _id, data);
       return response.data;
     } catch (error) {
       console.log(error);
@@ -106,7 +106,22 @@ export const moveCard = createAsyncThunk(
     try {
       setAuthHeader(token);
       const { _id, data } = credentials;
-      const response = await axios.patch('/api/taskPro/cards' + _id, data);
+      const response = await axios.patch('/api/taskPro/cards/' + _id, data);
+      return response.data;
+    } catch (error) {
+      console.log(error);
+      return thunkAPI.rejectWithValue(error.message);
+    }
+  }
+);
+
+export const deleteCard = createAsyncThunk(
+  'taskPro/delete-card',
+  async (credentials, thunkAPI) => {
+    try {
+      setAuthHeader(token);
+      const { _id } = credentials;
+      const response = await axios.delete('/api/taskPro/cards/' + _id);
       return response.data;
     } catch (error) {
       console.log(error);

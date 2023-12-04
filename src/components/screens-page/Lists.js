@@ -5,18 +5,24 @@ import {
   openDeleteColumnModal,
   openAddCardModal,
   openMoveCardModal,
+  openEditCardModal,
+  openDeleteCardModal,
 } from '../../features/modals/modalsSlice';
 import {
   selectEditColumnModal,
   selectDeleteColumnModal,
   selectAddCardModal,
   selectMoveCardModal,
+  selectEditCardModal,
+  selectDeleteCardModal,
 } from '../../features/modals/selectors';
 import EditListModal from './EditListModal';
 import DeleteColumnModal from './DeleteColumnModal';
 import { labelColor } from './FilterModal';
 import AddCardModal from './AddCardModal';
 import MoveCardModal from './MoveCardModal';
+import EditCardModal from './EditCardModal';
+import DeleteCardModal from './DeleteCardModal';
 
 const Lists = () => {
   const lists = useSelector(selectBoardLists);
@@ -45,6 +51,8 @@ function ListTitle({ list }) {
   const deleteColumnModal = useSelector(selectDeleteColumnModal);
   const addCardModal = useSelector(selectAddCardModal);
   const moveCardModal = useSelector(selectMoveCardModal);
+  const editCardModal = useSelector(selectEditCardModal);
+  const deleteCardModal = useSelector(selectDeleteCardModal);
   const cards = list.cards;
 
   return (
@@ -81,6 +89,8 @@ function ListTitle({ list }) {
       {deleteColumnModal && <DeleteColumnModal />}
       {addCardModal && <AddCardModal />}
       {moveCardModal && <MoveCardModal />}
+      {editCardModal && <EditCardModal />}
+      {deleteCardModal && <DeleteCardModal />}
     </div>
   );
 }
@@ -135,14 +145,20 @@ function Card({ card }) {
           )}
           <button
             className='bg-transparent border-0 text-secondary'
-            onClick={() => dispatch(openMoveCardModal({ _id }))}
+            onClick={() => dispatch(openMoveCardModal({ _id, owner }))}
           >
             <i className='bi bi-arrow-right-circle'></i>
           </button>
-          <button className='bg-transparent border-0 text-secondary'>
+          <button
+            className='bg-transparent border-0 text-secondary'
+            onClick={() => dispatch(openEditCardModal(card))}
+          >
             <i className='bi bi-pencil'></i>
           </button>
-          <button className='bg-transparent border-0 text-secondary'>
+          <button
+            className='bg-transparent border-0 text-secondary'
+            onClick={() => dispatch(openDeleteCardModal(card))}
+          >
             {' '}
             <i className='bi bi-trash3'></i>
           </button>

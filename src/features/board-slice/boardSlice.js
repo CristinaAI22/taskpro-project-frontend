@@ -7,8 +7,8 @@ import {
   addCard,
   moveCard,
   editCard,
+  deleteCard,
 } from './operations';
-import { useDispatch } from 'react-redux';
 
 const initialState = {
   bordData: {
@@ -156,11 +156,50 @@ const boardSlice = createSlice({
         state.isLoading = true;
       })
       .addCase(moveCard.fulfilled, (state) => {
-        const dispatch = useDispatch();
-        dispatch(getBoardData({ _id: state.bordData._id }));
         state.isLoading = false;
       })
       .addCase(moveCard.rejected, (state) => {
+        state.isLoading = false;
+        state.isError = true;
+      })
+      .addCase(editCard.pending, (state) => {
+        state.isLoading = true;
+      })
+      .addCase(editCard.fulfilled, (state, action) => {
+        const { card } = action.payload;
+        const newBoardDataLists = state.bordData.lists.map((list) => {
+          const newCards = list.cards.map((listCard) => {
+            if (listCard._id === card._id) {
+              return card;
+            }
+            return listCard;
+          });
+          list.cards = newCards;
+          return list;
+        });
+        state.bordData.lists = newBoardDataLists;
+        state.isLoading = false;
+      })
+      .addCase(editCard.rejected, (state) => {
+        state.isLoading = false;
+        state.isError = true;
+      })
+      .addCase(deleteCard.pending, (state) => {
+        state.isLoading = true;
+      })
+      .addCase(deleteCard.fulfilled, (state, action) => {
+        const deletedCard = action.payload.deletedCard;
+        const newBoardDataLists = state.bordData.lists.map((list) => {
+          const newCards = list.cards.filter(
+            (listCard) => listCard._id !== deletedCard._id
+          );
+          list.cards = newCards;
+          return list;
+        });
+        state.bordData.lists = newBoardDataLists;
+        state.isLoading = false;
+      })
+      .addCase(deleteCard.rejected, (state) => {
         state.isLoading = false;
         state.isError = true;
       });

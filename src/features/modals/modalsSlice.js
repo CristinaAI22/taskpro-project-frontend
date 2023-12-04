@@ -55,23 +55,26 @@ const modalsSlice = createSlice({
     },
     openEditCardModal: (state, action) => {
       state.editCardModal = true;
+      state.card = action.payload;
     },
     closeEditCardModal: (state, action) => {
-      state.editCardModal = true;
+      state.editCardModal = false;
+      state.card = null;
     },
     openMoveCardModal: (state, action) => {
       state.card = action.payload;
       state.moveCardModal = true;
     },
-    closeMoveCardModal: (state, action) => {
+    closeMoveCardModal: (state) => {
       state.moveCardModal = false;
       state.card = null;
     },
     openDeleteCardModal: (state, action) => {
       state.deleteCardModal = true;
+      state.card = action.payload;
     },
     closeDeleteCardModal: (state, action) => {
-      state.deleteCardModal = true;
+      state.deleteCardModal = false;
     },
   },
 });
