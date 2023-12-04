@@ -1,12 +1,12 @@
-import React, { useState } from 'react';
-import { useSelector, useDispatch } from 'react-redux';
-import { Modal, Form } from 'react-bootstrap';
-import { closeEditProfileModal } from '../../features/auth/authSlice';
-import { updateProfile, refreshUser } from '../../features/auth/operations';
+import React, { useState } from "react";
+import { useSelector, useDispatch } from "react-redux";
+import { Modal, Form } from "react-bootstrap";
+import { closeEditProfileModal } from "../../features/auth/authSlice";
+import { updateProfile, refreshUser } from "../../features/auth/operations";
 import {
   selectIsEditProfileModalOpen,
   selectUser,
-} from '../../features/auth/selectors';
+} from "../../features/auth/selectors";
 
 const EditProfileModal = () => {
   const dispatch = useDispatch();
@@ -14,12 +14,13 @@ const EditProfileModal = () => {
   const user = useSelector(selectUser);
 
   const [formData, setFormData] = useState({
-    name: user?.name || '',
-    email: user?.email || '',
-    password: user?.password || '',
+    name: user?.name || "",
+    email: user?.email || "",
+    password: user?.password || "",
     avatar: null,
     showPassword: false,
   });
+  const [imageKey, setImageKey] = useState(Date.now());
 
   const handleClose = () => {
     dispatch(closeEditProfileModal());
@@ -35,10 +36,10 @@ const EditProfileModal = () => {
     e.preventDefault();
 
     const formDataObject = new FormData();
-    formDataObject.append('avatar', formData.avatar);
-    formDataObject.append('name', formData.name);
-    formDataObject.append('email', formData.email);
-    formDataObject.append('password', formData.password);
+    formDataObject.append("avatar", formData.avatar);
+    formDataObject.append("name", formData.name);
+    formDataObject.append("email", formData.email);
+    formDataObject.append("password", formData.password);
 
     await dispatch(updateProfile(formDataObject));
     await dispatch(refreshUser());
@@ -50,99 +51,107 @@ const EditProfileModal = () => {
 
   return (
     <>
-      <Modal show={isModalOpen} onHide={handleClose}>
-        <Modal.Header closeButton>
-          <Modal.Title>Edit Profile</Modal.Title>
-        </Modal.Header>
-        <Modal.Body>
-          <Form
-            onSubmit={handleSubmit}
-            className='border border-success d-grid gap-3'
-          >
-            <div className='position-relative '>
-              <div className='  border d-flex justify-content-center'>
-                <img
-                  src={
-                    formData.avatar
-                      ? URL.createObjectURL(formData.avatar)
-                      : user.avatarURL ||
-                        `path/to/placeholder.jpg?timestamp=${new Date().getTime()}`
-                    //de daugat placeholder
-                  }
-                  alt='Avatar'
-                  className='  border border-success rounded-2 '
-                  style={{ width: '150px', height: '150px' }}
-                />
+      {isModalOpen && (
+        <div className="modal" style={{ display: "block" }}>
+          <div className="modal-dialog">
+            <div className="modal-content">
+              <div data-bs-theme="dark" className="modal-header ">
+                <h4 className="modal-title">Edit Profile</h4>
+                <button
+                  type="button"
+                  className="btn-close "
+                  onClick={handleClose}
+                ></button>
               </div>
-              <label
-                htmlFor='avatarInput'
-                className='position-absolute rounded-2'
-                style={{
-                  bottom: '-10%',
-                  left: '50%',
-                  transform: 'translateX(-50%)',
-                  color: 'red',
-                }}
-              >
-                <input
-                  type='file'
-                  id='avatarInput'
-                  accept='image/*'
-                  className='d-none'
-                  onChange={handleFileChange}
-                />
-                <span className='btn btn-primary btn-sm'>
-                  <i className='bi bi-plus'></i>
-                </span>
-              </label>
+              <div data-bs-theme="dark" className="modal-body">
+                <form onSubmit={handleSubmit} className=" d-grid gap-3">
+                  <div className="position-relative">
+                    <div className="d-flex justify-content-center">
+                      <img
+                        src={
+                          formData.avatar
+                            ? URL.createObjectURL(formData.avatar)
+                            : user.avatarURL ||
+                              `path/to/placeholder.jpg?timestamp=${new Date().getTime()}`
+                        }
+                        alt="Avatar"
+                        className=" rounded-2"
+                        style={{ width: "150px", height: "150px" }}
+                      />
+                    </div>
+                    <label
+                      htmlFor="avatarInput"
+                      className="position-absolute rounded-2 color-hover-green"
+                      style={{
+                        bottom: "-10%",
+                        left: "50%",
+                        transform: "translateX(-50%)",
+                      }}
+                    >
+                      <input
+                        type="file"
+                        id="avatarInput"
+                        accept="image/*"
+                        className="d-none"
+                        onChange={handleFileChange}
+                      />
+                      <span className="btn btn-primary btn-sm">
+                        <i className="bi bi-plus"></i>
+                      </span>
+                    </label>
+                  </div>
+                  <input
+                    type="text"
+                    placeholder="Enter your name"
+                    value={formData.name}
+                    className="form-control color-black"
+                    onChange={(e) =>
+                      setFormData({ ...formData, name: e.target.value })
+                    }
+                  />
+                  <input
+                    type="email"
+                    placeholder="Enter your email"
+                    value={formData.email}
+                    className="form-control"
+                    onChange={(e) =>
+                      setFormData({ ...formData, email: e.target.value })
+                    }
+                  />
+                  <div className="input-group">
+                    <input
+                      type={formData.showPassword ? "text" : "password"}
+                      placeholder="Enter your password"
+                      value={formData.password}
+                      className="form-control"
+                      onChange={(e) =>
+                        setFormData({ ...formData, password: e.target.value })
+                      }
+                    />
+                    <button
+                      type="button"
+                      className="btn btn-outline-secondary"
+                      onClick={togglePasswordVisibility}
+                    >
+                      <i
+                        className={`bi ${
+                          formData.showPassword ? "bi-eye-slash" : "bi-eye"
+                        }`}
+                      ></i>
+                    </button>
+                  </div>
+                  <button
+                    type="submit"
+                    className="py-2 modals-buttons rounded-2 w-100 mt-4 form-submit-button"
+                  >
+                    Send
+                  </button>
+                </form>
+              </div>
             </div>
-            <Form.Control
-              type='text'
-              placeholder='Enter your name'
-              value={formData.name}
-              onChange={(e) =>
-                setFormData({ ...formData, name: e.target.value })
-              }
-            />
-
-            <Form.Control
-              type='email'
-              placeholder='Enter your email'
-              value={formData.email}
-              onChange={(e) =>
-                setFormData({ ...formData, email: e.target.value })
-              }
-            />
-            <div className='input-group'>
-              <Form.Control
-                type={formData.showPassword ? 'text' : 'password'}
-                placeholder='Enter your password'
-                value={formData.password}
-                onChange={(e) =>
-                  setFormData({ ...formData, password: e.target.value })
-                }
-              />
-              <button
-                type='button'
-                className='btn btn-outline-secondary'
-                onClick={togglePasswordVisibility}
-              >
-                <i
-                  className={`bi ${
-                    formData.showPassword ? 'bi-eye-slash' : 'bi-eye'
-                  }`}
-                ></i>
-              </button>
-            </div>
-            <button
-              type='submit'
-              className='py-2 modals-buttons rounded-2 w-100 mt-4 color-green '
-            >
-              Send
-            </button>
-          </Form>
-        </Modal.Body>
-      </Modal>
+          </div>
+        </div>
+      )}
     </>
   );
 };
