@@ -1,23 +1,26 @@
-import { lazy } from 'react';
-import { Route, Routes } from 'react-router-dom';
-import { RestrictedRoute } from './components/RestrictedRoute';
-import { PrivateRoute } from './components/PrivateRoute';
-import { refreshUser } from './features/auth/operations';
-import { useDispatch } from 'react-redux';
-import { useEffect } from 'react';
-import { useAuth } from './hooks/useAuth';
-import SharedLayout from './components/shared-layout/SharedLayout';
-import Loading from './components/loading/Loading';
+import { lazy } from "react";
+import { Route, Routes } from "react-router-dom";
+import { RestrictedRoute } from "./components/RestrictedRoute";
+import { PrivateRoute } from "./components/PrivateRoute";
+import { refreshUser } from "./features/auth/operations";
+import { useDispatch } from "react-redux";
+import { useEffect } from "react";
+import { useAuth } from "./hooks/useAuth";
+import SharedLayout from "./components/shared-layout/SharedLayout";
+import Loading from "./components/loading/Loading";
+import LoginForm from "./components/login/LogInForm.js";
+import RegisterForm from "./components/register/RegisterForm.js";
 
-import { Home } from './pages/home-page/HomePage.jsx'; 
-import Header from './components/header/Header.js';
+import { Home } from "./pages/home-page/HomePage.jsx";
+import Header from "./components/header/Header.js";
 
-const Register = lazy(() => import('./pages/register-page/Register'));
 const ScreensPage = lazy(() =>
-  import('./components/screens-page/ScreensPage.js')
+  import("./components/screens-page/ScreensPage.js")
 );
 
-const ErrorPage = lazy(() => import('./pages/error-page/ErrorPage'));
+const ErrorPage = lazy(() => import("./pages/error-page/ErrorPage"));
+const WelcomePage = lazy(() => import("./pages/welcome/Welcome.js"));
+const AuthPage = lazy(() => import("./pages/Auth/Auth.js"));
 
 export const App = () => {
   const { isRefreshing } = useAuth();
@@ -28,72 +31,37 @@ export const App = () => {
   }, [dispatch]);
 
   return isRefreshing ? (
-    <div className='loading-container'>
+    <div className="loading-container">
       <Loading />
     </div>
   ) : (
     <Routes>
-      <Route path='/' element={<SharedLayout />}>
-        <Route index element={<Register />} />
-        <Route path='screens-page' element={<ScreensPage />} />
-        <Route path='home-page' element={<Home />} />
-        <Route path='header' element={<Header />} />
-
-        {/* <Route
-          path='/users/register'
-          element={
-            <RestrictedRoute
-              redirectTo='/users/home-page'
-              component={<Register />}
-            />
-          }
-        />
-
+      <Route path="/" element={<SharedLayout />}>
         <Route
-          path='/users/login'
+          index
           element={
-            <RestrictedRoute
-              redirectTo='/users/home-page'
-              component={<Login />}
-            />
+            <RestrictedRoute redirectTo="/home" component={<WelcomePage />} />
           }
         />
         <Route
-          path='/users/home-page'
-          element={
-            <PrivateRoute
-              redirectTo='/users/register'
-              component={<UsersHomePage />}
-            />
-          }
-        />
-        <Route
-          path='/users/diary'
-          element={
-            <PrivateRoute redirectTo='/users/register' component={<Diary />} />
-          }
-        /> */}
-{/* <Routes>
-        <Route path="/" element={<SharedLayout />}>
-          <Route
-            index
-            path="/register"
-            element={<RestrictedRoute redirectTo="/users" component={<Register />} />}
-          />
-          <Route 
-            path="/login"
-            element={<RestrictedRoute redirectTo="/users" component={<LogIn />} />}
-          /> 
-          <Route
-            path="/users"
-            element={<PrivateRoute redirectTo="/register" component={<Dashboard />} />}
-          />
+          path="/home"
+          element={<PrivateRoute redirectTo="/" component={<Home />} />}
+        >
+          <Route path="screens-page" element={<ScreensPage />} />
         </Route>
-        <Route path="*" element={<ErrorPage />} />
-      </Routes>
-    )} */}
+        <Route path="header" element={<Header />} />
+        <Route path="/home" element={<WelcomePage />} />
+        <Route
+          path="auth/:id"
+          element={
+            <RestrictedRoute redirectTo="/home" component={<AuthPage />} />
+          }
+        >
+          <Route path="login" element={<LoginForm />} />
+          <Route path="register" element={<RegisterForm />} />
+        </Route>
       </Route>
-      <Route path='*' element={<ErrorPage />} />
+      <Route path="*" element={<ErrorPage />} />
     </Routes>
   );
 };

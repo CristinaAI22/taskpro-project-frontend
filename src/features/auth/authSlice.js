@@ -1,15 +1,16 @@
-import { createSlice } from '@reduxjs/toolkit';
+import { createSlice } from "@reduxjs/toolkit";
 
 import {
   register,
   refreshUser,
   logOut,
   login,
-  editUserProfile,
-} from './operations';
+  updateProfile,
+  updateUserTheme
+} from "./operations";
 
 const initialState = {
-  user: {},
+  user: { name: null, email: null, avatar: null, theme: "light" },
   token: null,
   isLoggedIn: false,
   isRefreshing: false,
@@ -20,12 +21,10 @@ const initialState = {
 };
 
 const authSlice = createSlice({
-  name: 'auth',
+  name: "auth",
   initialState,
   reducers: {
-    changeTheme: (state, action) => {
-      state.theme = action.payload;
-    },
+  
     openEditProfileModal: (state) => {
       state.isEditProfileModalOpen = true;
     },
@@ -50,7 +49,7 @@ const authSlice = createSlice({
       })
       .addCase(register.rejected, (state, action) => {
         const errorMessage = action.payload;
-        if (errorMessage === 'Email in use') {
+        if (errorMessage === "Email in use") {
           state.errorMessage = errorMessage;
         } else {
           state.isError = true;
@@ -96,28 +95,33 @@ const authSlice = createSlice({
         state.errorMessage = action.payload;
         state.isLoading = false;
       })
-      .addCase(editUserProfile.pending, (state) => {
+      .addCase(updateProfile.pending, (state) => {
         state.isLoading = true;
       })
-      .addCase(editUserProfile.fulfilled, (state, action) => {
+      .addCase(updateProfile.fulfilled, (state, action) => {
         const { user } = action.payload;
         state.user.name = user.name;
         state.user.email = user.email;
-        state.user.image = user.image;
+        state.user.password = user.password;
+        state.user.avatarURL = user.avatarURL;
         state.isLoading = false;
       })
-      .addCase(editUserProfile.rejected, (state, action) => {
+      .addCase(updateProfile.rejected, (state, action) => {
         state.isError = true;
         state.errorMessage = action.payload;
         state.isLoading = false;
-      });
+      })
+      .addCase(updateUserTheme.fulfilled,(state, action)=> {
+        state.user.theme = action.payload.theme;
+        state.isLoggedIn = true;
+        state.isRefreshing = false;
+  })
   },
 });
 
 export const authReducer = authSlice.reducer;
 
 export const {
-  changeTheme,
   openEditProfileModal,
   closeEditProfileModal,
   resetError,

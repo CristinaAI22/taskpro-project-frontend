@@ -1,33 +1,40 @@
 body {
   margin: 0;
-  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
-    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
-    sans-serif;
+  font-family: "Poppins", sans-serif;
+
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   color: "#FFF";
-  font-family: "Poppins"; 
+  font-family: "Poppins";
 }
 
 code {
-  font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
-    monospace;
+  font-family: "Poppins", sans-serif;
 }
 
-.modal-content, .card{
+:root {
+  --modals-btns-bg: #bedbb0;
+}
+
+.modal-content,
+.card {
   background-color: #000;
   color: #fff;
 }
-.hQSxZz { 
-margin: 25px 15px !important;
+
+.hQSxZz {
+  margin: 25px 15px !important;
 }
 
-.modal-header, .modal-footer{
-  border:1px solid black;
+.modal-header,
+.modal-footer {
+  border: 1px solid black;
 }
-.jGeaPm{
-  border-bottom:1px solid black;
+
+.jGeaPm {
+  border-bottom: 1px solid black;
 }
-input{
-  color:#fff;
+
+input {
+  color: #fff;
 }
