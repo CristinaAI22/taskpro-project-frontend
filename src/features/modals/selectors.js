@@ -18,3 +18,5 @@ export const selectEditCardModal = (state) => state.modals.editCardModal;
 export const selectMoveCardModal = (state) => state.modals.moveCardModal;
 
 export const selectDeleteCardModal = (state) => state.modals.deleteCardModal;
+
+export const selectCard = (state) => state.modals.card;

@@ -157,3 +157,9 @@ button:hover {
   top: 50%;
   transform: translate(-50%, -50%);
 }
+
+.move-card-li {
+  list-style: none;
+  display: flex;
+  justify-content: space-between;
+}

@@ -4,16 +4,19 @@ import {
   openEditColumnModal,
   openDeleteColumnModal,
   openAddCardModal,
+  openMoveCardModal,
 } from '../../features/modals/modalsSlice';
 import {
   selectEditColumnModal,
   selectDeleteColumnModal,
   selectAddCardModal,
+  selectMoveCardModal,
 } from '../../features/modals/selectors';
 import EditListModal from './EditListModal';
 import DeleteColumnModal from './DeleteColumnModal';
 import { labelColor } from './FilterModal';
 import AddCardModal from './AddCardModal';
+import MoveCardModal from './MoveCardModal';
 
 const Lists = () => {
   const lists = useSelector(selectBoardLists);
@@ -41,6 +44,7 @@ function ListTitle({ list }) {
   const editColumnModal = useSelector(selectEditColumnModal);
   const deleteColumnModal = useSelector(selectDeleteColumnModal);
   const addCardModal = useSelector(selectAddCardModal);
+  const moveCardModal = useSelector(selectMoveCardModal);
   const cards = list.cards;
 
   return (
@@ -76,6 +80,7 @@ function ListTitle({ list }) {
       {editColumnModal && <EditListModal />}
       {deleteColumnModal && <DeleteColumnModal />}
       {addCardModal && <AddCardModal />}
+      {moveCardModal && <MoveCardModal />}
     </div>
   );
 }
@@ -85,6 +90,7 @@ function Card({ card }) {
   const colorObject = labelColor.find((item) => item.color === color);
   const thisDay = new Date().toLocaleDateString();
   const today = thisDay === deadline;
+  const dispatch = useDispatch();
 
   return (
     <div
@@ -127,7 +133,10 @@ function Card({ card }) {
               <i className='bi bi-bell'></i>
             </button>
           )}
-          <button className='bg-transparent border-0 text-secondary'>
+          <button
+            className='bg-transparent border-0 text-secondary'
+            onClick={() => dispatch(openMoveCardModal({ _id }))}
+          >
             <i className='bi bi-arrow-right-circle'></i>
           </button>
           <button className='bg-transparent border-0 text-secondary'>
