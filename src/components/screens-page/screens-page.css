@@ -11,6 +11,11 @@
   cursor: pointer;
 }
 
+.screens-page {
+  max-width: 100%;
+  max-height: 100%;
+}
+
 .modals-container {
   width: 100vw;
   height: 100vh;
@@ -116,8 +121,8 @@
 }
 
 .main-dashboard-lists {
-  height: 100%;
-  overflow: auto;
+  max-height: 50%;
+  overflow-y: auto;
 }
 
 .label-color-display {

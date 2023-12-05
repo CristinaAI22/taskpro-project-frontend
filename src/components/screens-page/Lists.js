@@ -26,10 +26,10 @@ import AddCardModal from './AddCardModal';
 import MoveCardModal from './MoveCardModal';
 import EditCardModal from './EditCardModal';
 import DeleteCardModal from './DeleteCardModal';
+import { useEffect, useState } from 'react';
 
 const Lists = () => {
   const lists = useSelector(selectBoardLists);
-
   return (
     <>
       {lists.map((list) => {
@@ -63,6 +63,20 @@ function ListTitle({ list }) {
     ? list.cards.filter((card) => card.labelColor === filter)
     : list.cards;
 
+  const [windowHeight, setWindowHeight] = useState(window.innerHeight);
+
+  const handleResize = () => {
+    setWindowHeight(window.innerHeight);
+  };
+
+  useEffect(() => {
+    window.addEventListener('resize', handleResize);
+    return () => {
+      window.removeEventListener('resize', handleResize);
+    };
+  }, []);
+  const divHeight = windowHeight - 200;
+
   return (
     <div className='column-title-card text-light '>
       <div className='list-title-card d-flex justify-content-between p-3 bg-dark rounded-2 mb-3'>
@@ -82,7 +96,10 @@ function ListTitle({ list }) {
           </button>
         </div>
       </div>
-      <div className='cards-container'>
+      <div
+        className='cards-container'
+        style={{ height: divHeight, overflow: 'auto', paddingBottom: 60 }}
+      >
         {cards.map((card) => (
           <Card key={card._id} card={card} />
         ))}
