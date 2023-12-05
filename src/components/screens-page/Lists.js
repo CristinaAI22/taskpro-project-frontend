@@ -1,5 +1,8 @@
 import { useDispatch, useSelector } from 'react-redux';
-import { selectBoardLists } from '../../features/board-slice/selectors';
+import {
+  selectBoardLists,
+  selectBoardFilter,
+} from '../../features/board-slice/selectors';
 import {
   openEditColumnModal,
   openDeleteColumnModal,
@@ -53,7 +56,12 @@ function ListTitle({ list }) {
   const moveCardModal = useSelector(selectMoveCardModal);
   const editCardModal = useSelector(selectEditCardModal);
   const deleteCardModal = useSelector(selectDeleteCardModal);
-  const cards = list.cards;
+
+  const filter = useSelector(selectBoardFilter);
+
+  const cards = filter
+    ? list.cards.filter((card) => card.labelColor === filter)
+    : list.cards;
 
   return (
     <div className='column-title-card text-light '>

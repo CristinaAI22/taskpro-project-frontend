@@ -15,7 +15,7 @@
   width: 100vw;
   height: 100vh;
   background-color: transparent;
-  z-index: 99;
+  z-index: 9999;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -112,7 +112,7 @@
 
 .main-dashboard {
   overflow: scroll;
-  gap: 30px;
+  /* gap: 30px; */
 }
 
 .main-dashboard-lists {
