@@ -30,6 +30,7 @@ import { useEffect, useState } from 'react';
 
 const Lists = () => {
   const lists = useSelector(selectBoardLists);
+
   return (
     <>
       {lists.map((list) => {
@@ -64,11 +65,9 @@ function ListTitle({ list }) {
     : list.cards;
 
   const [windowHeight, setWindowHeight] = useState(window.innerHeight);
-
   const handleResize = () => {
     setWindowHeight(window.innerHeight);
   };
-
   useEffect(() => {
     window.addEventListener('resize', handleResize);
     return () => {
