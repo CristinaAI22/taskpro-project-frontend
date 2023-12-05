@@ -1,19 +1,31 @@
 import { useDispatch, useSelector } from 'react-redux';
-import { selectBoardLists } from '../../features/board-slice/selectors';
+import {
+  selectBoardLists,
+  selectBoardFilter,
+} from '../../features/board-slice/selectors';
 import {
   openEditColumnModal,
   openDeleteColumnModal,
   openAddCardModal,
+  openMoveCardModal,
+  openEditCardModal,
+  openDeleteCardModal,
 } from '../../features/modals/modalsSlice';
 import {
   selectEditColumnModal,
   selectDeleteColumnModal,
   selectAddCardModal,
+  selectMoveCardModal,
+  selectEditCardModal,
+  selectDeleteCardModal,
 } from '../../features/modals/selectors';
 import EditListModal from './EditListModal';
 import DeleteColumnModal from './DeleteColumnModal';
 import { labelColor } from './FilterModal';
 import AddCardModal from './AddCardModal';
+import MoveCardModal from './MoveCardModal';
+import EditCardModal from './EditCardModal';
+import DeleteCardModal from './DeleteCardModal';
 
 const Lists = () => {
   const lists = useSelector(selectBoardLists);
@@ -41,7 +53,15 @@ function ListTitle({ list }) {
   const editColumnModal = useSelector(selectEditColumnModal);
   const deleteColumnModal = useSelector(selectDeleteColumnModal);
   const addCardModal = useSelector(selectAddCardModal);
-  const cards = list.cards;
+  const moveCardModal = useSelector(selectMoveCardModal);
+  const editCardModal = useSelector(selectEditCardModal);
+  const deleteCardModal = useSelector(selectDeleteCardModal);
+
+  const filter = useSelector(selectBoardFilter);
+
+  const cards = filter
+    ? list.cards.filter((card) => card.labelColor === filter)
+    : list.cards;
 
   return (
     <div className='column-title-card text-light '>
@@ -76,6 +96,9 @@ function ListTitle({ list }) {
       {editColumnModal && <EditListModal />}
       {deleteColumnModal && <DeleteColumnModal />}
       {addCardModal && <AddCardModal />}
+      {moveCardModal && <MoveCardModal />}
+      {editCardModal && <EditCardModal />}
+      {deleteCardModal && <DeleteCardModal />}
     </div>
   );
 }
@@ -85,6 +108,7 @@ function Card({ card }) {
   const colorObject = labelColor.find((item) => item.color === color);
   const thisDay = new Date().toLocaleDateString();
   const today = thisDay === deadline;
+  const dispatch = useDispatch();
 
   return (
     <div
@@ -127,13 +151,22 @@ function Card({ card }) {
               <i className='bi bi-bell'></i>
             </button>
           )}
-          <button className='bg-transparent border-0 text-secondary'>
+          <button
+            className='bg-transparent border-0 text-secondary'
+            onClick={() => dispatch(openMoveCardModal({ _id, owner }))}
+          >
             <i className='bi bi-arrow-right-circle'></i>
           </button>
-          <button className='bg-transparent border-0 text-secondary'>
+          <button
+            className='bg-transparent border-0 text-secondary'
+            onClick={() => dispatch(openEditCardModal(card))}
+          >
             <i className='bi bi-pencil'></i>
           </button>
-          <button className='bg-transparent border-0 text-secondary'>
+          <button
+            className='bg-transparent border-0 text-secondary'
+            onClick={() => dispatch(openDeleteCardModal(card))}
+          >
             {' '}
             <i className='bi bi-trash3'></i>
           </button>

@@ -2,7 +2,7 @@ import { useEffect } from 'react';
 import HeaderDashboard from './HeaderDashboard';
 import MainDashboard from './MainDashboard';
 import './screens-page.css';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { getBoardData } from '../../features/board-slice/operations';
 
 const ScreensPage = () => {
@@ -13,6 +13,8 @@ const ScreensPage = () => {
     dispatch(getBoardData({ _id: boardId }));
   }, [dispatch]);
 
+  // const state = useSelector((state) => state.auth);
+  // console.log(state);
   return (
     <div className='screens-page bg-secondary text-center '>
       {/* col */}
