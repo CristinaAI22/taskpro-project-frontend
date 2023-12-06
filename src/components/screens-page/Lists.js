@@ -2,6 +2,8 @@ import { useDispatch, useSelector } from 'react-redux';
 import {
   selectBoardLists,
   selectBoardFilter,
+  selectBoardIsLoading,
+  selectBoardData,
 } from '../../features/board-slice/selectors';
 import {
   openEditColumnModal,
@@ -27,9 +29,16 @@ import MoveCardModal from './MoveCardModal';
 import EditCardModal from './EditCardModal';
 import DeleteCardModal from './DeleteCardModal';
 import { useEffect, useState } from 'react';
+import Loading from '../loading/Loading';
 
 const Lists = () => {
   const lists = useSelector(selectBoardLists);
+  // const isLoading = useSelector(selectBoardIsLoading);
+  // const boardData = useSelector(selectBoardData);
+
+  // if (isLoading || !boardData) {
+  //   return <Loading />;
+  // }
 
   return (
     <>
@@ -75,6 +84,13 @@ function ListTitle({ list }) {
     };
   }, []);
   const divHeight = windowHeight - 250;
+
+  // const isLoading = useSelector(selectBoardIsLoading);
+  // const boardData = useSelector(selectBoardData);
+
+  // if (isLoading || !boardData) {
+  //   return <Loading />;
+  // }
 
   return (
     <div className='column-title-card text-light '>
@@ -125,6 +141,12 @@ function Card({ card }) {
   const thisDay = new Date().toLocaleDateString();
   const today = thisDay === deadline;
   const dispatch = useDispatch();
+  // const isLoading = useSelector(selectBoardIsLoading);
+  // const boardData = useSelector(selectBoardData);
+
+  // if (isLoading || !boardData) {
+  //   return <Loading />;
+  // }
 
   return (
     <div

@@ -46,14 +46,14 @@ const boardSlice = createSlice({
         state.isLoading = true;
       })
       .addCase(editList.fulfilled, (state, action) => {
-        const { list } = action.payload;
-        const newLists = state.bordData.lists.map((boardList) => {
-          if (boardList._id === list._id) {
-            return list;
-          }
-          return boardList;
-        });
-        state.bordData.lists = newLists;
+        // const { list } = action.payload;
+        // const newLists = state.bordData.lists.map((boardList) => {
+        //   if (boardList._id === list._id) {
+        //     return list;
+        //   }
+        //   return boardList;
+        // });
+        // state.bordData.lists = newLists;
         state.isLoading = false;
       })
       .addCase(editList.rejected, (state) => {
@@ -66,6 +66,7 @@ const boardSlice = createSlice({
       .addCase(getBoardData.fulfilled, (state, action) => {
         const { bordData } = action.payload;
         state.bordData = bordData;
+        state.isLoading = false;
       })
       .addCase(getBoardData.rejected, (state) => {
         state.isLoading = false;

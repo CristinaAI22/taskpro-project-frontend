@@ -4,7 +4,10 @@ import MainDashboard from './MainDashboard';
 import './screens-page.css';
 import { useDispatch, useSelector } from 'react-redux';
 import { getBoardData } from '../../features/board-slice/operations';
-import { selectBoardData } from '../../features/board-slice/selectors';
+import {
+  selectBoardData,
+  selectBoardIsLoading,
+} from '../../features/board-slice/selectors';
 import Loading from '../loading/Loading';
 import { useParams } from 'react-router-dom';
 
@@ -13,7 +16,7 @@ const ScreensPage = () => {
   const boardId = '656639d36713cb888590d983';
   const boadData = useSelector(selectBoardData);
   // const boardId = useParams('boardId');
-
+  const isLoading = useSelector(selectBoardIsLoading);
   useEffect(() => {
     dispatch(getBoardData({ _id: boardId }));
   }, [dispatch, boardId]);
@@ -34,6 +37,10 @@ const ScreensPage = () => {
         </div>
       </div>
     );
+  }
+
+  if (isLoading) {
+    return <Loading />;
   }
 
   return (
