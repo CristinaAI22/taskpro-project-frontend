@@ -37,7 +37,7 @@ const Lists = () => {
         return (
           <div
             key={list._id}
-            className='main-dashboard-lists col-12 col-sm-6 col-md-4  bg-secondary p-3 rounded-2'
+            className='main-dashboard-lists col-12 col-sm-6 col-md-4  bg-secondary p-1 rounded-2'
           >
             <ListTitle list={list} />
           </div>
@@ -74,7 +74,7 @@ function ListTitle({ list }) {
       window.removeEventListener('resize', handleResize);
     };
   }, []);
-  const divHeight = windowHeight - 200;
+  const divHeight = windowHeight - 250;
 
   return (
     <div className='column-title-card text-light '>
@@ -97,7 +97,7 @@ function ListTitle({ list }) {
       </div>
       <div
         className='cards-container'
-        style={{ height: divHeight, overflow: 'auto', paddingBottom: 60 }}
+        style={{ height: divHeight, overflow: 'auto' }}
       >
         {cards.map((card) => (
           <Card key={card._id} card={card} />

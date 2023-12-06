@@ -1,7 +1,8 @@
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { closeFilterModal } from '../../features/modals/modalsSlice';
 import { useState } from 'react';
 import { setFilter, resetFilter } from '../../features/board-slice/boardSlice';
+import { selectBoardFilter } from '../../features/board-slice/selectors';
 
 export const labelColor = [
   { name: 'Without priority', color: '#FFFFFF4D' },
@@ -12,7 +13,8 @@ export const labelColor = [
 
 const FilterModal = () => {
   const dispatch = useDispatch();
-  const [selectedColor, setSelectedColor] = useState(null);
+  const filter = useSelector(selectBoardFilter);
+  const [selectedColor, setSelectedColor] = useState(filter ? filter : null);
   const handleColorChange = (color) => {
     setSelectedColor(color);
     dispatch(setFilter(color));

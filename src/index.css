@@ -53,9 +53,12 @@ code {
   --color-text-green-main: #bedbb0;
   --color-text-violet-main: #5255bc;
 
-  --color-text-dark-07: #161616b2; /*card description*/
-  --color-text-dark-05: #16161680; /*priority deadline*/
-  --color-text-white-05: #ffffff80; /*card description*/
+  --color-text-dark-07: #161616b2;
+  /*card description*/
+  --color-text-dark-05: #16161680;
+  /*priority deadline*/
+  --color-text-white-05: #ffffff80;
+  /*card description*/
   --color-cream: #fcfcfc;
 }
 
@@ -81,13 +84,32 @@ code {
 input {
   color: #fff;
 }
+
 .header {
   background-color: var(--color-black);
 }
+
 .user-name {
   color: var(--color-text-white-main);
 }
+
 .form-submit-button {
   color: var(--color-black);
   font-weight: 600;
+}
+
+
+.aplication-container {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: nowrap;
+}
+
+.aplication-sidebar-container {
+  max-width: 25%;
+}
+
+.aplication-main-container {
+  width: 75%;
+  flex-grow: 1;
 }
