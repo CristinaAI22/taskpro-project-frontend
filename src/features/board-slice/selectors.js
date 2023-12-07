@@ -12,5 +12,4 @@ export const selectBoardFilter = (state) => state.board.filter;
 
 export const selectBoardData = (state) => state.board.bordData;
 
-export const selectBoardBackgroundImg = (state) =>
-  state.board.bordData.backgroundImg;
+export const selectBoardBackgroundImg = (state) => state.board.backgroundImg;

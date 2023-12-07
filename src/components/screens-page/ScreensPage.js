@@ -18,16 +18,21 @@ const ScreensPage = () => {
   const boadData = useSelector(selectBoardData);
   // const boardId = useParams('boardId');
   const isLoading = useSelector(selectBoardIsLoading);
+  const backgroundImg = useSelector(selectBoardBackgroundImg);
+
   useEffect(() => {
     dispatch(getBoardData({ _id: boardId }));
   }, [dispatch, boardId]);
 
   const state = useSelector((state) => state.board);
-  // console.log(state);
-  const backgroundImg = useSelector(selectBoardBackgroundImg);
+  console.log(state);
+
   const divStyle = {
     backgroundImage: backgroundImg ? `url(${backgroundImg})` : 'none',
   };
+  if (isLoading) {
+    return <Loading />;
+  }
 
   if (!boadData) {
     return (
@@ -43,10 +48,6 @@ const ScreensPage = () => {
         </div>
       </div>
     );
-  }
-
-  if (isLoading) {
-    return <Loading />;
   }
 
   return (

@@ -1,13 +1,10 @@
 import AddColumn from './AddColumn';
-import { useSelector } from 'react-redux';
-import { selectBoardLists } from '../../features/board-slice/selectors';
 import { useModals } from '../../hooks/useModals';
 import AddColumnModal from './AddColumnModal';
 import Lists from './Lists';
 
 const MainDashboard = () => {
-  const boardLists = useSelector(selectBoardLists);
-  const { addColumnModal, editColumnModal } = useModals();
+  const { addColumnModal } = useModals();
 
   return (
     <>
