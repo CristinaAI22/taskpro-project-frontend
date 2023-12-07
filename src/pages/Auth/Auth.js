@@ -2,7 +2,7 @@ import { NavLink, Outlet, useParams } from 'react-router-dom';
 import { Suspense } from 'react';
 import { ToastContainer } from 'react-toastify';
 import RegisterForm from '../../components/register/RegisterForm';
-import LoginForm from '../../components/login/LoginForm';
+import LoginForm from '../../components/login/LogInForm';
 import Loading from '../../components/loading/Loading';
 
 const Auth = () => {

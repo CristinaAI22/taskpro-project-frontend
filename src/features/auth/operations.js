@@ -70,11 +70,12 @@ export const login = createAsyncThunk(
   }
 );
 
-export const logOut = createAsyncThunk("user/logOut", async (_, thunkAPI) => {
+export const logOut = createAsyncThunk("users/logOut", async (_, thunkAPI) => {
   try {
-    await axios.post("api/taskPro/users/logout");
+    await axios.get("api/taskPro/users/logout");
     clearAuthHeader();
   } catch (error) {
+    console.error("Logout Error:", error.response.data);
     return thunkAPI.rejectWithValue(error.message);
   }
 });
@@ -125,3 +126,26 @@ export const updateUserTheme = createAsyncThunk(
     }
   }
 );
+/*modal help*/
+export const addComment = createAsyncThunk(
+  "taskPro/add-comment",
+  async ({ email, text }, thunkAPI) => {
+    const { auth } = thunkAPI.getState();
+    const { token } = auth;
+
+    console.log("Token:", token);
+    try {
+      setAuthHeader(token);
+      const response = await axios.post("/api/taskPro/users/need-help", {
+        email,
+        text,
+      });
+      return response.data;
+    } catch (error) {
+      console.error("Error:", error);
+      console.log("Response Data:", error.response.data);
+      return thunkAPI.rejectWithValue(error.response.data);
+    }
+  }
+);
+ 
