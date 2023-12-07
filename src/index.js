@@ -12,13 +12,17 @@ import "jquery/dist/jquery.min";
 import "bootstrap/dist/js/bootstrap.bundle.min";
 import "bootstrap-icons/font/bootstrap-icons.css";
 import { ThemeProvider } from "./components/header/ThemeContext";
+import getTheme from "./components/header/getTheme";
+
+const userTheme = "light";
+const theme = getTheme(userTheme);
 
 ReactDOM.createRoot(document.getElementById("root")).render(
   <React.StrictMode>
     <Provider store={store}>
       <PersistGate loading={null} persistor={persistor}>
         <BrowserRouter>
-          <ThemeProvider>
+          <ThemeProvider theme={theme}>
             <App />
           </ThemeProvider>
         </BrowserRouter>

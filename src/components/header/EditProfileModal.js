@@ -1,6 +1,5 @@
 import React, { useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
-import { Modal, Form } from "react-bootstrap";
 import { closeEditProfileModal } from "../../features/auth/authSlice";
 import { updateProfile, refreshUser } from "../../features/auth/operations";
 import {
@@ -20,7 +19,6 @@ const EditProfileModal = () => {
     avatar: null,
     showPassword: false,
   });
-  const [imageKey, setImageKey] = useState(Date.now());
 
   const handleClose = () => {
     dispatch(closeEditProfileModal());
@@ -53,9 +51,9 @@ const EditProfileModal = () => {
     <>
       {isModalOpen && (
         <div className="modal" style={{ display: "block" }}>
-          <div className="modal-dialog">
+          <div className="modal-dialog" style={{ marginTop: "80px" }}>
             <div className="modal-content">
-              <div data-bs-theme="dark" className="modal-header ">
+              <div data-bs-theme="dark" className="modal-header  ">
                 <h4 className="modal-title">Edit Profile</h4>
                 <button
                   type="button"
@@ -81,7 +79,7 @@ const EditProfileModal = () => {
                     </div>
                     <label
                       htmlFor="avatarInput"
-                      className="position-absolute rounded-2 color-hover-green"
+                      className="position-absolute rounded-2 change-image-button"
                       style={{
                         bottom: "-10%",
                         left: "50%",
@@ -92,11 +90,11 @@ const EditProfileModal = () => {
                         type="file"
                         id="avatarInput"
                         accept="image/*"
-                        className="d-none"
+                        className="d-none "
                         onChange={handleFileChange}
                       />
-                      <span className="btn btn-primary btn-sm">
-                        <i className="bi bi-plus"></i>
+                      <span className="btn ">
+                        <i className="bi bi-plus plus-icon"></i>
                       </span>
                     </label>
                   </div>
@@ -104,7 +102,7 @@ const EditProfileModal = () => {
                     type="text"
                     placeholder="Enter your name"
                     value={formData.name}
-                    className="form-control color-black"
+                    className="form-control color-black "
                     onChange={(e) =>
                       setFormData({ ...formData, name: e.target.value })
                     }
@@ -122,7 +120,7 @@ const EditProfileModal = () => {
                     <input
                       type={formData.showPassword ? "text" : "password"}
                       placeholder="Enter your password"
-                      value={formData.password}
+                      // value={formData.password}
                       className="form-control"
                       onChange={(e) =>
                         setFormData({ ...formData, password: e.target.value })

@@ -12,7 +12,10 @@ import SharedLayout from "./components/shared-layout/SharedLayout";
 import Loading from "./components/loading/Loading";
 import LoginForm from "./components/login/LogInForm.js";
 import RegisterForm from "./components/register/RegisterForm.js";
-import { createTheme } from "@mui/material/styles";
+import {
+  createTheme,
+  ThemeProvider as MuiThemeProvider,
+} from "@mui/material/styles";
 import { ThemeProvider } from "./components/header/ThemeContext.js";
 import getTheme from "./components/header/getTheme.js";
 
@@ -44,32 +47,37 @@ export const App = () => {
     </div>
   ) : (
     <ThemeProvider theme={theme}>
-      <Routes>
-        <Route path="/" element={<SharedLayout />}>
-          <Route
-            index
-            element={
-              <RestrictedRoute redirectTo="/home" component={<WelcomePage />} />
-            }
-          />
-          <Route
-            path="/home"
-            element={<PrivateRoute redirectTo="/" component={<Home />} />}
-          ></Route>
-          {/* <Route path='screens-page' element={<ScreensPage />} /> */}
-          {/* <Route path='header' element={<Header />} /> */}
-          {/* <Route path='/home' element={<WelcomePage />} /> */}
-          <Route
-            path="auth/:id"
-            element={
-              <RestrictedRoute redirectTo="/home" component={<AuthPage />} />
-            }
-          ></Route>
-          <Route path="register" element={<RegisterForm />} />
-          <Route path="login" element={<LoginForm />} />
-        </Route>
-        <Route path="*" element={<ErrorPage />} />
-      </Routes>
+      <MuiThemeProvider theme={theme}>
+        <Routes>
+          <Route path="/" element={<SharedLayout />}>
+            <Route
+              index
+              element={
+                <RestrictedRoute
+                  redirectTo="/home"
+                  component={<WelcomePage />}
+                />
+              }
+            />
+            <Route
+              path="/home"
+              element={<PrivateRoute redirectTo="/" component={<Home />} />}
+            ></Route>
+            <Route path="screens-page" element={<ScreensPage />} />
+            <Route path="header" element={<Header />} />
+            <Route path="/home" element={<WelcomePage />} />
+            <Route
+              path="auth/:id"
+              element={
+                <RestrictedRoute redirectTo="/home" component={<AuthPage />} />
+              }
+            ></Route>
+            <Route path="register" element={<RegisterForm />} />
+            <Route path="login" element={<LoginForm />} />
+          </Route>
+          <Route path="*" element={<ErrorPage />} />
+        </Routes>
+      </MuiThemeProvider>
     </ThemeProvider>
   );
 };

@@ -60,8 +60,15 @@ const ThemeSwitcher = () => {
 
   const handleLocalThemeChange = async (selectedTheme) => {
     try {
+      console.log("Updating user theme:", selectedTheme);
+
       // Dispatch the updateUserTheme async thunk to update the user's theme on the backend
       await dispatch(updateUserTheme({ theme: selectedTheme }));
+
+      // Introduce a delay or use a callback to ensure that the state is updated
+      setTimeout(() => {
+        console.log("Updated theme after delay:", selectedTheme);
+      }, 1000);
 
       // Update the theme locally using the context
       handleThemeChange(selectedTheme);
@@ -72,7 +79,13 @@ const ThemeSwitcher = () => {
   };
 
   return (
-    <div className="dropdown " data-bs-theme="dark">
+    <div
+      className="dropdown "
+      data-bs-theme="dark"
+      style={{
+        theme,
+      }}
+    >
       <button
         className="btn btn-secondary header border-0"
         type="button"
