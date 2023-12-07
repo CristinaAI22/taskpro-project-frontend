@@ -2,8 +2,9 @@ import { useDispatch, useSelector } from 'react-redux';
 import { closeEditColumnModal } from '../../features/modals/modalsSlice';
 import Notiflix from 'notiflix';
 import { useRef } from 'react';
-import { editList } from '../../features/board-slice/operations';
+import { editList, getBoardData } from '../../features/board-slice/operations';
 import { selectListToEdit } from '../../features/modals/selectors';
+import { selectBoardId } from '../../features/board-slice/selectors';
 
 const EditListModal = () => {
   const list = useSelector(selectListToEdit);
@@ -11,6 +12,7 @@ const EditListModal = () => {
   const _id = list._id;
   const dispatch = useDispatch();
   const inputRef = useRef();
+  const boardId = useSelector(selectBoardId);
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -26,6 +28,7 @@ const EditListModal = () => {
 
     const credentials = { _id, data };
     dispatch(editList(credentials));
+    dispatch(getBoardData({ _id: boardId }));
     dispatch(closeEditColumnModal());
   };
 
@@ -33,7 +36,9 @@ const EditListModal = () => {
     <div className='modals-container'>
       <div className='bg-dark modal-inner-container p-4'>
         <div className='filter-modal-header w-100 position-relative'>
-          <h4 className='text-light'>Add column</h4>
+          <h4 className='text-light'>
+            Edit <span className='color-green'>{defaultTitle}</span> column
+          </h4>
           <button
             className='text-light filter-btn position-btn-right'
             onClick={() => dispatch(closeEditColumnModal())}
@@ -52,7 +57,7 @@ const EditListModal = () => {
             />
           </label>
           <button type='submit' className='py-2 modals-buttons rounded-2'>
-            <i className='bi bi-plus-square-fill me-1'></i> Add
+            <i className='bi bi-plus-square-fill me-1'></i> Edit
           </button>
         </form>
       </div>

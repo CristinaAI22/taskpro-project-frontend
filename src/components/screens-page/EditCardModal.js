@@ -1,48 +1,38 @@
 import { useDispatch, useSelector } from 'react-redux';
-import { closeAddCardModal } from '../../features/modals/modalsSlice';
+import { closeEditCardModal } from '../../features/modals/modalsSlice';
 import Notiflix from 'notiflix';
 import { useRef, useState } from 'react';
-import { selectListId } from '../../features/modals/selectors';
-// import { addList } from '../../features/board-slice/operations';
+import { selectListId, selectCard } from '../../features/modals/selectors';
+import { editCard } from '../../features/board-slice/operations';
 import { labelColor } from './FilterModal';
 import Calendar from 'react-calendar';
 import 'react-calendar/dist/Calendar.css';
 import { addCard } from '../../features/board-slice/operations';
+import { monthNames, daysOfWeek } from './AddCardModal';
 
-export const monthNames = [
-  'January',
-  'February',
-  'March',
-  'April',
-  'May',
-  'June',
-  'July',
-  'August',
-  'September',
-  'October',
-  'November',
-  'December',
-];
-
-export const daysOfWeek = [
-  'Sunday',
-  'Monday',
-  'Tuesday',
-  'Wednesday',
-  'Thursday',
-  'Friday',
-  'Saturday',
-];
-
-const AddCardModal = () => {
+const EditCardModal = () => {
   const dispatch = useDispatch();
   const titleRef = useRef();
   const textRef = useRef();
-  const owner = useSelector(selectListId);
+
+  const card = useSelector(selectCard);
+  const {
+    _id,
+    title,
+    owner,
+    labelColor: cardLabelColor,
+    description,
+    deadline,
+  } = card;
+
+  const parts = deadline.split('/');
+  const formattedDateString = `${parts[1]} ${parts[0]} ${parts[2]}`;
+  const dateObject = new Date(formattedDateString);
+
   const currentDate = new Date();
-  const [selectedColor, setSelectedColor] = useState(null);
+  const [selectedColor, setSelectedColor] = useState(cardLabelColor);
   const [displayCalendar, setDisplayCalendar] = useState(false);
-  const [selectedDate, setSelectedDate] = useState(null);
+  const [selectedDate, setSelectedDate] = useState(dateObject);
   const handleColorChange = (color) => {
     setSelectedColor(color);
   };
@@ -65,7 +55,9 @@ const AddCardModal = () => {
 
   let weekDay = null;
   if (selectedDate) {
-    if (selectedDate.toLocaleDateString() === new Date().toLocaleDateString()) {
+    if (
+      selectedDate.toLocaleDateString() === currentDate.toLocaleDateString()
+    ) {
       weekDay = 'Today';
     } else {
       const dayOfWeekNumber = selectedDate.getDay();
@@ -83,25 +75,25 @@ const AddCardModal = () => {
         'Please enter a title of at least 3 characters'
       );
     }
-    const credentials = {
+    const data = {
       owner,
       title,
       description: text,
       labelColor: selectedColor ? selectedColor : labelColor[0].color,
       deadline: selectedDate ? selectedDate.toLocaleDateString() : 'Not set',
     };
-    dispatch(addCard(credentials));
-    dispatch(closeAddCardModal());
+    dispatch(editCard({ _id, data }));
+    dispatch(closeEditCardModal());
   };
 
   return (
     <div className='modals-container'>
       <div className='bg-dark modal-inner-container p-4'>
         <div className='filter-modal-header w-100 position-relative'>
-          <h4 className='text-light text-start'>Add card</h4>
+          <h4 className='text-light text-start'>Edit card</h4>
           <button
             className='text-light filter-btn position-btn-right'
-            onClick={() => dispatch(closeAddCardModal())}
+            onClick={() => dispatch(closeEditCardModal())}
           >
             <i className='bi bi-x-lg fw-bold'></i>
           </button>
@@ -112,6 +104,7 @@ const AddCardModal = () => {
               type='text'
               placeholder='Title'
               className='w-100 rounded-2 p-2 bg-black text-light add-column-input'
+              defaultValue={title}
               ref={titleRef}
             />
           </label>
@@ -121,6 +114,7 @@ const AddCardModal = () => {
               placeholder='Description'
               rows='4'
               cols='50'
+              defaultValue={description}
               ref={textRef}
             ></textarea>
           </label>
@@ -182,11 +176,11 @@ const AddCardModal = () => {
             type='submit'
             className='py-2 modals-buttons rounded-2 w-100 mt-4'
           >
-            <i className='bi bi-plus-square-fill me-1'></i> Add
+            <i className='bi bi-plus-square-fill me-1'></i> Edit
           </button>
         </form>
       </div>
     </div>
   );
 };
-export default AddCardModal;
+export default EditCardModal;

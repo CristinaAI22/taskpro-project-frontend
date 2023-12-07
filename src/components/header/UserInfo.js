@@ -14,7 +14,7 @@ const UserInfo = () => {
 
   return (
     <div className="d-flex gap-2 ">
-      <span className="d-none d-md-block ps-2 align-self-center">
+      <span className="d-none d-md-block ps-2 align-self-center user-name">
         {user.name}
       </span>
       <img

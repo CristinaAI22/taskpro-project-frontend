@@ -1,22 +1,44 @@
 import { useDispatch, useSelector } from 'react-redux';
-import { selectBoardLists } from '../../features/board-slice/selectors';
+import {
+  selectBoardLists,
+  selectBoardFilter,
+  selectBoardIsLoading,
+  selectBoardData,
+} from '../../features/board-slice/selectors';
 import {
   openEditColumnModal,
   openDeleteColumnModal,
   openAddCardModal,
+  openMoveCardModal,
+  openEditCardModal,
+  openDeleteCardModal,
 } from '../../features/modals/modalsSlice';
 import {
   selectEditColumnModal,
   selectDeleteColumnModal,
   selectAddCardModal,
+  selectMoveCardModal,
+  selectEditCardModal,
+  selectDeleteCardModal,
 } from '../../features/modals/selectors';
 import EditListModal from './EditListModal';
 import DeleteColumnModal from './DeleteColumnModal';
 import { labelColor } from './FilterModal';
 import AddCardModal from './AddCardModal';
+import MoveCardModal from './MoveCardModal';
+import EditCardModal from './EditCardModal';
+import DeleteCardModal from './DeleteCardModal';
+import { useEffect, useState } from 'react';
+import Loading from '../loading/Loading';
 
 const Lists = () => {
   const lists = useSelector(selectBoardLists);
+  // const isLoading = useSelector(selectBoardIsLoading);
+  // const boardData = useSelector(selectBoardData);
+
+  // if (isLoading || !boardData) {
+  //   return <Loading />;
+  // }
 
   return (
     <>
@@ -24,7 +46,7 @@ const Lists = () => {
         return (
           <div
             key={list._id}
-            className='main-dashboard-lists col-12 col-sm-6 col-md-4  bg-secondary p-3 rounded-2'
+            className='main-dashboard-lists col-12 col-sm-6 col-md-4  bg-secondary p-1 rounded-2'
           >
             <ListTitle list={list} />
           </div>
@@ -41,7 +63,34 @@ function ListTitle({ list }) {
   const editColumnModal = useSelector(selectEditColumnModal);
   const deleteColumnModal = useSelector(selectDeleteColumnModal);
   const addCardModal = useSelector(selectAddCardModal);
-  const cards = list.cards;
+  const moveCardModal = useSelector(selectMoveCardModal);
+  const editCardModal = useSelector(selectEditCardModal);
+  const deleteCardModal = useSelector(selectDeleteCardModal);
+
+  const filter = useSelector(selectBoardFilter);
+
+  const cards = filter
+    ? list.cards.filter((card) => card.labelColor === filter)
+    : list.cards;
+
+  const [windowHeight, setWindowHeight] = useState(window.innerHeight);
+  const handleResize = () => {
+    setWindowHeight(window.innerHeight);
+  };
+  useEffect(() => {
+    window.addEventListener('resize', handleResize);
+    return () => {
+      window.removeEventListener('resize', handleResize);
+    };
+  }, []);
+  const divHeight = windowHeight - 250;
+
+  // const isLoading = useSelector(selectBoardIsLoading);
+  // const boardData = useSelector(selectBoardData);
+
+  // if (isLoading || !boardData) {
+  //   return <Loading />;
+  // }
 
   return (
     <div className='column-title-card text-light '>
@@ -62,7 +111,10 @@ function ListTitle({ list }) {
           </button>
         </div>
       </div>
-      <div className='cards-container'>
+      <div
+        className='cards-container'
+        style={{ height: divHeight, overflow: 'auto' }}
+      >
         {cards.map((card) => (
           <Card key={card._id} card={card} />
         ))}
@@ -76,6 +128,9 @@ function ListTitle({ list }) {
       {editColumnModal && <EditListModal />}
       {deleteColumnModal && <DeleteColumnModal />}
       {addCardModal && <AddCardModal />}
+      {moveCardModal && <MoveCardModal />}
+      {editCardModal && <EditCardModal />}
+      {deleteCardModal && <DeleteCardModal />}
     </div>
   );
 }
@@ -85,6 +140,13 @@ function Card({ card }) {
   const colorObject = labelColor.find((item) => item.color === color);
   const thisDay = new Date().toLocaleDateString();
   const today = thisDay === deadline;
+  const dispatch = useDispatch();
+  // const isLoading = useSelector(selectBoardIsLoading);
+  // const boardData = useSelector(selectBoardData);
+
+  // if (isLoading || !boardData) {
+  //   return <Loading />;
+  // }
 
   return (
     <div
@@ -127,13 +189,22 @@ function Card({ card }) {
               <i className='bi bi-bell'></i>
             </button>
           )}
-          <button className='bg-transparent border-0 text-secondary'>
+          <button
+            className='bg-transparent border-0 text-secondary'
+            onClick={() => dispatch(openMoveCardModal({ _id, owner }))}
+          >
             <i className='bi bi-arrow-right-circle'></i>
           </button>
-          <button className='bg-transparent border-0 text-secondary'>
+          <button
+            className='bg-transparent border-0 text-secondary'
+            onClick={() => dispatch(openEditCardModal(card))}
+          >
             <i className='bi bi-pencil'></i>
           </button>
-          <button className='bg-transparent border-0 text-secondary'>
+          <button
+            className='bg-transparent border-0 text-secondary'
+            onClick={() => dispatch(openDeleteCardModal(card))}
+          >
             {' '}
             <i className='bi bi-trash3'></i>
           </button>
