@@ -46,7 +46,7 @@ const Lists = () => {
         return (
           <div
             key={list._id}
-            className='main-dashboard-lists col-12 col-sm-6 col-md-4  bg-secondary p-1 rounded-2'
+            className='main-dashboard-lists col-12 col-sm-6 col-md-4  bg-transparent p-1 rounded-2'
           >
             <ListTitle list={list} />
           </div>

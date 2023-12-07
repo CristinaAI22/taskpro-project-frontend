@@ -10,18 +10,18 @@ import { selectUser } from './features/auth/selectors.js';
 import { useSelector } from 'react-redux';
 import SharedLayout from './components/shared-layout/SharedLayout';
 import Loading from './components/loading/Loading';
-import LoginForm from './components/login/LogInForm.js';
+import LoginForm from './components/login/LoginForm.js';
 import RegisterForm from './components/register/RegisterForm.js';
 import { createTheme } from '@mui/material/styles';
 import { ThemeProvider } from './components/header/ThemeContext.js';
 import getTheme from './components/header/getTheme.js';
 
 import { Home } from './pages/home-page/HomePage.jsx';
-import Header from './components/header/Header.js';
+// import Header from './components/header/Header.js';
 
-const ScreensPage = lazy(() =>
-  import('./components/screens-page/ScreensPage.js')
-);
+// const ScreensPage = lazy(() =>
+//   import('./components/screens-page/ScreensPage.js')
+// );
 
 const ErrorPage = lazy(() => import('./pages/error-page/ErrorPage'));
 const WelcomePage = lazy(() => import('./pages/welcome/Welcome.js'));

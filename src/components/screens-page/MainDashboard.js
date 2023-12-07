@@ -11,7 +11,7 @@ const MainDashboard = () => {
 
   return (
     <>
-      <div className='main-dashboard row p-3 px-4 flex-nowrap'>
+      <div className='main-dashboard row p-3 px-4 flex-nowrap bg-transparent'>
         <Lists />
         <AddColumn />
       </div>

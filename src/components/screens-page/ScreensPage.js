@@ -7,21 +7,27 @@ import { getBoardData } from '../../features/board-slice/operations';
 import {
   selectBoardData,
   selectBoardIsLoading,
+  selectBoardBackgroundImg,
 } from '../../features/board-slice/selectors';
 import Loading from '../loading/Loading';
 import { useParams } from 'react-router-dom';
 
 const ScreensPage = () => {
   const dispatch = useDispatch();
-  const boardId = '656639d36713cb888590d983';
+  const boardId = '656f7fe83a3d3914e6fbf7f0';
   const boadData = useSelector(selectBoardData);
   // const boardId = useParams('boardId');
   const isLoading = useSelector(selectBoardIsLoading);
   useEffect(() => {
     dispatch(getBoardData({ _id: boardId }));
   }, [dispatch, boardId]);
-  // const state = useSelector((state) => state.auth);
+
+  const state = useSelector((state) => state.board);
   // console.log(state);
+  const backgroundImg = useSelector(selectBoardBackgroundImg);
+  const divStyle = {
+    backgroundImage: backgroundImg ? `url(${backgroundImg})` : 'none',
+  };
 
   if (!boadData) {
     return (
@@ -44,7 +50,7 @@ const ScreensPage = () => {
   }
 
   return (
-    <div className='screens-page bg-secondary text-center '>
+    <div className='screens-page bg-secondary text-center' style={divStyle}>
       {/* col */}
       {/* <div className='row'> */}
       <HeaderDashboard />
