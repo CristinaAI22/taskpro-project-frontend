@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import styles from "../styles";
 import { CDBListGroup, CDBListGroupItem } from "cdbreact";
-import icon_project from "../images/icons/icon_project.svg";
+import icon_project from "../images/modal/icon_project.svg";
 import trash from "../images/trash.svg";
 import pencil from "../images/pencil.svg";
 import { CDBBtn } from "cdbreact";

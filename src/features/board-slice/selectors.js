@@ -1,3 +1,5 @@
+export const selectBoard = (state) => state.board.bordData;
+
 export const selectBoardTitle = (state) => state.board.bordData.title;
 
 export const selectBoardLists = (state) => state.board.bordData.lists;
@@ -11,3 +13,5 @@ export const selectBoardIsError = (state) => state.board.isError;
 export const selectBoardFilter = (state) => state.board.filter;
 
 export const selectBoardData = (state) => state.board.bordData;
+
+export const selectBoardBackgroundImg = (state) => state.board.backgroundImg;

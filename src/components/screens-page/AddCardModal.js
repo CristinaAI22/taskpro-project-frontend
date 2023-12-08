@@ -88,7 +88,9 @@ const AddCardModal = () => {
       title,
       description: text,
       labelColor: selectedColor ? selectedColor : labelColor[0].color,
-      deadline: selectedDate ? selectedDate.toLocaleDateString() : 'Not set',
+      deadline: selectedDate
+        ? selectedDate.toLocaleDateString()
+        : currentDate.toLocaleDateString(),
     };
     dispatch(addCard(credentials));
     dispatch(closeAddCardModal());

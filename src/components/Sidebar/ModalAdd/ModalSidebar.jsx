@@ -1,25 +1,59 @@
-
-import React from "react";
-import Modal from "react-bootstrap/Modal";
+import React, { useRef, useState } from "react";
+import { useSelector, useDispatch } from "react-redux";
+import Modal from "react-bootstrap/Modal"; 
+//import Form from "react-bootstrap/Form";
+import Notiflix from 'notiflix';
+import { addBoard } from '../../../features/board-slice/operations';
+import { iconRadio, BackgroundRadio } from "./radioOptions";
+import { CDBBtn } from "cdbreact";
 import styles from "../styles";
-import icon_project from "../images/icons/icon_project.svg";
-import star from "../images/icons/star.svg";
-import loading from "../images/icons/loading.svg";
-import puzzle_piece from "../images/icons/puzzle_piece.svg";
-import container from "../images/icons/container.svg";
-import lightning from "../images/icons/lightning.svg";
-import colors from "../images/icons/colors.svg";
-import hexagon from "../images/icons/hexagon.svg";
-import help from "../images/help.svg";
 import plus from "../images/plus2.svg";
-import { CDBInput, CDBBtn } from "cdbreact";
-import { Formik, Form, Field, ErrorMessage } from "formik"; 
 import close from "../images/close.svg"; 
-import { formikConfig } from './FormikConfig';
 
 const ModalSidebar = (props) => {
+  const [selectedIcon, setSelectedIcon] = useState(iconRadio[0].value);
+  const [selectedBackground, setSelectedBackground] = useState(BackgroundRadio[0].value);
+
+  const dispatch = useDispatch();
+  const titleRef = useRef();
+
+  const handleIconChange = (e) => {
+    const selectedIcon = e.target.value;
+    setSelectedIcon(selectedIcon); 
+  };
+
+  const handleBackgroundChange = (e) => {
+    const selectedBackground = e.target.value;
+    setSelectedBackground(selectedBackground); 
+  };
+
+  const handleSubmit = async (evt) => {
+    evt.preventDefault();
+    const title = titleRef.current.value;
+    if (title.length < 3) {
+      return Notiflix.Notify.failure('Please enter a title of at least 3 characters');
+    }
+   
+    // const formData = new FormData();
+    // formData.append("title", title);
+    // formData.append("icon", selectedIcon.image);
+    // formData.append("backgroundImg", selectedBackground.image);
+    const requestData = {
+      title: title,
+      icon: iconRadio.find(option => option.value === selectedIcon)?.image,
+      backgroundImg: BackgroundRadio.find(option => option.value === selectedBackground)?.image,
+    };
+   
+    console.log("Request Data:", requestData);
+
+    dispatch(addBoard(requestData))
+      .then(response => console.log("Backend Response:", response))
+      .catch(error => console.error("Backend Error:", error));
+  
+    props.onHide();
+  };
+  
   return (
-    <Formik {...formikConfig}>
     <Modal {...props} size="sm" aria-labelledby="modal-sidebar" centered>
       <Modal.Header>
         <Modal.Title style={styles.addModal}>New board</Modal.Title>
@@ -27,70 +61,85 @@ const ModalSidebar = (props) => {
           <img src={close} alt="closeIcon" />
         </CDBBtn>
       </Modal.Header>
-      <Form>
+      <form onSubmit={handleSubmit}>
         <Modal.Body>
           <div className="col">
             <div className="row">
-              <Field
+              <input
                 type="text"
                 name="title"
                 placeholder="Title"
-                component={CDBInput}
                 style={styles.inputText}
-              />
-              <ErrorMessage
-                name="title"
-                component="div"
-                style={{ color: "red" }}
+                ref={titleRef}
+                required
               />
             </div>
+
+            {/* Icons */}
             <div className="row">
-              <label
-                htmlFor="icons"
-                className="icons mt-4 mb-3"
-                style={styles.icons}
-              >
-                Icons
-              </label>
+              <label className="icons mt-4 mb-3">Icons</label>
               <div className="row">
-               <div className="col-1">
-                  <img src={icon_project} alt="icon_project" />
-               </div>
-                <div className="col-1">
-                 <img src={star} alt="star" />
-                </div>
-               <div className="col-1">
-                 <img src={loading} alt="loading" />
-                </div>
-                <div className="col-1">
-                  <img src={puzzle_piece} alt="puzzle_piece" />
-               </div>
-                <div className="col-1">
-                  <img src={container} alt="container" />
-               </div>
-               <div className="col-1">
-                  <img src={lightning} alt="lightning" />
-                </div>
-               <div className="col-1">
-                  <img src={colors} alt="colors" />
-                </div>
-                <div className="col-1">
-                  <img src={hexagon} alt="hexagon" />
-                </div>
+                {iconRadio.map((option) => (
+                  <div
+                    key={option.value}
+                    className={`radio-option col-1 m-1 ${selectedIcon === option.value ? "selected" : ""}`}
+                    onClick={() => setSelectedIcon(option.value)}
+                  >
+                    <img
+                      src={option.image}
+                      alt={option.value}
+                      style={{
+                        width: "28px",
+                        height: "28px",
+                        borderRadius: "3px",
+                        marginBottom: "5px",
+                        border: selectedIcon === option.value ? "1px solid red" : "none",
+                      }}
+                    />
+                    <input
+                      type="radio"
+                      name="radioGroupIcon"
+                      value={option.value}
+                      checked={selectedIcon === option.value}
+                      onChange={handleIconChange}
+                      style={{ display: "none" }}
+                    />
+                  </div>
+                ))}
               </div>
             </div>
+
+            {/* Background */}
             <div className="row">
-              <label htmlFor="background" className="icons mt-4 mb-3">
-                Background
-              </label>
+              <label className="icons mt-4 mb-3">Background</label>
               <div className="row">
-                <div className="col-1">
-                  <img
-                    src={help}
-                    alt="help"
-                    style={styles.background_border}
-                  />
-                </div>
+                {BackgroundRadio.map((option) => (
+                  <div
+                    key={option.value}
+                    className={`radio-option col-1 m-1 ${selectedBackground === option.value ? "selected" : ""}`}
+                    onClick={() => setSelectedBackground(option.value)}
+                  >
+                    <img
+                      src={option.image}
+                      alt={option.value}
+                      style={{
+                        width: "28px",
+                        height: "28px",
+                        borderRadius: "3px",
+                        marginBottom: "5px",
+                        border: selectedBackground === option.value ? "1px solid red" : "none",
+                      }}
+                    />
+                    <input
+                      type="radio"
+                      name="radioGroupBackground"
+                      value={option.value}
+                      checked={selectedBackground === option.value}
+                      onChange={handleBackgroundChange}
+                      style={{ display: "none" }}
+                    />
+                  </div>
+                ))}
               </div>
             </div>
           </div>
@@ -98,14 +147,13 @@ const ModalSidebar = (props) => {
         <Modal.Footer>
           <div className="d-grid col-12 mx-auto">
             <CDBBtn type="submit" style={styles.btnNewBoard}>
-            <img src={plus} alt="plus" style={styles.plusBtn} />
+              <img src={plus} alt="plus" style={styles.plusBtn} />
               <span style={styles.textBtn}>Create</span>
             </CDBBtn>
           </div>
         </Modal.Footer>
-      </Form>
-        </Modal>
-    </Formik>
+      </form>
+    </Modal>
   );
 };
 

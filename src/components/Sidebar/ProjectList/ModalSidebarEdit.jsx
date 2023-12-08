@@ -3,22 +3,21 @@ import Modal from "react-bootstrap/Modal";
 import styles from "../styles";
 import plus from "../images/plus2.svg";
 import close from "../images/close.svg";
-import icon_project from "../images/icons/icon_project.svg";
-import star from "../images/icons/star.svg";
-import loading from "../images/icons/loading.svg";
-import puzzle_piece from "../images/icons/puzzle_piece.svg";
-import container from "../images/icons/container.svg";
-import lightning from "../images/icons/lightning.svg";
-import colors from "../images/icons/colors.svg";
-import hexagon from "../images/icons/hexagon.svg";
+import icon_project from "../images/modal/icon_project.svg";
+import star from "../images/modal/star.svg";
+import loading from "../images/modal/loading.svg";
+import puzzle_piece from "../images/modal/puzzle_piece.svg";
+import container from "../images/modal/container.svg";
+import lightning from "../images/modal/lightning.svg";
+import colors from "../images/modal/colors.svg";
+import hexagon from "../images/modal/hexagon.svg";
 import help from "../images/help.svg"; 
 import { CDBInput, CDBBtn } from "cdbreact";
-import { Formik, Form, Field, ErrorMessage } from "formik";
-import { formikConfig } from '../ModalAdd/FormikConfig';
+//import { Formik, Form, Field, ErrorMessage } from "formik";
+//import { formikConfig } from '../ModalAdd/FormikConfig';
 
 const ModalSidebarEdit = (props) => { 
-  return (
-    <Formik {...formikConfig}>
+  return ( 
     <Modal {...props} size="sm" aria-labelledby="modal-sidebar" centered>
       <Modal.Header>
         <Modal.Title style={styles.addModal}>Edit board</Modal.Title>
@@ -26,22 +25,17 @@ const ModalSidebarEdit = (props) => {
           <img src={close} alt="closeIcon" />
         </CDBBtn>
       </Modal.Header>
-      <Form>
+      <form>
         <Modal.Body>
           <div className="col">
             <div className="row">
-              <Field
+              <input
                 type="text"
                 name="title"
                 placeholder="Title"
                 component={CDBInput}
                 style={styles.inputText}
-              />
-              <ErrorMessage
-                name="title"
-                component="div"
-                style={{ color: "red" }}
-              />
+              /> 
             </div>
             <div className="row">
               <label
@@ -102,9 +96,8 @@ const ModalSidebarEdit = (props) => {
             </CDBBtn>
           </div>
         </Modal.Footer>
-      </Form>
-        </Modal>
-    </Formik>
+      </form>
+        </Modal> 
   );
 };
 

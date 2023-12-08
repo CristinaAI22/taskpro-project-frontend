@@ -8,6 +8,9 @@ import {
   moveCard,
   editCard,
   deleteCard,
+  addBoard,
+  deleteBoard,
+  editBoard
 } from './operations';
 
 const initialState = {
@@ -15,6 +18,7 @@ const initialState = {
   isLoading: false,
   isError: false,
   filter: null,
+  backgroundImg: null,
 };
 
 const boardSlice = createSlice({
@@ -66,6 +70,7 @@ const boardSlice = createSlice({
       .addCase(getBoardData.fulfilled, (state, action) => {
         const { bordData } = action.payload;
         state.bordData = bordData;
+        state.backgroundImg = bordData.backgroundImg;
         state.isLoading = false;
       })
       .addCase(getBoardData.rejected, (state) => {
@@ -145,7 +150,33 @@ const boardSlice = createSlice({
       .addCase(deleteCard.rejected, (state) => {
         state.isLoading = false;
         state.isError = true;
-      });
+      })
+      .addCase(addBoard.pending, (state) => {
+        state.isLoading = true;
+      })   
+        .addCase(addBoard.fulfilled, (state, action) => {  
+            state.isLoading = false; 
+            state.bordData = action.payload.newBoard;
+            state.isError = false;           
+        }) 
+          .addCase(editBoard.fulfilled, (state, action) => {
+            const { editedBoard } = action.payload;
+          state.bordData.lists = state.bordData.lists.map((board) =>
+            board._id === editedBoard._id ? editedBoard : board
+          )
+          state.isLoading = false;
+          }) 
+          .addCase(deleteBoard.pending, (state) => {
+            state.isLoading = true;
+          })
+          .addCase(deleteBoard.fulfilled, (state) =>{
+            state.bordData = initialState.bordData;
+            state.isLoading = false;
+          })
+          .addCase(deleteBoard.rejected, (state) => {
+            state.isLoading = false;
+            state.isError = true;
+          });
   },
 });
 
