@@ -10,11 +10,17 @@ import { NavLink } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import { selectAllBoards } from '../../../features/board-slice/selectors';
 import { iconRadio } from '../ModalAdd/radioOptions';
-import { setBoard } from '../../../features/modals/modalsSlice';
+import {
+  setBoard,
+  openDeleteBoardModal,
+} from '../../../features/modals/modalsSlice';
+import { selectDeleteBoardModal } from '../../../features/modals/selectors';
+import ModalDeleteBoard from '../ModalDeleteBoard/ModalDeleteBoard';
 
 const ProjectList = () => {
   const dispatch = useDispatch();
   const [selectedItem, setSelectedItem] = useState(null);
+  const deleteBoardModal = useSelector(selectDeleteBoardModal);
 
   const projectList = useSelector(selectAllBoards);
   // const projectList = [
@@ -65,7 +71,15 @@ const ProjectList = () => {
               >
                 <img src={pencil} alt='pencil' />
               </CDBBtn>
-              <img src={trash} alt='trash' />
+              <img
+                src={trash}
+                alt='trash'
+                onClick={() => {
+                  dispatch(setBoard(project));
+                  dispatch(openDeleteBoardModal());
+                  console.log(deleteBoardModal);
+                }}
+              />
             </div>
             {modalShow && (
               <ModalSidebarEdit
@@ -73,6 +87,7 @@ const ProjectList = () => {
                 onHide={() => setModalShow(false)}
               />
             )}
+            {deleteBoardModal && <ModalDeleteBoard />}
           </CDBListGroupItem>
         ))}
       </CDBListGroup>
