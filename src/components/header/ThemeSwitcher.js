@@ -49,13 +49,36 @@
 // export default ThemeSwitcher;
 
 import React from "react";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { updateUserTheme } from "../../features/auth/operations";
-import { useTheme } from "./ThemeContext";
-
+import { selectTheme } from "../../features/auth/selectors";
+const colorThemes = {
+  light: {
+    switcherButton: {
+      backgroundColor: "#FFFFFF",
+      color: "black",
+    },
+    switcherClass: "clasaLight",
+  },
+  dark: {
+    switcherButton: {
+      backgroundColor: "#454545",
+      color: "white",
+    },
+    switcherClass: "clasaDark",
+  },
+  violet: {
+    switcherButton: {
+      backgroundColor: "red",
+      color: "blue",
+    },
+    switcherClass: "clasaViolet",
+  },
+};
 const ThemeSwitcher = () => {
+  const theme = useSelector(selectTheme);
   const dispatch = useDispatch();
-  const { theme, handleThemeChange } = useTheme();
+  // const { theme, handleThemeChange } = useTheme();
   const themeOptions = ["light", "dark", "violet"];
 
   const handleLocalThemeChange = async (selectedTheme) => {
@@ -71,7 +94,6 @@ const ThemeSwitcher = () => {
       }, 1000);
 
       // Update the theme locally using the context
-      handleThemeChange(selectedTheme);
     } catch (error) {
       console.error("Error updating user theme:", error.message);
       // Handle error or dispatch an error action
@@ -79,13 +101,7 @@ const ThemeSwitcher = () => {
   };
 
   return (
-    <div
-      className="dropdown "
-      data-bs-theme="dark"
-      style={{
-        theme,
-      }}
-    >
+    <div data-bs-theme="dark" className={colorThemes[theme].switcherClass}>
       <button
         className="btn btn-secondary header border-0"
         type="button"
@@ -93,8 +109,9 @@ const ThemeSwitcher = () => {
         data-bs-toggle="dropdown"
         aria-haspopup="true"
         aria-expanded="false"
+        style={colorThemes[theme].switcherButton}
       >
-        Theme <i className="bi bi-chevron-down"></i>
+        Theme ({theme}) <i className="bi bi-chevron-down"></i>
       </button>
 
       <div

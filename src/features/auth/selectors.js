@@ -14,7 +14,7 @@ export const selectIsLoading = (state) => state.auth.isLoading;
 
 export const selectUserPage = (state) => state.auth.userPage;
 
-export const selectTheme = (state) => state.auth.theme;
+export const selectTheme = (state) => state.auth.user.theme;
 
 export const selectIsEditProfileModalOpen = (state) =>
   state.auth.isEditProfileModalOpen;
