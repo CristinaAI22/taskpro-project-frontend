@@ -1,3 +1,5 @@
+export const selectBoard = (state) => state.board.bordData;
+
 export const selectBoardTitle = (state) => state.board.bordData.title;
 
 export const selectBoardLists = (state) => state.board.bordData.lists;
