@@ -13,7 +13,6 @@ import { selectBoard } from '../../../features/modals/selectors';
 
 const ModalSidebarEdit = (props) => {
   const board = useSelector(selectBoard);
-  console.log(board);
 
   const [selectedIcon, setSelectedIcon] = useState(
     board.icon ? iconRadio[board.icon].value : iconRadio[0].value
