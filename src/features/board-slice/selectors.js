@@ -11,3 +11,5 @@ export const selectBoardIsError = (state) => state.board.isError;
 export const selectBoardFilter = (state) => state.board.filter;
 
 export const selectBoardData = (state) => state.board.bordData;
+
+export const selectBoardBackgroundImg = (state) => state.board.backgroundImg;

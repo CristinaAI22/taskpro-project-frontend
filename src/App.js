@@ -20,11 +20,11 @@ import { ThemeProvider } from "./components/header/ThemeContext.js";
 import getTheme from "./components/header/getTheme.js";
 
 import { Home } from "./pages/home-page/HomePage.jsx";
-import Header from "./components/header/Header.js";
+// import Header from './components/header/Header.js';
 
-const ScreensPage = lazy(() =>
-  import("./components/screens-page/ScreensPage.js")
-);
+// const ScreensPage = lazy(() =>
+//   import('./components/screens-page/ScreensPage.js')
+// );
 
 const ErrorPage = lazy(() => import("./pages/error-page/ErrorPage"));
 const WelcomePage = lazy(() => import("./pages/welcome/Welcome.js"));
@@ -63,8 +63,8 @@ export const App = () => {
               path="/home"
               element={<PrivateRoute redirectTo="/" component={<Home />} />}
             ></Route>
-            <Route path="screens-page" element={<ScreensPage />} />
-            <Route path="header" element={<Header />} />
+            {/* <Route path="screens-page" element={<ScreensPage />} />
+            <Route path="header" element={<Header />} /> */}
             <Route path="/home" element={<WelcomePage />} />
             <Route
               path="auth/:id"

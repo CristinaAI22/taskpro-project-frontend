@@ -10,7 +10,7 @@ const HeaderDashboard = () => {
 
   return (
     <>
-      <div className='d-flex p-2 m-0 justify-content-between'>
+      <div className='d-flex p-2 m-0 justify-content-between bg-transparent'>
         <h4 className='text-light '>{boardName}</h4>
         <Filters />
       </div>

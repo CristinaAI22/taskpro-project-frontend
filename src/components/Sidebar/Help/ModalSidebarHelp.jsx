@@ -1,23 +1,43 @@
-import React from "react";
+import { useRef, useState } from "react";
+import { useSelector, useDispatch } from "react-redux";
 import Modal from "react-bootstrap/Modal";
 import styles from "../styles";
 import close from "../images/close.svg";
-import { CDBBtn, CDBInput } from "cdbreact";
-import { Formik, Form, Field, ErrorMessage } from "formik";
-import * as Yup from "yup";
+import { CDBBtn } from "cdbreact";
+import { selectUser } from "../../../features/auth/selectors";
+import Notiflix from "notiflix";
+import { addComment } from "../../../features/auth/operations";
 
-const ModalSidebarHelp = (props) => { 
-
-  const HelpSchema  = Yup.object().shape({
-    email: Yup.string().email("Enter a valid email").required("Email is required"),
-    comment: Yup.string().required("Your comment is required"),
+const ModalSidebarHelp = (props) => {
+  const user = useSelector(selectUser);
+  const dispatch = useDispatch();
+  const textRef = useRef();
+  const [formData, setFormData] = useState({
+    email: user?.email || "",
   });
 
-  const initialValues = {
-    email: "",
-    comment: ""
-  };
+  const handleSubmit = async (e) => {
+    e.preventDefault();
 
+    const formDataObject = new FormData();
+    formDataObject.append("email", formData.email || "");
+
+    const text = textRef.current.value;
+    if (text.length < 10) {
+      return Notiflix.Notify.failure(
+        "Please enter a comment of at least 10 characters"
+      );
+    }
+    console.log("Email:", formData.email);
+    console.log("Text:", text);
+    try {
+      await dispatch(addComment({ email: formData.email, text }));
+      Notiflix.Notify.success("Your request has been sent successfully!");
+    } catch (error) {
+      console.error("Error sending request:", error);
+      Notiflix.Notify.failure("Failed to send your request. Please try again.");
+    }
+  };
   return (
     <Modal {...props} size="sm" aria-labelledby="modal-sidebar" centered>
       <Modal.Header>
@@ -26,58 +46,32 @@ const ModalSidebarHelp = (props) => {
           <img src={close} alt="closeIcon" />
         </CDBBtn>
       </Modal.Header>
-      <Formik
-        validationSchema={HelpSchema}
-        initialValues={initialValues}
-        onSubmit={(values, actions) => {
-          actions.setSubmitting(false);
-          console.log(values);
-        }}
-      >
-        {({
-          handleChange,
-          handleBlur,
-          values,
-          errors,
-          touched, 
-        }) => (
-          <Form>
-            <Modal.Body style={styles.bodyHelp}>
-              <div>
-                <Field
-                  name="email" 
-                  type="email"
-                  placeholder="Email address" 
-                  style={styles.inputText}
-                  onChange={handleChange}
-                  onBlur={handleBlur} 
-                />
-                <ErrorMessage name="email" component="div" style={styles.errorMsg} />
-              </div>
-              <div>
-                <Field
-                  type="text"
-                  name="comment"
-                  placeholder="Comment"
-                  as={CDBInput}
-                  style={styles.inputTextarea}
-                  onChange={handleChange}
-                  onBlur={handleBlur}
-                />
-                <ErrorMessage name="comment" component="div" style={styles.errorMsg}/>
-              </div>
-            </Modal.Body>
-            <Modal.Footer>
-              <div className="d-grid col-12 mx-auto">
-                <CDBBtn style={styles.btnNewBoard} type="submit">
-                  <span style={styles.textBtn}>Send</span>
-                </CDBBtn>
-              </div>
-            </Modal.Footer>
-          </Form>
-        )}
-      </Formik>
+      <form onSubmit={handleSubmit}>
+        <Modal.Body style={styles.bodyHelp}>
+          <div>
+            <strong>Email: </strong>
+            {user?.email}
+          </div>
+          <div>
+            <input
+              type="text"
+              name="comment"
+              placeholder="Comment"
+              style={styles.inputTextarea}
+              ref={textRef}
+            />
+          </div>
+        </Modal.Body>
+        <Modal.Footer>
+          <div className="d-grid col-12 mx-auto">
+            <CDBBtn style={styles.btnNewBoard} type="submit">
+              <span style={styles.textBtn}>Send</span>
+            </CDBBtn>
+          </div>
+        </Modal.Footer>
+      </form>
     </Modal>
   );
 };
+
 export default ModalSidebarHelp;

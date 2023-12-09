@@ -15,6 +15,7 @@ const initialState = {
   isLoading: false,
   isError: false,
   filter: null,
+  backgroundImg: null,
 };
 
 const boardSlice = createSlice({
@@ -66,6 +67,7 @@ const boardSlice = createSlice({
       .addCase(getBoardData.fulfilled, (state, action) => {
         const { bordData } = action.payload;
         state.bordData = bordData;
+        state.backgroundImg = bordData.backgroundImg;
         state.isLoading = false;
       })
       .addCase(getBoardData.rejected, (state) => {
