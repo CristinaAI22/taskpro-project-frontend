@@ -117,18 +117,32 @@ export const deleteCard = createAsyncThunk(
 /*Board*/
 export const addBoard = createAsyncThunk(
   'taskPro/add-board',
-  async (formData, thunkAPI) => { 
+  async (formData, thunkAPI) => {
     try {
       //setAuthHeader(res.data.token);
-      const response = await axios.post("/api/taskPro/boards/", formData);
+      const response = await axios.post('/api/taskPro/boards/', formData);
       return response.data;
-    } catch (error) { 
+    } catch (error) {
       return thunkAPI.rejectWithValue(error.message);
     }
   }
 );
+
+export const getAllBoards = createAsyncThunk(
+  'taskPro/getAll-boards',
+  async (thunkAPI) => {
+    try {
+      //setAuthHeader(res.data.token);
+      const response = await axios.get('/api/taskPro/boards');
+      return response.data;
+    } catch (error) {
+      return thunkAPI.rejectWithValue(error.message);
+    }
+  }
+);
+
 export const deleteBoard = createAsyncThunk(
-  'taskPro/delete-board',
+  'taskPro/delete-board'
   // async (credentials, thunkAPI) => {
   //   try {
   //     setAuthHeader(token);
@@ -143,15 +157,13 @@ export const deleteBoard = createAsyncThunk(
 );
 export const editBoard = createAsyncThunk(
   'taskPro/edit-board',
-  // async (credentials, thunkAPI) => {
-  //   try { 
-  //     setAuthHeader(token);
-  //     const { _id, data } = credentials;
-  //     const response = await axios.patch('/api/taskPro/boards/' + _id, data);
-  //     return response.data;
-  //   } catch (error) {
-  //     toast.error('Oops. Something is wrong. Please try again!');
-  //     return thunkAPI.rejectWithValue(error.message);
-  //   }
-  // }
+  async (credentials, thunkAPI) => {
+    try {
+      const { _id, data } = credentials;
+      const response = await axios.patch('/api/taskPro/boards/' + _id, data);
+      return response.data;
+    } catch (error) {
+      return thunkAPI.rejectWithValue(error.message);
+    }
+  }
 );

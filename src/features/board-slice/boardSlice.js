@@ -10,7 +10,8 @@ import {
   deleteCard,
   addBoard,
   deleteBoard,
-  editBoard
+  editBoard,
+  getAllBoards,
 } from './operations';
 
 const initialState = {
@@ -19,6 +20,7 @@ const initialState = {
   isError: false,
   filter: null,
   backgroundImg: null,
+  boards: [],
 };
 
 const boardSlice = createSlice({
@@ -153,30 +155,46 @@ const boardSlice = createSlice({
       })
       .addCase(addBoard.pending, (state) => {
         state.isLoading = true;
-      })   
-        .addCase(addBoard.fulfilled, (state, action) => {  
-            state.isLoading = false; 
-            state.bordData = action.payload.newBoard;
-            state.isError = false;           
-        }) 
-          .addCase(editBoard.fulfilled, (state, action) => {
-            const { editedBoard } = action.payload;
-          state.bordData.lists = state.bordData.lists.map((board) =>
-            board._id === editedBoard._id ? editedBoard : board
-          )
-          state.isLoading = false;
-          }) 
-          .addCase(deleteBoard.pending, (state) => {
-            state.isLoading = true;
-          })
-          .addCase(deleteBoard.fulfilled, (state) =>{
-            state.bordData = initialState.bordData;
-            state.isLoading = false;
-          })
-          .addCase(deleteBoard.rejected, (state) => {
-            state.isLoading = false;
-            state.isError = true;
-          });
+      })
+      .addCase(addBoard.fulfilled, (state, action) => {
+        state.isLoading = false;
+        const newBoard = action.payload.newBoard;
+        state.boards.push(newBoard);
+        // state.bordData = action.payload.newBoard;
+        state.isError = false;
+      })
+      .addCase(editBoard.fulfilled, (state, action) => {
+        const { boardToUpdate } = action.payload;
+        state.boards = state.boards.map((board) => {
+          if (board._id === boardToUpdate._id) {
+            return boardToUpdate;
+          }
+          return board;
+        });
+        state.isLoading = false;
+      })
+      .addCase(deleteBoard.pending, (state) => {
+        state.isLoading = true;
+      })
+      .addCase(deleteBoard.fulfilled, (state) => {
+        state.bordData = initialState.bordData;
+        state.isLoading = false;
+      })
+      .addCase(deleteBoard.rejected, (state) => {
+        state.isLoading = false;
+        state.isError = true;
+      })
+      .addCase(getAllBoards.pending, (state) => {
+        state.isLoading = true;
+      })
+      .addCase(getAllBoards.fulfilled, (state, action) => {
+        state.boards = action.payload.boards;
+        state.isLoading = false;
+      })
+      .addCase(getAllBoards.rejected, (state) => {
+        state.isLoading = false;
+        state.isError = true;
+      });
   },
 });
 

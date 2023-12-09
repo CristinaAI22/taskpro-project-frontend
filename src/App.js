@@ -36,7 +36,7 @@ export const App = () => {
   useEffect(() => {
     dispatch(refreshUser());
   }, [dispatch]);
-  console.log('Current Theme:', theme);
+  // console.log('Current Theme:', theme);
 
   return isRefreshing ? (
     <div className='loading-container'>
@@ -54,6 +54,10 @@ export const App = () => {
           />
           <Route
             path='/home'
+            element={<PrivateRoute redirectTo='/' component={<Home />} />}
+          ></Route>
+          <Route
+            path='/home/:boardId'
             element={<PrivateRoute redirectTo='/' component={<Home />} />}
           ></Route>
           {/* <Route path='screens-page' element={<ScreensPage />} /> */}
