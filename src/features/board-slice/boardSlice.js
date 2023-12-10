@@ -33,6 +33,9 @@ const boardSlice = createSlice({
     resetFilter: (state) => {
       state.filter = null;
     },
+    deleteBoardData: (state) => {
+      state.bordData = null;
+    },
   },
   extraReducers: (builder) => {
     builder
@@ -176,8 +179,10 @@ const boardSlice = createSlice({
       .addCase(deleteBoard.pending, (state) => {
         state.isLoading = true;
       })
-      .addCase(deleteBoard.fulfilled, (state) => {
-        state.bordData = initialState.bordData;
+      .addCase(deleteBoard.fulfilled, (state, action) => {
+        const _id = action.payload.deleteBoard;
+        const newBoards = state.boards.filter((board) => board._id !== _id);
+        state.boards = newBoards;
         state.isLoading = false;
       })
       .addCase(deleteBoard.rejected, (state) => {
@@ -198,6 +203,6 @@ const boardSlice = createSlice({
   },
 });
 
-export const { setFilter, resetFilter } = boardSlice.actions;
+export const { setFilter, resetFilter, deleteBoardData } = boardSlice.actions;
 
 export default boardSlice.reducer;

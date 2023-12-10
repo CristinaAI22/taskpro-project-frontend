@@ -65,7 +65,7 @@ const ModalSidebarEdit = (props) => {
   return (
     <Modal {...props} size='sm' aria-labelledby='modal-sidebar' centered>
       <Modal.Header>
-        <Modal.Title style={styles.addModal}>New board</Modal.Title>
+        <Modal.Title style={styles.addModal}>Edit board</Modal.Title>
         <CDBBtn onClick={props.onHide} style={styles.closeIconStyle}>
           <img src={close} alt='closeIcon' />
         </CDBBtn>

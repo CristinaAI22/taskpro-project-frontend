@@ -9,7 +9,6 @@ const initialState = {
   moveCardModal: false,
   editCardModal: false,
   deleteCardModal: false,
-  deleteBoardModal: false,
   list: null,
   listId: null,
   card: null,
@@ -81,13 +80,6 @@ const modalsSlice = createSlice({
     setBoard: (state, action) => {
       state.board = action.payload;
     },
-    openDeleteBoardModal: (state, action) => {
-      state.deleteBoardModal = true;
-      // state.card = action.payload;
-    },
-    closeDeleteBoardModal: (state, action) => {
-      state.deleteBoardModal = false;
-    },
   },
 });
 
@@ -109,8 +101,6 @@ export const {
   closeEditCardModal,
   closeMoveCardModal,
   setBoard,
-  openDeleteBoardModal,
-  closeDeleteBoardModal,
 } = modalsSlice.actions;
 
 export default modalsSlice.reducer;

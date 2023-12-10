@@ -10,17 +10,12 @@ import { NavLink } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import { selectAllBoards } from '../../../features/board-slice/selectors';
 import { iconRadio } from '../ModalAdd/radioOptions';
-import {
-  setBoard,
-  openDeleteBoardModal,
-} from '../../../features/modals/modalsSlice';
-import { selectDeleteBoardModal } from '../../../features/modals/selectors';
+import { setBoard } from '../../../features/modals/modalsSlice';
 import ModalDeleteBoard from '../ModalDeleteBoard/ModalDeleteBoard';
 
 const ProjectList = () => {
   const dispatch = useDispatch();
   const [selectedItem, setSelectedItem] = useState(null);
-  const deleteBoardModal = useSelector(selectDeleteBoardModal);
 
   const projectList = useSelector(selectAllBoards);
   // const projectList = [
@@ -31,6 +26,7 @@ const ProjectList = () => {
     setSelectedItem(selectedItem === projectId ? null : projectId);
   };
   const [modalShow, setModalShow] = React.useState(false);
+  const [modalDeleteShow, setModalDeleteShow] = useState(false);
 
   return (
     <div style={{ height: 120, overflow: 'auto' }}>
@@ -71,15 +67,16 @@ const ProjectList = () => {
               >
                 <img src={pencil} alt='pencil' />
               </CDBBtn>
-              <img
-                src={trash}
-                alt='trash'
+
+              <CDBBtn
                 onClick={() => {
                   dispatch(setBoard(project));
-                  dispatch(openDeleteBoardModal());
-                  console.log(deleteBoardModal);
+                  setModalDeleteShow(true);
                 }}
-              />
+                style={styles.closeIconStyle}
+              >
+                <img src={trash} alt='trash' />
+              </CDBBtn>
             </div>
             {modalShow && (
               <ModalSidebarEdit
@@ -87,7 +84,12 @@ const ProjectList = () => {
                 onHide={() => setModalShow(false)}
               />
             )}
-            {deleteBoardModal && <ModalDeleteBoard />}
+            {modalDeleteShow && (
+              <ModalDeleteBoard
+                show={modalDeleteShow}
+                onHide={() => setModalDeleteShow(false)}
+              />
+            )}
           </CDBListGroupItem>
         ))}
       </CDBListGroup>

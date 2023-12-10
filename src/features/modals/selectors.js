@@ -22,5 +22,3 @@ export const selectDeleteCardModal = (state) => state.modals.deleteCardModal;
 export const selectCard = (state) => state.modals.card;
 
 export const selectBoard = (state) => state.modals.board;
-
-export const selectDeleteBoardModal = (state) => state.modals.deleteBoardModal;

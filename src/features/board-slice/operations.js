@@ -132,7 +132,6 @@ export const getAllBoards = createAsyncThunk(
   'taskPro/getAll-boards',
   async (thunkAPI) => {
     try {
-      //setAuthHeader(res.data.token);
       const response = await axios.get('/api/taskPro/boards');
       return response.data;
     } catch (error) {
