@@ -5,7 +5,7 @@ const AddColumn = () => {
   const dispatch = useDispatch();
 
   return (
-    <div className='col-12 col-sm-6 col-md-4 bg-secondary p-2 rounded-2 '>
+    <div className='col-12 col-sm-6 col-md-4 bg-transparent p-1 rounded-2'>
       <button
         className='bg-dark text-light d-flex m-auto border-0 w-100 d-flex justify-content-center p-3 rounded-2 '
         onClick={() => dispatch(openColumnModal())}

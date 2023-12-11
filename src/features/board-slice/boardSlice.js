@@ -8,6 +8,10 @@ import {
   moveCard,
   editCard,
   deleteCard,
+  addBoard,
+  deleteBoard,
+  editBoard,
+  getAllBoards,
 } from './operations';
 
 const initialState = {
@@ -16,6 +20,7 @@ const initialState = {
   isError: false,
   filter: null,
   backgroundImg: null,
+  boards: [],
 };
 
 const boardSlice = createSlice({
@@ -27,6 +32,9 @@ const boardSlice = createSlice({
     },
     resetFilter: (state) => {
       state.filter = null;
+    },
+    deleteBoardData: (state) => {
+      state.bordData = null;
     },
   },
   extraReducers: (builder) => {
@@ -147,10 +155,54 @@ const boardSlice = createSlice({
       .addCase(deleteCard.rejected, (state) => {
         state.isLoading = false;
         state.isError = true;
+      })
+      .addCase(addBoard.pending, (state) => {
+        state.isLoading = true;
+      })
+      .addCase(addBoard.fulfilled, (state, action) => {
+        state.isLoading = false;
+        const newBoard = action.payload.newBoard;
+        state.boards.push(newBoard);
+        // state.bordData = action.payload.newBoard;
+        state.isError = false;
+      })
+      .addCase(editBoard.fulfilled, (state, action) => {
+        const { boardToUpdate } = action.payload;
+        state.boards = state.boards.map((board) => {
+          if (board._id === boardToUpdate._id) {
+            return boardToUpdate;
+          }
+          return board;
+        });
+        state.isLoading = false;
+      })
+      .addCase(deleteBoard.pending, (state) => {
+        state.isLoading = true;
+      })
+      .addCase(deleteBoard.fulfilled, (state, action) => {
+        const _id = action.payload.deleteBoard;
+        const newBoards = state.boards.filter((board) => board._id !== _id);
+        state.boards = newBoards;
+        state.isLoading = false;
+      })
+      .addCase(deleteBoard.rejected, (state) => {
+        state.isLoading = false;
+        state.isError = true;
+      })
+      .addCase(getAllBoards.pending, (state) => {
+        state.isLoading = true;
+      })
+      .addCase(getAllBoards.fulfilled, (state, action) => {
+        state.boards = action.payload.boards;
+        state.isLoading = false;
+      })
+      .addCase(getAllBoards.rejected, (state) => {
+        state.isLoading = false;
+        state.isError = true;
       });
   },
 });
 
-export const { setFilter, resetFilter } = boardSlice.actions;
+export const { setFilter, resetFilter, deleteBoardData } = boardSlice.actions;
 
 export default boardSlice.reducer;

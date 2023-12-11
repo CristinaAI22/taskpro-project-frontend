@@ -2,12 +2,14 @@
   display: flex;
   flex-wrap: nowrap;
 }
+
 h1 {
   font-family: Poppins;
   font-weight: 600px;
   font-size: 40px;
   line-height: 60px;
 }
+
 .first-page-cont {
   width: 473px;
   height: 438px;
@@ -27,6 +29,7 @@ h1 {
   margin-top: 20px;
   padding: 10px;
 }
+
 .home-link-cont {
   display: flex;
   flex-direction: column;
@@ -38,6 +41,7 @@ h1 {
   max-width: 1200px;
   margin: 0 auto;
 }
+
 /**
 * Template Name: NiceAdmin
 * Updated: Nov 17 2023 with Bootstrap v5.3.2
@@ -533,7 +537,7 @@ h6 {
   font-size: 12px;
   padding: 3px 6px;
 }
- 
+
 
 .header-nav .profile {
   min-width: 240px;
@@ -730,4 +734,3 @@ h6 {
 .sidebar-nav .nav-content a.active i {
   background-color: #4154f1;
 }
- 

@@ -32,7 +32,7 @@ const EditProfileModal = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-
+    console.log(formData.avatar);
     const formDataObject = new FormData();
     formDataObject.append("avatar", formData.avatar);
     formDataObject.append("name", formData.name);
@@ -120,7 +120,7 @@ const EditProfileModal = () => {
                     <input
                       type={formData.showPassword ? "text" : "password"}
                       placeholder="Enter your password"
-                      // value={formData.password}
+                      value={formData.password}
                       className="form-control"
                       onChange={(e) =>
                         setFormData({ ...formData, password: e.target.value })

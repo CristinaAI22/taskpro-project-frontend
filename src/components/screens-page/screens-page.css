@@ -118,7 +118,6 @@
 
 .main-dashboard {
   overflow: auto;
-  /* gap: 30px; */
 }
 
 .main-dashboard-lists {
@@ -196,4 +195,13 @@ button:hover {
 ::-webkit-scrollbar-track {
   background-color: #313131;
   border-radius: 6px;
+}
+
+.card-options-btns-container {
+  display: flex;
+  flex-direction: row;
+}
+
+.card-text-container p {
+  overflow: auto;
 }

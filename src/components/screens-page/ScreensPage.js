@@ -11,24 +11,32 @@ import {
 } from '../../features/board-slice/selectors';
 import Loading from '../loading/Loading';
 import { useParams } from 'react-router-dom';
+import { BackgroundRadio } from '../Sidebar/ModalAdd/radioOptions';
 
 const ScreensPage = () => {
   const dispatch = useDispatch();
-  const boardId = '656f7fe83a3d3914e6fbf7f0';
+  // const boardId = '656f7fe83a3d3914e6fbf7f0';
   const boadData = useSelector(selectBoardData);
-  // const boardId = useParams('boardId');
+  const { boardId } = useParams();
   const isLoading = useSelector(selectBoardIsLoading);
   const backgroundImg = useSelector(selectBoardBackgroundImg);
+  // console.log(boardId);
 
   useEffect(() => {
-    dispatch(getBoardData({ _id: boardId }));
+    if (boardId) {
+      dispatch(getBoardData({ _id: boardId }));
+    }
   }, [dispatch, boardId]);
 
-  const state = useSelector((state) => state.board);
-  console.log(state);
+  // const state = useSelector((state) => state.board);
+  // console.log(state);
 
   const divStyle = {
-    backgroundImage: backgroundImg ? `url(${backgroundImg})` : 'none',
+    backgroundImage: backgroundImg
+      ? `url(${BackgroundRadio[backgroundImg].image})`
+      : 'none',
+    backgroundPosition: 'center',
+    backgroundSize: 'cover',
   };
   if (isLoading) {
     return <Loading />;

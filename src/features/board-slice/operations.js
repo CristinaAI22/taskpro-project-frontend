@@ -113,3 +113,54 @@ export const deleteCard = createAsyncThunk(
     }
   }
 );
+
+/*Board*/
+export const addBoard = createAsyncThunk(
+  'taskPro/add-board',
+  async (formData, thunkAPI) => {
+    try {
+      //setAuthHeader(res.data.token);
+      const response = await axios.post('/api/taskPro/boards/', formData);
+      return response.data;
+    } catch (error) {
+      return thunkAPI.rejectWithValue(error.message);
+    }
+  }
+);
+
+export const getAllBoards = createAsyncThunk(
+  'taskPro/getAll-boards',
+  async (thunkAPI) => {
+    try {
+      const response = await axios.get('/api/taskPro/boards');
+      return response.data;
+    } catch (error) {
+      return thunkAPI.rejectWithValue(error.message);
+    }
+  }
+);
+
+export const deleteBoard = createAsyncThunk(
+  'taskPro/delete-board',
+  async (credentials, thunkAPI) => {
+    try {
+      const { _id } = credentials;
+      const response = await axios.delete('/api/taskPro/boards/' + _id);
+      return response.data;
+    } catch (error) {
+      return thunkAPI.rejectWithValue(error.message);
+    }
+  }
+);
+export const editBoard = createAsyncThunk(
+  'taskPro/edit-board',
+  async (credentials, thunkAPI) => {
+    try {
+      const { _id, data } = credentials;
+      const response = await axios.patch('/api/taskPro/boards/' + _id, data);
+      return response.data;
+    } catch (error) {
+      return thunkAPI.rejectWithValue(error.message);
+    }
+  }
+);
