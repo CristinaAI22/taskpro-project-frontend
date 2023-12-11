@@ -2,8 +2,11 @@ import React from "react";
 
 import ThemeSwitcher from "./ThemeSwitcher";
 import UserInfo from "./UserInfo";
+import { useTheme } from "./ThemeContext";
 
 const Header = () => {
+  const { theme } = useTheme();
+  console.log(theme.palette);
   return (
     <>
       <div className="header">

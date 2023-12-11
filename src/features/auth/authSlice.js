@@ -34,6 +34,9 @@ const authSlice = createSlice({
     resetError: (state) => {
       state.isError = false;
     },
+    updateUserThemeSuccess: (state, action) => {
+      state.user.theme = action.payload.theme;
+    },
   },
   extraReducers: (builder) => {
     builder
@@ -112,7 +115,7 @@ const authSlice = createSlice({
         state.isLoading = false;
       })
       .addCase(updateUserTheme.fulfilled, (state, action) => {
-        state.user.theme = action.payload.user.theme;
+        authSlice.caseReducers.updateUserThemeSuccess(state, action);
         state.isLoggedIn = true;
         state.isRefreshing = false;
       });
@@ -126,4 +129,5 @@ export const {
   closeEditProfileModal,
   resetError,
   setIsNotLoggedIn,
+  updateUserThemeSuccess,
 } = authSlice.actions;
