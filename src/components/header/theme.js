@@ -3,7 +3,7 @@ const lightTheme = {
     primary: {
       light: "#FCFCFC",
       main: "#BEDBB0;",
-      dark: "#0b5c15",
+      dark: "#CFFF04",
       darker: "#F6F6F7",
       contrastText: "rgba(22, 22, 22, 0.1)",
       info: "rgba(22, 22, 22, 0.5)",
@@ -46,8 +46,8 @@ const darkTheme = {
     type: "dark",
     primary: {
       light: "#161616",
-      main: "#BEDBB0",
-      dark: "#1b1c21",
+      main: "#bedbb0",
+      dark: "#FFFF",
       darker: "#1F1F1F",
       contrastText: "rgba(255, 255, 255, 0.1)",
       info: "rgba(255, 255, 255, 0.5)",
