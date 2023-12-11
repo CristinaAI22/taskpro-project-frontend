@@ -3,20 +3,31 @@ import { useSelector, useDispatch } from 'react-redux';
 import Modal from 'react-bootstrap/Modal';
 //import Form from "react-bootstrap/Form";
 import Notiflix from 'notiflix';
-import { addBoard } from '../../../features/board-slice/operations';
-import { iconRadio, BackgroundRadio } from './radioOptions';
+import { editBoard } from '../../../features/board-slice/operations';
+import { iconRadio, BackgroundRadio } from '../ModalAdd/radioOptions';
 import { CDBBtn } from 'cdbreact';
 import styles from '../styles';
 import plus from '../images/plus2.svg';
 import close from '../images/close.svg';
+import { selectBoard } from '../../../features/modals/selectors';
 
-const ModalSidebar = (props) => {
-  const [selectedIcon, setSelectedIcon] = useState(iconRadio[0].value);
-  const [selectedIconImg, setSelectedIconImg] = useState(0);
-  const [selectedBackground, setSelectedBackground] = useState(
-    BackgroundRadio[0].value
+const ModalSidebarEdit = (props) => {
+  const board = useSelector(selectBoard);
+
+  const [selectedIcon, setSelectedIcon] = useState(
+    board.icon ? iconRadio[board.icon].value : iconRadio[0].value
   );
-  const [selectedBackgroundImg, setSelectedBackgroundImg] = useState(0);
+  const [selectedIconImg, setSelectedIconImg] = useState(
+    board.icon ? board.icon : 0
+  );
+  const [selectedBackground, setSelectedBackground] = useState(
+    board.backgroundImg
+      ? BackgroundRadio[board.backgroundImg].value
+      : BackgroundRadio[0].value
+  );
+  const [selectedBackgroundImg, setSelectedBackgroundImg] = useState(
+    board.backgroundImg ? board.backgroundImg : 0
+  );
 
   const dispatch = useDispatch();
   const titleRef = useRef();
@@ -40,19 +51,21 @@ const ModalSidebar = (props) => {
       );
     }
 
-    const credentials = {
+    const data = {
       title,
       icon: selectedIconImg,
       backgroundImg: selectedBackgroundImg !== 0 ? selectedBackgroundImg : null,
     };
-    dispatch(addBoard(credentials));
+    const credentials = { _id: board._id, data };
+
+    dispatch(editBoard(credentials));
     props.onHide();
   };
 
   return (
     <Modal {...props} size='sm' aria-labelledby='modal-sidebar' centered>
       <Modal.Header>
-        <Modal.Title style={styles.addModal}>New board</Modal.Title>
+        <Modal.Title style={styles.addModal}>Edit board</Modal.Title>
         <CDBBtn onClick={props.onHide} style={styles.closeIconStyle}>
           <img src={close} alt='closeIcon' />
         </CDBBtn>
@@ -64,6 +77,7 @@ const ModalSidebar = (props) => {
               <input
                 type='text'
                 name='title'
+                defaultValue={board.title}
                 placeholder='Title'
                 style={styles.inputText}
                 ref={titleRef}
@@ -94,9 +108,9 @@ const ModalSidebar = (props) => {
                         height: '28px',
                         borderRadius: '3px',
                         marginBottom: '5px',
-                        border:
+                        boxShadow:
                           selectedIcon === option.value
-                            ? '1px solid red'
+                            ? 'inset 0 0 10px 2px #BEDBB0'
                             : 'none',
                       }}
                     />
@@ -137,11 +151,11 @@ const ModalSidebar = (props) => {
                         borderRadius: '3px',
                         marginBottom: '5px',
                         border:
-                          selectedBackground === option.value
-                            ? '1px solid red'
-                            : 'none',
-                      }}
-                    />
+                        selectedBackground === option.value
+                          ? '2px solid #BEDBB0'
+                          : 'none',
+                    }}
+                  />
                     <input
                       type='radio'
                       name='radioGroupBackground'
@@ -160,7 +174,7 @@ const ModalSidebar = (props) => {
           <div className='d-grid col-12 mx-auto'>
             <CDBBtn type='submit' style={styles.btnNewBoard}>
               <img src={plus} alt='plus' style={styles.plusBtn} />
-              <span style={styles.textBtn}>Create</span>
+              <span style={styles.textBtn}>Edit</span>
             </CDBBtn>
           </div>
         </Modal.Footer>
@@ -169,4 +183,4 @@ const ModalSidebar = (props) => {
   );
 };
 
-export default ModalSidebar;
+export default ModalSidebarEdit;

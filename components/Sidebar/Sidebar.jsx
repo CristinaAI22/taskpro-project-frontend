@@ -76,14 +76,10 @@ const Sidebar = () => {
             </CDBSidebarMenuItem>
           </CDBSidebarMenu>
         </CDBSidebarContent>
-        <CDBSidebarFooter>
-          <CDBSidebarContent>
-            <CDBSidebarMenu>
-              <CDBSidebarMenuItem>
+        <CDBSidebarFooter> 
+            <div>
                 <LogOutBtn />
-              </CDBSidebarMenuItem>
-            </CDBSidebarMenu>
-          </CDBSidebarContent>
+            </div>  
         </CDBSidebarFooter>
       </CDBSidebar>
     </div>

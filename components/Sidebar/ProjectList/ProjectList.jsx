@@ -1,7 +1,6 @@
 import React, { useState } from 'react';
 import styles from '../styles';
-import { CDBListGroup, CDBListGroupItem } from 'cdbreact';
-import icon_project from '../images/modal/icon_project.svg';
+import { CDBListGroup, CDBListGroupItem } from 'cdbreact'; 
 import trash from '../images/trash.svg';
 import pencil from '../images/pencil.svg';
 import { CDBBtn } from 'cdbreact';
@@ -17,11 +16,7 @@ const ProjectList = () => {
   const dispatch = useDispatch();
   const [selectedItem, setSelectedItem] = useState(null);
 
-  const projectList = useSelector(selectAllBoards);
-  // const projectList = [
-  //   { id: 1, title: "Project 1" },
-  //   { id: 2, title: "Project 2" },
-  // ];
+  const projectList = useSelector(selectAllBoards); 
   const handleItemClick = (projectId) => {
     setSelectedItem(selectedItem === projectId ? null : projectId);
   };
@@ -29,12 +24,12 @@ const ProjectList = () => {
   const [modalDeleteShow, setModalDeleteShow] = useState(false);
 
   return (
-    <div style={{ height: 120, overflow: 'auto' }}>
+    <div style={styles.containerProject}>
       <CDBListGroup>
         {projectList.map((project) => (
           <CDBListGroupItem
             key={project._id}
-            className={`row-12 d-flex justify-content-between align-items-center bgListProject ${
+            className={`row-10 d-flex justify-content-between align-items-center m-2 overflow-hidden bgListProject ${
               selectedItem === project._id ? 'active' : ''
             }`}
             style={
