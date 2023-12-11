@@ -5,7 +5,7 @@ import { PrivateRoute } from "./components/PrivateRoute";
 import { useAuth } from "./hooks/useAuth";
 import SharedLayout from "./components/shared-layout/SharedLayout";
 import Loading from "./components/loading/Loading";
-import LoginForm from "./components/login/LogInForm.js";
+import LoginForm from "./components/login/LoginForm.js";
 import RegisterForm from "./components/register/RegisterForm.js";
 import { Home } from "./pages/home-page/HomePage.jsx";
 import { useSelector } from "react-redux";
