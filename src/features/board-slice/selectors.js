@@ -17,3 +17,5 @@ export const selectBoardData = (state) => state.board.bordData;
 export const selectBoardBackgroundImg = (state) => state.board.backgroundImg;
 
 export const selectAllBoards = (state) => state.board.boards;
+
+export const selectErrorMessage = (state) => state.board.errorMessage;

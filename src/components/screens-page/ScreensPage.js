@@ -8,10 +8,12 @@ import {
   selectBoardData,
   selectBoardIsLoading,
   selectBoardBackgroundImg,
+  selectBoardIsError,
 } from '../../features/board-slice/selectors';
 import Loading from '../loading/Loading';
 import { useParams } from 'react-router-dom';
 import { BackgroundRadio } from '../Sidebar/ModalAdd/radioOptions';
+import Error from '../error/Error';
 
 const ScreensPage = () => {
   const dispatch = useDispatch();
@@ -19,6 +21,7 @@ const ScreensPage = () => {
   const boadData = useSelector(selectBoardData);
   const { boardId } = useParams();
   const isLoading = useSelector(selectBoardIsLoading);
+  const isError = useSelector(selectBoardIsError);
   const backgroundImg = useSelector(selectBoardBackgroundImg);
   // console.log(boardId);
 
@@ -28,9 +31,6 @@ const ScreensPage = () => {
     }
   }, [dispatch, boardId]);
 
-  // const state = useSelector((state) => state.board);
-  // console.log(state);
-
   const divStyle = {
     backgroundImage: backgroundImg
       ? `url(${BackgroundRadio[backgroundImg].image})`
@@ -38,8 +38,13 @@ const ScreensPage = () => {
     backgroundPosition: 'center',
     backgroundSize: 'cover',
   };
+
   if (isLoading) {
     return <Loading />;
+  }
+
+  if (isError) {
+    return <Error />;
   }
 
   if (!boadData) {
@@ -60,13 +65,8 @@ const ScreensPage = () => {
 
   return (
     <div className='screens-page bg-secondary text-center' style={divStyle}>
-      {/* col */}
-      {/* <div className='row'> */}
       <HeaderDashboard />
-      {/* </div> */}
-      {/* <div className='row'> */}
       <MainDashboard />
-      {/* </div> */}
     </div>
   );
 };
