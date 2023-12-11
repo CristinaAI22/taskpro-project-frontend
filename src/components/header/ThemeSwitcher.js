@@ -21,7 +21,7 @@ const ThemeSwitcher = () => {
 
         if (response.payload && response.payload.user) {
           const themeFromResponse = response.payload.user.theme;
-          console.log("Updated Theme:", themeFromResponse);
+          console.log(updatedTheme(themeFromResponse));
           setUpdatedTheme(themeFromResponse);
           dispatch(updateUserThemeSuccess(response.payload));
         } else {
