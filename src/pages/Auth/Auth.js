@@ -1,28 +1,28 @@
-import { NavLink, Outlet, useParams } from 'react-router-dom';
-import { Suspense } from 'react';
-import { ToastContainer } from 'react-toastify';
-import RegisterForm from '../../components/register/RegisterForm';
-import LoginForm from '../../components/login/LoginForm';
-import Loading from '../../components/loading/Loading';
+import { NavLink, Outlet, useParams } from "react-router-dom";
+import { Suspense } from "react";
+import { ToastContainer } from "react-toastify";
+import RegisterForm from "../../components/register/RegisterForm";
+import LoginForm from "../../components/login/LogInForm";
+import Loading from "../../components/loading/Loading";
 
 const Auth = () => {
   const { id } = useParams();
 
   return (
-    <div className='welcome-wrapper'>
+    <div className="welcome-wrapper">
       <ToastContainer />
-      <div className='form-container'>
-        <div className='link-wrapper'>
-          <NavLink className='auth-links' to='/auth/register'>
+      <div className="form-container">
+        <div className="link-wrapper">
+          <NavLink className="auth-links" to="/auth/register">
             Registration
           </NavLink>
-          <NavLink className='auth-links' to='/auth/login'>
+          <NavLink className="auth-links" to="/auth/login">
             Log In
           </NavLink>
         </div>
 
-        {id === 'login' && <LoginForm />}
-        {id === 'register' && <RegisterForm />}
+        {id === "login" && <LoginForm />}
+        {id === "register" && <RegisterForm />}
 
         <Suspense fallback={<Loading />}>
           <Outlet />

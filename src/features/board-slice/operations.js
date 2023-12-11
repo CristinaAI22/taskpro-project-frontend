@@ -119,6 +119,7 @@ export const addBoard = createAsyncThunk(
   'taskPro/add-board',
   async (formData, thunkAPI) => {
     try {
+      //setAuthHeader(res.data.token);
       const response = await axios.post('/api/taskPro/boards/', formData);
       return response.data;
     } catch (error) {

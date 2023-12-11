@@ -2,7 +2,9 @@ import React from "react";
 import ThemeSwitcher from "./ThemeSwitcher";
 import UserInfo from "./UserInfo";
 
+
 const Header = () => {
+
   return (
     <>
       <div className="header">
