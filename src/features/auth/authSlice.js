@@ -1,4 +1,5 @@
 import { createSlice } from "@reduxjs/toolkit";
+import getTheme from "../../components/header/getTheme";
 
 import {
   register,
@@ -6,7 +7,7 @@ import {
   logOut,
   login,
   updateProfile,
-  updateUserTheme
+  updateUserTheme,
 } from "./operations";
 
 const initialState = {
@@ -18,13 +19,13 @@ const initialState = {
   isError: false,
   errorMessage: null,
   isEditProfileModalOpen: false,
+  themeProps: getTheme(),
 };
 
 const authSlice = createSlice({
   name: "auth",
   initialState,
   reducers: {
-  
     openEditProfileModal: (state) => {
       state.isEditProfileModalOpen = true;
     },
@@ -35,6 +36,10 @@ const authSlice = createSlice({
     resetError: (state) => {
       state.isError = false;
     },
+    updateUserThemeSuccess: (state, action) => {
+      state.user.theme = action.payload.user.theme;
+    },
+    getThemeProprieties: (state) => getTheme(state.user.theme),
   },
   extraReducers: (builder) => {
     builder
@@ -61,6 +66,7 @@ const authSlice = createSlice({
       })
       .addCase(refreshUser.fulfilled, (state, action) => {
         state.user = action.payload.user;
+        state.themeProps = getTheme(action.payload.user.theme);
         state.isLoggedIn = true;
         state.isRefreshing = false;
       })
@@ -75,8 +81,8 @@ const authSlice = createSlice({
         state.user = { name: null, email: null };
         state.token = null;
         state.isLoggedIn = false;
-        state.isRefreshing = false;  
-      })  
+        state.isRefreshing = false;
+      })
       .addCase(logOut.rejected, (state, action) => {
         state.isError = true;
         state.errorMessage = action.payload;
@@ -112,11 +118,12 @@ const authSlice = createSlice({
         state.errorMessage = action.payload;
         state.isLoading = false;
       })
-      .addCase(updateUserTheme.fulfilled,(state, action)=> {
-        state.user.theme = action.payload.theme;
+      .addCase(updateUserTheme.fulfilled, (state, action) => {
+        authSlice.caseReducers.updateUserThemeSuccess(state, action);
+        state.themeProps = getTheme(action.payload.user.theme);
         state.isLoggedIn = true;
         state.isRefreshing = false;
-  })
+      });
   },
 });
 
@@ -127,4 +134,5 @@ export const {
   closeEditProfileModal,
   resetError,
   setIsNotLoggedIn,
+  updateUserThemeSuccess,
 } = authSlice.actions;

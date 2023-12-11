@@ -4,7 +4,7 @@ body {
 
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-  color: "#FFF";
+  /* color: "#FFF"; */
   font-family: "Poppins";
 }
 
@@ -73,7 +73,7 @@ code {
 }
 .bPmpKP {
   padding-top: 30px !important;
-  }
+}
 .modal-header,
 .modal-footer {
   border: 1px solid black;
@@ -100,7 +100,6 @@ input {
   font-weight: 600;
 }
 
-
 .aplication-container {
   display: flex;
   flex-direction: row;
@@ -114,4 +113,16 @@ input {
 .aplication-main-container {
   width: 75%;
   flex-grow: 1;
+}
+
+.change-image-button {
+  background-color: var(--color-hover-green);
+  padding: 0;
+  margin: 0;
+}
+.plus-icon {
+  color: var(--color-black);
+}
+.form-input {
+  margin-top: 40px;
 }

@@ -120,6 +120,7 @@ export const updateUserTheme = createAsyncThunk(
     try {
       setAuthHeader(token);
       const response = await axios.patch("/api/taskPro/users/theme", data);
+      console.log(response);
       return response.data;
     } catch (error) {
       return thunkAPI.rejectWithValue(error.message);

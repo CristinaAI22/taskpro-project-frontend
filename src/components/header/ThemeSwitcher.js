@@ -1,87 +1,49 @@
-// import React, { createContext, useContext, useState } from "react";
-// import { useDispatch } from "react-redux";
-// import { updateUserTheme } from "../../features/auth/operations";
-// import getTheme from "./getTheme";
-
-// const ThemeSwitcher = () => {
-//   const dispatch = useDispatch();
-
-//   const handleThemeChange = (selectedTheme) => {
-//     const newTheme = createTheme(getTheme(selectedTheme));
-//     dispatch(updateUserTheme({ theme: selectedTheme }));
-//     // Apply the new theme to the entire app
-//     setTheme(newTheme);
-//   };
-
-//   const themeOptions = ["light", "dark", "violet"];
-
-//   return (
-//     <div className="dropdown" data-bs-theme="dark">
-//       <button
-//         className="btn btn-secondary"
-//         type="button"
-//         id="dropdownMenuButton"
-//         data-bs-toggle="dropdown"
-//         aria-haspopup="true"
-//         aria-expanded="false"
-//       >
-//         Theme <i className="bi bi-chevron-down"></i>
-//       </button>
-
-//       <div
-//         className="dropdown-menu dropdown-menu-right flex-column"
-//         aria-labelledby="dropdownMenuButton"
-//       >
-//         {themeOptions.map((themeOption) => (
-//           <button
-//             className="dropdown-item"
-//             key={themeOption}
-//             onClick={() => handleThemeChange(themeOption)}
-//           >
-//             {themeOption.charAt(0).toUpperCase() + themeOption.slice(1)}
-//           </button>
-//         ))}
-//       </div>
-//     </div>
-//   );
-// };
-
-// export default ThemeSwitcher;
-
-import React from "react";
-import { useDispatch } from "react-redux";
+import React, { useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
 import { updateUserTheme } from "../../features/auth/operations";
-import { useTheme } from "./ThemeContext";
+import { selectIsLoggedIn } from "../../features/auth/selectors";
+import { updateUserThemeSuccess } from "../../features/auth/authSlice";
 
 const ThemeSwitcher = () => {
+  const [updatedTheme, setUpdatedTheme] = useState(null);
   const dispatch = useDispatch();
-  const { theme, handleThemeChange } = useTheme();
-  const themeOptions = ["light", "dark", "violet"];
+  const isLoggedIn = useSelector(selectIsLoggedIn);
+  const theme = useSelector((state) => state.auth.user.theme);
+  const themeProps = useSelector((state) => state.auth.themeProps);
 
+  const themeOptions = ["light", "dark", "violet"];
   const handleLocalThemeChange = async (selectedTheme) => {
     try {
-      // Dispatch the updateUserTheme async thunk to update the user's theme on the backend
-      await dispatch(updateUserTheme({ theme: selectedTheme }));
+      if (isLoggedIn) {
+        const response = await dispatch(
+          updateUserTheme({ theme: selectedTheme })
+        );
 
-      // Update the theme locally using the context
-      handleThemeChange(selectedTheme);
+        if (response.payload && response.payload.user) {
+          const themeFromResponse = response.payload.user.theme;
+          console.log("Updated Theme:", themeFromResponse);
+          setUpdatedTheme(themeFromResponse);
+          dispatch(updateUserThemeSuccess(response.payload));
+        } else {
+          console.error("Invalid response structure:", response);
+        }
+      }
     } catch (error) {
       console.error("Error updating user theme:", error.message);
-      // Handle error or dispatch an error action
     }
   };
-
   return (
-    <div className="dropdown " data-bs-theme="dark">
+    <div data-bs-theme="dark">
       <button
-        className="btn btn-secondary header border-0"
+        className="btn header border-0"
         type="button"
         id="dropdownMenuButton"
         data-bs-toggle="dropdown"
         aria-haspopup="true"
         aria-expanded="false"
+        style={{ color: themeProps.palette.primary.dark }}
       >
-        Theme <i className="bi bi-chevron-down"></i>
+        Theme({theme}) <i className="bi bi-chevron-down"></i>
       </button>
 
       <div
