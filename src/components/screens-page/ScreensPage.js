@@ -17,13 +17,11 @@ import Error from '../error/Error';
 
 const ScreensPage = () => {
   const dispatch = useDispatch();
-  // const boardId = '656f7fe83a3d3914e6fbf7f0';
   const boadData = useSelector(selectBoardData);
   const { boardId } = useParams();
   const isLoading = useSelector(selectBoardIsLoading);
   const isError = useSelector(selectBoardIsError);
   const backgroundImg = useSelector(selectBoardBackgroundImg);
-  // console.log(boardId);
 
   useEffect(() => {
     if (boardId) {

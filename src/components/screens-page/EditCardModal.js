@@ -2,12 +2,11 @@ import { useDispatch, useSelector } from 'react-redux';
 import { closeEditCardModal } from '../../features/modals/modalsSlice';
 import Notiflix from 'notiflix';
 import { useRef, useState } from 'react';
-import { selectListId, selectCard } from '../../features/modals/selectors';
+import { selectCard } from '../../features/modals/selectors';
 import { editCard } from '../../features/board-slice/operations';
 import { labelColor } from './FilterModal';
 import Calendar from 'react-calendar';
 import 'react-calendar/dist/Calendar.css';
-import { addCard } from '../../features/board-slice/operations';
 import { monthNames, daysOfWeek } from './AddCardModal';
 
 const EditCardModal = () => {

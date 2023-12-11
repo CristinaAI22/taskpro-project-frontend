@@ -1,6 +1,5 @@
 import { useDispatch, useSelector } from 'react-redux';
 import { closeMoveCardModal } from '../../features/modals/modalsSlice';
-import Notiflix from 'notiflix';
 import {
   selectBoardId,
   selectBoardLists,
