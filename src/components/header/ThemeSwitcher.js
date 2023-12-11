@@ -12,6 +12,7 @@ const ThemeSwitcher = () => {
   const themeProps = useSelector((state) => state.auth.themeProps);
 
   const themeOptions = ["light", "dark", "violet"];
+
   const handleLocalThemeChange = async (selectedTheme) => {
     try {
       if (isLoggedIn) {
@@ -21,7 +22,7 @@ const ThemeSwitcher = () => {
 
         if (response.payload && response.payload.user) {
           const themeFromResponse = response.payload.user.theme;
-          console.log(updatedTheme(themeFromResponse));
+          console.log(response.payload.user.theme, response);
           setUpdatedTheme(themeFromResponse);
           dispatch(updateUserThemeSuccess(response.payload));
         } else {
