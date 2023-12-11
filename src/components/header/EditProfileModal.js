@@ -15,7 +15,7 @@ const EditProfileModal = () => {
   const [formData, setFormData] = useState({
     name: user?.name || "",
     email: user?.email || "",
-    password: user?.password || "",
+    password: "",
     avatar: null,
     showPassword: false,
   });
@@ -102,7 +102,7 @@ const EditProfileModal = () => {
                     type="text"
                     placeholder="Enter your name"
                     value={formData.name}
-                    className="form-control color-black "
+                    className="form-control color-black form-input "
                     onChange={(e) =>
                       setFormData({ ...formData, name: e.target.value })
                     }
@@ -132,9 +132,7 @@ const EditProfileModal = () => {
                       onClick={togglePasswordVisibility}
                     >
                       <i
-                        className={`bi ${
-                          formData.showPassword ? "bi-eye-slash" : "bi-eye"
-                        }`}
+                        className={`bi ${formData ? "bi-eye-slash" : "bi-eye"}`}
                       ></i>
                     </button>
                   </div>

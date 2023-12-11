@@ -1,4 +1,5 @@
 import { createSlice } from "@reduxjs/toolkit";
+import getTheme from "../../components/header/getTheme";
 
 import {
   register,
@@ -18,6 +19,7 @@ const initialState = {
   isError: false,
   errorMessage: null,
   isEditProfileModalOpen: false,
+  themeProps: getTheme(),
 };
 
 const authSlice = createSlice({
@@ -35,8 +37,9 @@ const authSlice = createSlice({
       state.isError = false;
     },
     updateUserThemeSuccess: (state, action) => {
-      state.user.theme = action.payload.theme;
+      state.user.theme = action.payload.user.theme;
     },
+    getThemeProprieties: (state) => getTheme(state.user.theme),
   },
   extraReducers: (builder) => {
     builder
@@ -63,6 +66,7 @@ const authSlice = createSlice({
       })
       .addCase(refreshUser.fulfilled, (state, action) => {
         state.user = action.payload.user;
+        state.themeProps = getTheme(action.payload.user.theme);
         state.isLoggedIn = true;
         state.isRefreshing = false;
       })
@@ -116,6 +120,7 @@ const authSlice = createSlice({
       })
       .addCase(updateUserTheme.fulfilled, (state, action) => {
         authSlice.caseReducers.updateUserThemeSuccess(state, action);
+        state.themeProps = getTheme(action.payload.user.theme);
         state.isLoggedIn = true;
         state.isRefreshing = false;
       });

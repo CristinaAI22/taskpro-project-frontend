@@ -4,7 +4,7 @@ body {
 
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-  color: "#FFF";
+  /* color: "#FFF"; */
   font-family: "Poppins";
 }
 
@@ -73,7 +73,7 @@ code {
 }
 .bPmpKP {
   padding-top: 30px !important;
-  }
+}
 .modal-header,
 .modal-footer {
   border: 1px solid black;
@@ -100,8 +100,6 @@ input {
   font-weight: 600;
 }
 
-
-
 .aplication-container {
   display: flex;
   flex-direction: row;
@@ -124,7 +122,7 @@ input {
 }
 .plus-icon {
   color: var(--color-black);
-
-  border: 2px solid red;
 }
-
+.form-input {
+  margin-top: 40px;
+}
