@@ -94,9 +94,9 @@ const ModalSidebar = (props) => {
                         height: '28px',
                         borderRadius: '3px',
                         marginBottom: '5px',
-                        border:
+                        boxShadow:
                           selectedIcon === option.value
-                            ? '1px solid red'
+                            ? 'inset 0 0 10px 2px #BEDBB0'
                             : 'none',
                       }}
                     />
@@ -130,7 +130,7 @@ const ModalSidebar = (props) => {
                   >
                     <img
                       src={option.image}
-                      alt={option.value}
+                      alt={option.value} 
                       style={{
                         width: '28px',
                         height: '28px',
@@ -138,7 +138,7 @@ const ModalSidebar = (props) => {
                         marginBottom: '5px',
                         border:
                           selectedBackground === option.value
-                            ? '1px solid red'
+                            ? '2px solid #BEDBB0'
                             : 'none',
                       }}
                     />

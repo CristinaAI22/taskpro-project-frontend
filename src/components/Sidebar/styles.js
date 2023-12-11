@@ -1,6 +1,5 @@
 const styles = {
-  helpText: {
-    // fontFamily: "Poppins",
+  helpText: { 
     color: '#FFF',
     fontSize: '16px',
     fontStyle: 'normal',
@@ -11,8 +10,7 @@ const styles = {
     textAlign: 'left',
   },
   TaskPro: {
-    color: '#BEDBB0',
-    // fontFamily: "Poppins",
+    color: '#BEDBB0', 
     fontSize: '16px',
     fontStyle: 'normal',
     fontWeight: 400,
@@ -20,8 +18,7 @@ const styles = {
     letterSpacing: '-0.2px',
   },
 
-  helpLink: {
-    // fontFamily: "Poppins",
+  helpLink: { 
     color: '#FFF',
     fontSize: '16px',
     fontStyle: 'normal',
@@ -31,18 +28,20 @@ const styles = {
     textAlign: 'left',
     textDecoration: 'none',
   },
+  middleContainer: {
+    display: 'flex',
+    flexDirection: 'column',
+    justifyContent: 'space-between'
+  },
 
   helpContainer: {
     display: 'flex',
     flexDirection: 'column',
     backgroundColor: '#1F1F1F',
-    padding: '22px',
-    borderRadius: '10px',
-    // marginTop: '60px',
-    height: 150,
-    overflow: 'auto',
-    // flexWrap: 'wrap',
-    // alignContent: 'flex-end',
+    marginTop: '-45px',
+    padding: '10px 22px',
+    borderRadius: '10px',  
+    maxHeight: '350px', 
   },
   imgHelp: {
     width: '62px',
@@ -65,6 +64,7 @@ const styles = {
     borderRadius: '5px',
     width: '267px',
     padding: '10px',
+    marginLeft: '7px',
   },
   inputTextarea: {
     backgroundColor: '#000',
@@ -87,8 +87,7 @@ const styles = {
     borderRadius: '7px',
     padding: '5px',
   },
-  icons: {
-    // fontFamily: "Poppins",
+  icons: { 
     color: '#FFF',
     fontSize: '16px',
     fontStyle: 'normal',
@@ -104,8 +103,7 @@ const styles = {
     borderRadius: '5px',
   },
 
-  addModal: {
-    // fontFamily: "Poppins",
+  addModal: { 
     color: '#FFF',
     fontSize: '18px',
     fontStyle: 'normal',
@@ -116,6 +114,7 @@ const styles = {
   },
   closeIconStyle: {
     backgroundColor: 'transparent',
+    boxShadow: 'none',
     marginRight: '-12px',
   },
 
@@ -123,8 +122,7 @@ const styles = {
     backgroundColor: '#BEDBB0',
   },
   textBtn: {
-    color: '#161616',
-    // fontFamily: "Poppins",
+    color: '#161616', 
     fontSize: '16px',
     fontStyle: 'normal',
     fontWeight: 500,
@@ -132,14 +130,22 @@ const styles = {
     letterSpacing: '-0.28px',
     padding: '5px 0',
   },
+  containerProject:{
+    height: '120px', 
+    overflowY: 'auto',
+  },
+  listProject: {
+    padding: '7px 3px',
+    backgroundColor: '#000',
+    border: 'none',
+  },  
   listProject: {
     padding: '7px 3px',
     backgroundColor: '#000',
     border: 'none',
   },
   titleProject: {
-    color: '#FFF',
-    //fontFamily: "Poppins",
+    color: '#FFF', 
     fontSize: '16px',
     fontStyle: 'normal',
     fontWeight: 500,
@@ -155,8 +161,7 @@ const styles = {
     borderBottom: '1px solid #000',
     borderRight: '4px solid #BEDBB0',
   },
-  btnContainer: {
-    // margin: "15px 0 5px 0",
+  btnContainer: { 
     marginTop: '20px',
   },
   logoutIcon: {
@@ -165,16 +170,14 @@ const styles = {
   },
   logoutBtn: {
     display: 'flex',
-    gap: '14px',
-    // color: "#FFF",
-    // fontFamily: "Poppins",
-    fontSize: '20px',
+    gap: '25px', 
+    fontSize: '16px',
     fontStyle: 'normal',
     fontWeight: 500,
     lineHeight: 'normal',
     textDecoration: 'none',
-    backgroundColor: '#000',
-    paddingTop: '28px',
+   // backgroundColor: '#000',
+    backgroundColor: 'transparent', 
   },
 
   sidebarStyle: {
@@ -188,8 +191,7 @@ const styles = {
   },
 
   titleLogo: {
-    color: '#FFF',
-    // fontFamily: "Poppins",
+    color: '#FFF', 
     fontSize: '22px',
     fontStyle: 'normal',
     fontWeight: 600,
@@ -202,8 +204,7 @@ const styles = {
     borderBottom: '1px solid #ccc',
   },
   boardsTitle: {
-    color: 'rgba(255, 255, 255, 0.50)',
-    // fontFamily: "Poppins",
+    color: 'rgba(255, 255, 255, 0.50)', 
     fontSize: '16px',
     fontStyle: 'normal',
     fontWeight: 400,
@@ -211,10 +212,7 @@ const styles = {
     letterSpacing: '0.2px',
     margin: '30px 0 -30px 0',
   },
-  textBoard: {
-    // color: "#FFF",
-    // fontFamily: "Poppins",
-    // fontStyle: "normal",
+  textBoard: { 
     fontSize: '18px',
     fontWeight: 500,
     lineHeight: '1.5',

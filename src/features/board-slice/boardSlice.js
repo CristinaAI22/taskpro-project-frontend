@@ -21,7 +21,6 @@ const initialState = {
   filter: null,
   backgroundImg: null,
   boards: [],
-  errorMessage: null,
 };
 
 const boardSlice = createSlice({
@@ -37,10 +36,6 @@ const boardSlice = createSlice({
     deleteBoardData: (state) => {
       state.bordData = null;
     },
-    resetError: (state) => {
-      state.isError = false;
-      state.errorMessage = null;
-    },
   },
   extraReducers: (builder) => {
     builder
@@ -52,10 +47,9 @@ const boardSlice = createSlice({
         state.bordData.lists.push({ ...newList, cards: [] });
         state.isLoading = false;
       })
-      .addCase(addList.rejected, (state, action) => {
+      .addCase(addList.rejected, (state) => {
         state.isLoading = false;
         state.isError = true;
-        state.errorMessage = action.payload;
       })
       .addCase(editList.pending, (state) => {
         state.isLoading = true;
@@ -71,10 +65,9 @@ const boardSlice = createSlice({
         // state.bordData.lists = newLists;
         state.isLoading = false;
       })
-      .addCase(editList.rejected, (state, action) => {
+      .addCase(editList.rejected, (state) => {
         state.isLoading = false;
         state.isError = true;
-        state.errorMessage = action.payload;
       })
       .addCase(getBoardData.pending, (state) => {
         state.isLoading = true;
@@ -85,21 +78,16 @@ const boardSlice = createSlice({
         state.backgroundImg = bordData.backgroundImg;
         state.isLoading = false;
       })
-      .addCase(getBoardData.rejected, (state, action) => {
+      .addCase(getBoardData.rejected, (state) => {
         state.isLoading = false;
         state.isError = true;
-        state.errorMessage = action.payload;
       })
       .addCase(deleteList.pending, (state) => {
         state.isLoading = true;
       })
-      .addCase(deleteList.fulfilled, (state) => {
-        state.isLoading = false;
-      })
-      .addCase(deleteList.rejected, (state, action) => {
+      .addCase(deleteList.rejected, (state) => {
         state.isLoading = false;
         state.isError = true;
-        state.errorMessage = action.payload;
       })
       .addCase(addCard.pending, (state) => {
         state.isLoading = true;
@@ -113,10 +101,9 @@ const boardSlice = createSlice({
         });
         state.isLoading = false;
       })
-      .addCase(addCard.rejected, (state, action) => {
+      .addCase(addCard.rejected, (state) => {
         state.isLoading = false;
         state.isError = true;
-        state.errorMessage = action.payload;
       })
       .addCase(moveCard.pending, (state) => {
         state.isLoading = true;
@@ -124,10 +111,9 @@ const boardSlice = createSlice({
       .addCase(moveCard.fulfilled, (state) => {
         state.isLoading = false;
       })
-      .addCase(moveCard.rejected, (state, action) => {
+      .addCase(moveCard.rejected, (state) => {
         state.isLoading = false;
         state.isError = true;
-        state.errorMessage = action.payload;
       })
       .addCase(editCard.pending, (state) => {
         state.isLoading = true;
@@ -147,10 +133,9 @@ const boardSlice = createSlice({
         state.bordData.lists = newBoardDataLists;
         state.isLoading = false;
       })
-      .addCase(editCard.rejected, (state, action) => {
+      .addCase(editCard.rejected, (state) => {
         state.isLoading = false;
         state.isError = true;
-        state.errorMessage = action.payload;
       })
       .addCase(deleteCard.pending, (state) => {
         state.isLoading = true;
@@ -167,10 +152,9 @@ const boardSlice = createSlice({
         state.bordData.lists = newBoardDataLists;
         state.isLoading = false;
       })
-      .addCase(deleteCard.rejected, (state, action) => {
+      .addCase(deleteCard.rejected, (state) => {
         state.isLoading = false;
         state.isError = true;
-        state.errorMessage = action.payload;
       })
       .addCase(addBoard.pending, (state) => {
         state.isLoading = true;
@@ -179,15 +163,8 @@ const boardSlice = createSlice({
         state.isLoading = false;
         const newBoard = action.payload.newBoard;
         state.boards.push(newBoard);
+        // state.bordData = action.payload.newBoard;
         state.isError = false;
-      })
-      .addCase(addBoard.rejected, (state, action) => {
-        state.isLoading = false;
-        state.isError = true;
-        state.errorMessage = action.payload;
-      })
-      .addCase(editBoard.pending, (state) => {
-        state.isLoading = true;
       })
       .addCase(editBoard.fulfilled, (state, action) => {
         const { boardToUpdate } = action.payload;
@@ -199,11 +176,6 @@ const boardSlice = createSlice({
         });
         state.isLoading = false;
       })
-      .addCase(editBoard.rejected, (state, action) => {
-        state.isLoading = false;
-        state.isError = true;
-        state.errorMessage = action.payload;
-      })
       .addCase(deleteBoard.pending, (state) => {
         state.isLoading = true;
       })
@@ -213,10 +185,9 @@ const boardSlice = createSlice({
         state.boards = newBoards;
         state.isLoading = false;
       })
-      .addCase(deleteBoard.rejected, (state, action) => {
+      .addCase(deleteBoard.rejected, (state) => {
         state.isLoading = false;
         state.isError = true;
-        state.errorMessage = action.payload;
       })
       .addCase(getAllBoards.pending, (state) => {
         state.isLoading = true;
@@ -225,15 +196,13 @@ const boardSlice = createSlice({
         state.boards = action.payload.boards;
         state.isLoading = false;
       })
-      .addCase(getAllBoards.rejected, (state, action) => {
+      .addCase(getAllBoards.rejected, (state) => {
         state.isLoading = false;
         state.isError = true;
-        state.errorMessage = action.payload;
       });
   },
 });
 
-export const { setFilter, resetFilter, deleteBoardData, resetError } =
-  boardSlice.actions;
+export const { setFilter, resetFilter, deleteBoardData } = boardSlice.actions;
 
 export default boardSlice.reducer;

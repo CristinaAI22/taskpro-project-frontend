@@ -64,7 +64,7 @@ const ModalSidebarHelp = (props) => {
         </Modal.Body>
         <Modal.Footer>
           <div className="d-grid col-12 mx-auto">
-            <CDBBtn style={styles.btnNewBoard} type="submit">
+            <CDBBtn style={styles.btnNewBoard} type="submit" onClick={props.onHide}>
               <span style={styles.textBtn}>Send</span>
             </CDBBtn>
           </div>
