@@ -1,7 +1,9 @@
 import axios from "axios";
 import { createAsyncThunk } from "@reduxjs/toolkit";
 
-axios.defaults.baseURL = "http://localhost:5000";
+const heroku_url =
+  "https://taskpro-project-backend-acf7e3c9785b.herokuapp.com/";
+axios.defaults.baseURL = "http://localhost:5000" || heroku_url;
 
 // Utility to add JWT
 
@@ -149,4 +151,3 @@ export const addComment = createAsyncThunk(
     }
   }
 );
- 
